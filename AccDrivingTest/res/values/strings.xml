@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <string name="app_name">Accurate Driving Test</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="obd_data_menu">OBD\nData</string>
+    <string name="route_progress_menu">Route\nProgress</string>
+    <string name="test_progress_menu">Test\nProgress</string>
+    <string name="comment_menu">Comment\nMenu</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="return_from_comment_menu">Hide\nComment\nMenu</string>
+    <string name="view_comment_templates">View Comment\nTemplates</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="enter_comment">Enter comment here</string>
+    <string name="return_from_OBD_data_menu">Hide\nOBD\nData</string>
+    <string name="return_from_route_progress_menu">Hide\nRoute\nProgress</string>
+    <string name="return_from_test_progress_menu">Hide\nTest\nProgress</string>
+    <string name="title_activity_splash__screen"></string>
+    <string name="accurate_driving_test">Accurate Driving\nTest</string>
+    <string name="title_activity_user_menu">UserMenu</string>
+
+    <!-- BEGIN USER MENU STRINGS -->
+    <string name="begin_evaluation">Begin Evaluation</string>
+    <string name="create_and_edit_routes">Create and Edit Routes</string>
+    <string name="create_and_edit_tests">Create and Edit Tests</string>
+    <string name="view_past_evaluations">View Past Evaluations</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="title_activity_during_evaluation"></string>
+
+</resources>

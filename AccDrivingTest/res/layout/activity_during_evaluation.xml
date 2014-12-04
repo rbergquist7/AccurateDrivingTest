@@ -1,0 +1,352 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" >
+
+	<Button
+	    android:id="@+id/Button_OBD_Data_Menu"
+	    android:layout_width="0px"
+	    android:layout_height="wrap_content"
+	    android:text="@string/obd_data_menu"
+	    android:onClick="revealOBDDataMenu"
+	    android:layout_alignLeft="@+id/Route_Progress_Menu_Button"
+   		android:layout_alignRight="@+id/Route_Progress_Menu_Button"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentBottom="true" />
+	
+	<Button
+	    android:id="@+id/Route_Progress_Menu_Button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/route_progress_menu"
+	    android:onClick="revealRouteProgress"
+	    android:layout_alignParentRight="true"
+	    android:layout_above="@id/Button_OBD_Data_Menu" />
+	
+	<Button
+	    android:id="@+id/Button_Test_Progress_Menu"
+	    android:layout_width="0px"
+	    android:layout_height="wrap_content"
+	    android:text="@string/test_progress_menu"
+	    android:onClick="revealTestProgress"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignLeft="@+id/Route_Progress_Menu_Button"
+   		android:layout_alignRight="@+id/Route_Progress_Menu_Button"
+	    android:layout_above="@id/Route_Progress_Menu_Button" />
+	
+	<Button
+	    android:id="@+id/Button_Comment_Menu"
+	    android:layout_width="wrap_content"
+	    android:layout_height="0px"
+	    android:text="@string/comment_menu"
+	    android:onClick="extendCommentMenu"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignTop="@+id/Button_Test_Progress_Menu"
+   		android:layout_alignBottom="@+id/Button_OBD_Data_Menu" />
+	
+	<!-- BEGIN COMMENT MENU -->
+	<LinearLayout
+    		android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_comments"
+		    android:visibility="invisible"
+		    android:layout_alignParentBottom="true"
+		    android:orientation="horizontal"
+		    android:weightSum="10"
+		    android:background="#FFFFFF">
+	    
+		<LinearLayout
+			    android:layout_width="0dp"
+			    android:layout_height="fill_parent" 
+			    android:id="@+id/menu_comments_left"
+			    android:layout_weight="2"
+			    android:orientation="vertical"
+			    android:weightSum="30"
+			    >
+
+			    
+			<Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="10"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+			    
+		    
+		    <Button
+		        android:id="@+id/Button_Comment_Templates"
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="10"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    />
+		    
+		    <Button
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="10"
+			    android:text="@string/add_comment"
+			    android:onClick="extendCommentMenu"
+			    />
+		    
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_comments_middle"
+		    android:layout_weight="6"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+		    
+			<EditText
+			    android:id="@+id/Field_Comment"
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+			    android:layout_weight="2"
+			    android:hint="@string/enter_comment"
+			    ></EditText>
+			
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_comments_right"
+		    android:layout_weight="2"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+		    
+			<Button
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    android:text="@string/return_from_comment_menu"
+			    android:onClick="hideCommentMenu"
+			    />
+			
+		</LinearLayout>
+	
+	</LinearLayout>
+	<!-- END COMMENT MENU -->
+
+		    
+	<!-- BEGIN OBD DATA MENU -->
+	<LinearLayout
+   		android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:id="@+id/menu_OBD_data"
+	    android:visibility="invisible"
+	    android:layout_alignParentBottom="true"
+	    android:orientation="horizontal"
+	    android:weightSum="10"
+	    android:background="#FFFFFF">
+		
+	    <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_OBD_data_left"
+		    android:layout_weight="2"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+		    
+			<Button
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    android:text="@string/return_from_OBD_data_menu"
+			    android:onClick="hideOBDDataMenu"
+			    />
+			
+		</LinearLayout>
+
+	    <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_OBD_data_right"
+		    android:layout_weight="8"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+		    
+			<TextView
+			    android:id="@+id/obd_data_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    />
+			
+	    </LinearLayout>
+	    
+	</LinearLayout>
+	<!-- END OBD DATA MENU -->
+	
+	<!-- BEGIN ROUTE PROGRESS MENU -->
+	<LinearLayout
+   		android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:id="@+id/menu_route_progress"
+	    android:visibility="invisible"
+	    android:layout_alignParentBottom="true"
+	    android:orientation="horizontal"
+	    android:weightSum="10"
+	    android:background="#FFFFFF">
+		
+	    <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_route_progress_left"
+		    android:layout_weight="2"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+		    
+			<Button
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    android:text="@string/return_from_route_progress_menu"
+			    android:onClick="hideRouteProgress"
+			    />
+			
+		</LinearLayout>
+
+	    <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_route_progress_right"
+		    android:layout_weight="8"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:visibility="invisible"
+			    />
+		    
+			<TextView
+			    android:id="@+id/route_progress_data_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    />
+			
+	    </LinearLayout>
+	    
+	</LinearLayout>
+	<!-- END ROUTE PROGRESS MENU -->
+	
+	<!-- BEGIN TEST PROGRESS MENU -->
+	<LinearLayout
+   		android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:id="@+id/menu_test_progress"
+	    android:visibility="invisible"
+	    android:layout_alignParentBottom="true"
+	    android:orientation="horizontal"
+	    android:weightSum="10"
+	    android:background="#FFFFFF">
+		
+	    <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_test_progress_left"
+		    android:layout_weight="2"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:text="@string/view_comment_templates"
+			    android:onClick="extendCommentMenu"
+			    android:visibility="invisible"
+			    />
+		    
+			<Button
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    android:text="@string/return_from_test_progress_menu"
+			    android:onClick="hideTestProgress"
+			    />
+			
+		</LinearLayout>
+
+	    <LinearLayout
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent" 
+		    android:id="@+id/menu_test_progress_right"
+		    android:layout_weight="8"
+		    android:layout_alignParentBottom="true"
+		    android:orientation="vertical"
+		    android:weightSum="3">
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+	        	android:layout_weight="1"
+			    android:visibility="invisible"
+			    />
+		    
+			<TextView
+			    android:id="@+id/test_progress_data_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="0dp"
+	        	android:layout_weight="2"
+			    />
+			
+	    </LinearLayout>
+	    
+	</LinearLayout>
+	<!-- END TEST PROGRESS MENU -->
+</RelativeLayout>

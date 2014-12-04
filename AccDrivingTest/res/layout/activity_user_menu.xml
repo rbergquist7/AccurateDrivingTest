@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.wsuproj5.accuratedrivingtest.UserMenu" >
+
+    <Button
+	    android:id="@+id/Button_Begin_Evaluation"
+	    android:layout_width="0px"
+	    android:layout_height="wrap_content"
+	    android:text="@string/begin_evaluation"
+	    android:onClick="toBeginEvaluation"
+	    android:layout_alignLeft="@+id/Button_Create_And_Edit_Routes"
+   		android:layout_alignRight="@+id/Button_Create_And_Edit_Routes"
+	    android:layout_alignParentLeft="true" />
+	
+	<Button
+	    android:id="@+id/Button_Create_And_Edit_Routes"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/create_and_edit_routes"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/Button_Begin_Evaluation" />
+	
+	<Button
+	    android:id="@+id/Button_Create_And_Edit_Tests"
+	    android:layout_width="0px"
+	    android:layout_height="wrap_content"
+	    android:text="@string/create_and_edit_tests"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignLeft="@+id/Button_Create_And_Edit_Routes"
+   		android:layout_alignRight="@+id/Button_Create_And_Edit_Routes"
+	    android:layout_below="@id/Button_Create_And_Edit_Routes" />
+	
+	<Button
+	    android:id="@+id/Button_View_Past_Evaluations"
+	    android:layout_width="0px"
+	    android:layout_height="wrap_content"
+	    android:text="@string/view_past_evaluations"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignLeft="@+id/Button_Create_And_Edit_Routes"
+   		android:layout_alignRight="@+id/Button_Create_And_Edit_Routes"
+	    android:layout_below="@id/Button_Create_And_Edit_Tests" />
+	
+	<Button
+	    android:id="@+id/Button_Edit_Account"
+	    android:layout_width="0px"
+	    android:layout_height="wrap_content"
+	    android:text="@string/edit_account"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignLeft="@+id/Button_Create_And_Edit_Routes"
+   		android:layout_alignRight="@+id/Button_Create_And_Edit_Routes"
+	    android:layout_below="@id/Button_View_Past_Evaluations" />
+
+</RelativeLayout>
