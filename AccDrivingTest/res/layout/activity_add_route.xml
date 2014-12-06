@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:app="http://schemas.android.com/apk/res-auto"
+   		android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:id="@+id/menu_comments"
+	    android:layout_alignParentBottom="true"
+	    android:orientation="horizontal"
+	    android:weightSum="10"
+	    android:background="#FFFFFF"
+	    >
+		    
+	<RelativeLayout
+		android:layout_width="0dp"
+		android:layout_height="fill_parent"
+		android:layout_weight="3"
+		android:alignmentMode="alignBounds"
+		android:orientation="vertical"
+		android:padding="16dp"
+		android:weightSum="10"
+		android:useDefaultMargins="true" >
+		 
+	    <RelativeLayout
+	        android:id="@+id/editRouteView"
+	        android:layout_width="match_parent" 
+	        android:layout_height="match_parent"
+	        android:visibility="invisible"
+	        android:layout_alignParentTop="true"
+	        >
+	        
+	        <TableLayout 
+		        android:id="@+id/routeList"
+		        android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+		    	>
+	        </TableLayout>
+	        
+	        <Button
+				android:id="@+id/returnToEdit"
+				android:layout_width ="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="returnToEdit"
+				android:text="@string/load_route"
+				android:layout_alignParentBottom="true"/>
+	        
+	    </RelativeLayout>
+		
+	    <RelativeLayout
+	        android:id="@+id/createRouteView"
+	        android:orientation="vertical"
+	        android:layout_width="match_parent" 
+	        android:layout_height="match_parent"
+	        android:weightSum="10"
+	        android:layout_alignParentTop="true" >
+		
+		    <TableLayout 
+		        android:id="@+id/waypointList"
+		        android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+		    	>
+		        
+		    </TableLayout>
+		
+			<AutoCompleteTextView
+				android:id="@+id/nextWaypoint"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:completionThreshold="3"
+				android:hint="@string/enter_street_address"
+				android:layout_below="@id/waypointList" />
+		
+			<Button
+				android:id="@+id/add_waypoint"
+				android:layout_width ="fill_parent"
+				android:layout_height="wrap_content"
+				android:onClick="addWaypoint"
+				android:text="@string/add_waypoint"
+				android:layout_below="@id/nextWaypoint" />
+			
+			<EditText
+			    android:visibility="invisible"
+			    android:id="@+id/routeName"
+			    android:hint= "@string/enter_route_name"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_below="@id/add_waypoint"
+			    ></EditText>
+			
+			<Button
+			    android:id="@+id/save_route"
+				android:layout_width ="fill_parent"
+				android:layout_height="wrap_content"
+				android:onClick="saveRoute"
+				android:text="@string/save_route"
+				android:layout_below="@id/routeName" />
+			
+			<Button
+				android:layout_width ="fill_parent"
+				android:layout_height="wrap_content"
+				android:onClick="viewRoutes"
+				android:text="@string/view_routes"
+				android:layout_below="@id/save_route" />
+			</RelativeLayout>
+	</RelativeLayout>
+	
+	<fragment
+          android:id="@+id/map"
+          android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="7"
+          android:name="com.google.android.gms.maps.MapFragment"/>
+	
+</LinearLayout>

@@ -4,7 +4,7 @@
  * aapt tool from the resource data it found.  It
  * should not be modified by hand.
  */
-package android.support.v7.appcompat;
+package com.google.maps.android;
 
 public final class R {
 	public static final class anim {
@@ -47,11 +47,24 @@ public final class R {
 		public static final int actionProviderClass = 0x7f010050;
 		public static final int actionViewClass = 0x7f01004f;
 		public static final int activityChooserViewStyle = 0x7f01006c;
+		public static final int adSize = 0x7f01006e;
+		public static final int adSizes = 0x7f01006f;
+		public static final int adUnitId = 0x7f010070;
+		public static final int appTheme = 0x7f01007f;
 		public static final int background = 0x7f01002f;
 		public static final int backgroundSplit = 0x7f010031;
 		public static final int backgroundStacked = 0x7f010030;
 		public static final int buttonBarButtonStyle = 0x7f010018;
 		public static final int buttonBarStyle = 0x7f010017;
+		public static final int buyButtonAppearance = 0x7f010086;
+		public static final int buyButtonHeight = 0x7f010083;
+		public static final int buyButtonText = 0x7f010085;
+		public static final int buyButtonWidth = 0x7f010084;
+		public static final int cameraBearing = 0x7f010072;
+		public static final int cameraTargetLat = 0x7f010073;
+		public static final int cameraTargetLng = 0x7f010074;
+		public static final int cameraTilt = 0x7f010075;
+		public static final int cameraZoom = 0x7f010076;
 		public static final int customNavigationLayout = 0x7f010032;
 		public static final int disableChildrenWhenDisabled = 0x7f010054;
 		public static final int displayOptions = 0x7f010028;
@@ -61,7 +74,10 @@ public final class R {
 		public static final int dividerVertical = 0x7f01001a;
 		public static final int dropDownListViewStyle = 0x7f010021;
 		public static final int dropdownListPreferredItemHeight = 0x7f010048;
+		public static final int environment = 0x7f010080;
 		public static final int expandActivityOverflowButtonDrawable = 0x7f01006b;
+		public static final int fragmentMode = 0x7f010082;
+		public static final int fragmentStyle = 0x7f010081;
 		public static final int height = 0x7f010026;
 		public static final int homeAsUpIndicator = 0x7f010013;
 		public static final int homeLayout = 0x7f010033;
@@ -79,6 +95,14 @@ public final class R {
 		public static final int listPreferredItemPaddingLeft = 0x7f01001f;
 		public static final int listPreferredItemPaddingRight = 0x7f010020;
 		public static final int logo = 0x7f01002d;
+		public static final int mapType = 0x7f010071;
+		public static final int maskedWalletDetailsBackground = 0x7f010089;
+		public static final int maskedWalletDetailsButtonBackground = 0x7f01008b;
+		public static final int maskedWalletDetailsButtonTextAppearance = 0x7f01008a;
+		public static final int maskedWalletDetailsHeaderTextAppearance = 0x7f010088;
+		public static final int maskedWalletDetailsLogoImageType = 0x7f01008d;
+		public static final int maskedWalletDetailsLogoTextColor = 0x7f01008c;
+		public static final int maskedWalletDetailsTextAppearance = 0x7f010087;
 		public static final int navigationMode = 0x7f010027;
 		public static final int paddingEnd = 0x7f010039;
 		public static final int paddingStart = 0x7f010038;
@@ -119,6 +143,13 @@ public final class R {
 		public static final int textColorSearchUrl = 0x7f010068;
 		public static final int title = 0x7f010025;
 		public static final int titleTextStyle = 0x7f01002a;
+		public static final int uiCompass = 0x7f010077;
+		public static final int uiRotateGestures = 0x7f010078;
+		public static final int uiScrollGestures = 0x7f010079;
+		public static final int uiTiltGestures = 0x7f01007a;
+		public static final int uiZoomControls = 0x7f01007b;
+		public static final int uiZoomGestures = 0x7f01007c;
+		public static final int useViewLifecycle = 0x7f01007d;
 		public static final int windowActionBar = 0x7f010000;
 		public static final int windowActionBarOverlay = 0x7f010001;
 		public static final int windowFixedHeightMajor = 0x7f010006;
@@ -126,6 +157,7 @@ public final class R {
 		public static final int windowFixedWidthMajor = 0x7f010003;
 		public static final int windowFixedWidthMinor = 0x7f010005;
 		public static final int windowSplitActionBar = 0x7f010002;
+		public static final int zOrderOnTop = 0x7f01007e;
 	}
 	public static final class bool {
 		public static final int abc_action_bar_embed_tabs_pre_jb = 0x7f050000;
@@ -140,6 +172,33 @@ public final class R {
 		public static final int abc_search_url_text_normal = 0x7f060000;
 		public static final int abc_search_url_text_pressed = 0x7f060002;
 		public static final int abc_search_url_text_selected = 0x7f060001;
+		public static final int common_action_bar_splitter = 0x7f06000c;
+		public static final int common_signin_btn_dark_text_default = 0x7f060003;
+		public static final int common_signin_btn_dark_text_disabled = 0x7f060005;
+		public static final int common_signin_btn_dark_text_focused = 0x7f060006;
+		public static final int common_signin_btn_dark_text_pressed = 0x7f060004;
+		public static final int common_signin_btn_default_background = 0x7f06000b;
+		public static final int common_signin_btn_light_text_default = 0x7f060007;
+		public static final int common_signin_btn_light_text_disabled = 0x7f060009;
+		public static final int common_signin_btn_light_text_focused = 0x7f06000a;
+		public static final int common_signin_btn_light_text_pressed = 0x7f060008;
+		public static final int common_signin_btn_text_dark = 0x7f06001b;
+		public static final int common_signin_btn_text_light = 0x7f06001c;
+		public static final int wallet_bright_foreground_disabled_holo_light = 0x7f060012;
+		public static final int wallet_bright_foreground_holo_dark = 0x7f06000d;
+		public static final int wallet_bright_foreground_holo_light = 0x7f060013;
+		public static final int wallet_dim_foreground_disabled_holo_dark = 0x7f06000f;
+		public static final int wallet_dim_foreground_holo_dark = 0x7f06000e;
+		public static final int wallet_dim_foreground_inverse_disabled_holo_dark = 0x7f060011;
+		public static final int wallet_dim_foreground_inverse_holo_dark = 0x7f060010;
+		public static final int wallet_highlighted_text_holo_dark = 0x7f060017;
+		public static final int wallet_highlighted_text_holo_light = 0x7f060016;
+		public static final int wallet_hint_foreground_holo_dark = 0x7f060015;
+		public static final int wallet_hint_foreground_holo_light = 0x7f060014;
+		public static final int wallet_holo_blue_light = 0x7f060018;
+		public static final int wallet_link_text_light = 0x7f060019;
+		public static final int wallet_primary_text_holo_light = 0x7f06001d;
+		public static final int wallet_secondary_text_holo_dark = 0x7f06001e;
 	}
 	public static final class dimen {
 		public static final int abc_action_bar_default_height = 0x7f070002;
@@ -252,6 +311,40 @@ public final class R {
 		public static final int abc_textfield_searchview_holo_light = 0x7f020054;
 		public static final int abc_textfield_searchview_right_holo_dark = 0x7f020055;
 		public static final int abc_textfield_searchview_right_holo_light = 0x7f020056;
+		public static final int bubble_mask = 0x7f020057;
+		public static final int bubble_shadow = 0x7f020058;
+		public static final int common_full_open_on_phone = 0x7f020059;
+		public static final int common_ic_googleplayservices = 0x7f02005a;
+		public static final int common_signin_btn_icon_dark = 0x7f02005b;
+		public static final int common_signin_btn_icon_disabled_dark = 0x7f02005c;
+		public static final int common_signin_btn_icon_disabled_focus_dark = 0x7f02005d;
+		public static final int common_signin_btn_icon_disabled_focus_light = 0x7f02005e;
+		public static final int common_signin_btn_icon_disabled_light = 0x7f02005f;
+		public static final int common_signin_btn_icon_focus_dark = 0x7f020060;
+		public static final int common_signin_btn_icon_focus_light = 0x7f020061;
+		public static final int common_signin_btn_icon_light = 0x7f020062;
+		public static final int common_signin_btn_icon_normal_dark = 0x7f020063;
+		public static final int common_signin_btn_icon_normal_light = 0x7f020064;
+		public static final int common_signin_btn_icon_pressed_dark = 0x7f020065;
+		public static final int common_signin_btn_icon_pressed_light = 0x7f020066;
+		public static final int common_signin_btn_text_dark = 0x7f020067;
+		public static final int common_signin_btn_text_disabled_dark = 0x7f020068;
+		public static final int common_signin_btn_text_disabled_focus_dark = 0x7f020069;
+		public static final int common_signin_btn_text_disabled_focus_light = 0x7f02006a;
+		public static final int common_signin_btn_text_disabled_light = 0x7f02006b;
+		public static final int common_signin_btn_text_focus_dark = 0x7f02006c;
+		public static final int common_signin_btn_text_focus_light = 0x7f02006d;
+		public static final int common_signin_btn_text_light = 0x7f02006e;
+		public static final int common_signin_btn_text_normal_dark = 0x7f02006f;
+		public static final int common_signin_btn_text_normal_light = 0x7f020070;
+		public static final int common_signin_btn_text_pressed_dark = 0x7f020071;
+		public static final int common_signin_btn_text_pressed_light = 0x7f020072;
+		public static final int ic_plusone_medium_off_client = 0x7f020074;
+		public static final int ic_plusone_small_off_client = 0x7f020075;
+		public static final int ic_plusone_standard_off_client = 0x7f020076;
+		public static final int ic_plusone_tall_off_client = 0x7f020077;
+		public static final int powered_by_google_dark = 0x7f020078;
+		public static final int powered_by_google_light = 0x7f020079;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f09002f;
@@ -268,7 +361,12 @@ public final class R {
 		public static final int activity_chooser_view_content = 0x7f090038;
 		public static final int always = 0x7f090010;
 		public static final int beginning = 0x7f090017;
+		public static final int book_now = 0x7f090027;
+		public static final int buyButton = 0x7f090023;
+		public static final int buy_now = 0x7f090028;
+		public static final int buy_with_google = 0x7f090029;
 		public static final int checkbox = 0x7f090040;
+		public static final int classic = 0x7f09002a;
 		public static final int collapseActionView = 0x7f090011;
 		public static final int default_activity_button = 0x7f09003b;
 		public static final int dialog = 0x7f090015;
@@ -278,20 +376,29 @@ public final class R {
 		public static final int end = 0x7f090018;
 		public static final int expand_activities_button = 0x7f090039;
 		public static final int expanded_menu = 0x7f09003f;
+		public static final int grayscale = 0x7f09002b;
+		public static final int holo_dark = 0x7f09001e;
+		public static final int holo_light = 0x7f09001f;
 		public static final int home = 0x7f090000;
 		public static final int homeAsUp = 0x7f09000b;
+		public static final int hybrid = 0x7f09001b;
 		public static final int icon = 0x7f09003d;
 		public static final int ifRoom = 0x7f090012;
 		public static final int image = 0x7f09003a;
 		public static final int listMode = 0x7f090007;
 		public static final int list_item = 0x7f09003c;
+		public static final int match_parent = 0x7f090025;
 		public static final int middle = 0x7f090019;
+		public static final int monochrome = 0x7f09002c;
 		public static final int never = 0x7f090013;
 		public static final int none = 0x7f09001a;
 		public static final int normal = 0x7f090008;
+		public static final int production = 0x7f090020;
 		public static final int progress_circular = 0x7f090004;
 		public static final int progress_horizontal = 0x7f090005;
 		public static final int radio = 0x7f090042;
+		public static final int sandbox = 0x7f090021;
+		public static final int satellite = 0x7f09001c;
 		public static final int search_badge = 0x7f090045;
 		public static final int search_bar = 0x7f090044;
 		public static final int search_button = 0x7f090046;
@@ -302,21 +409,27 @@ public final class R {
 		public static final int search_plate = 0x7f090049;
 		public static final int search_src_text = 0x7f09004a;
 		public static final int search_voice_btn = 0x7f09004e;
+		public static final int selectionDetails = 0x7f090024;
 		public static final int shortcut = 0x7f090041;
 		public static final int showCustom = 0x7f09000c;
 		public static final int showHome = 0x7f09000d;
 		public static final int showTitle = 0x7f09000e;
 		public static final int split_action_bar = 0x7f090031;
+		public static final int strict_sandbox = 0x7f090022;
 		public static final int submit_area = 0x7f09004c;
 		public static final int tabMode = 0x7f090009;
+		public static final int terrain = 0x7f09001d;
+		public static final int text = 0x7f090006;
 		public static final int title = 0x7f09003e;
 		public static final int top_action_bar = 0x7f090033;
 		public static final int up = 0x7f090034;
 		public static final int useLogo = 0x7f09000f;
 		public static final int withText = 0x7f090014;
+		public static final int wrap_content = 0x7f090026;
 	}
 	public static final class integer {
 		public static final int abc_max_action_buttons = 0x7f080000;
+		public static final int google_play_services_version = 0x7f080001;
 	}
 	public static final class layout {
 		public static final int abc_action_bar_decor = 0x7f030000;
@@ -344,6 +457,7 @@ public final class R {
 		public static final int abc_search_view = 0x7f030016;
 		public static final int abc_simple_decor = 0x7f030017;
 		public static final int support_simple_spinner_dropdown_item = 0x7f03001d;
+		public static final int text_bubble = 0x7f03001e;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f0a0001;
@@ -359,8 +473,46 @@ public final class R {
 		public static final int abc_searchview_description_voice = 0x7f0a0008;
 		public static final int abc_shareactionprovider_share_with = 0x7f0a000c;
 		public static final int abc_shareactionprovider_share_with_application = 0x7f0a000b;
+		public static final int accept = 0x7f0a000f;
+		public static final int common_android_wear_notification_needs_update_text = 0x7f0a0016;
+		public static final int common_android_wear_update_text = 0x7f0a0023;
+		public static final int common_android_wear_update_title = 0x7f0a0021;
+		public static final int common_google_play_services_enable_button = 0x7f0a001f;
+		public static final int common_google_play_services_enable_text = 0x7f0a001e;
+		public static final int common_google_play_services_enable_title = 0x7f0a001d;
+		public static final int common_google_play_services_error_notification_requested_by_msg = 0x7f0a0018;
+		public static final int common_google_play_services_install_button = 0x7f0a001c;
+		public static final int common_google_play_services_install_text_phone = 0x7f0a001a;
+		public static final int common_google_play_services_install_text_tablet = 0x7f0a001b;
+		public static final int common_google_play_services_install_title = 0x7f0a0019;
+		public static final int common_google_play_services_invalid_account_text = 0x7f0a0027;
+		public static final int common_google_play_services_invalid_account_title = 0x7f0a0026;
+		public static final int common_google_play_services_needs_enabling_title = 0x7f0a0017;
+		public static final int common_google_play_services_network_error_text = 0x7f0a0025;
+		public static final int common_google_play_services_network_error_title = 0x7f0a0024;
+		public static final int common_google_play_services_notification_needs_installation_title = 0x7f0a0014;
+		public static final int common_google_play_services_notification_needs_update_title = 0x7f0a0015;
+		public static final int common_google_play_services_notification_ticker = 0x7f0a0013;
+		public static final int common_google_play_services_unknown_issue = 0x7f0a0028;
+		public static final int common_google_play_services_unsupported_text = 0x7f0a002a;
+		public static final int common_google_play_services_unsupported_title = 0x7f0a0029;
+		public static final int common_google_play_services_update_button = 0x7f0a002b;
+		public static final int common_google_play_services_update_text = 0x7f0a0022;
+		public static final int common_google_play_services_update_title = 0x7f0a0020;
+		public static final int common_open_on_phone = 0x7f0a002e;
+		public static final int common_signin_button_text = 0x7f0a002c;
+		public static final int common_signin_button_text_long = 0x7f0a002d;
+		public static final int create_calendar_message = 0x7f0a0012;
+		public static final int create_calendar_title = 0x7f0a0011;
+		public static final int decline = 0x7f0a0010;
+		public static final int store_picture_message = 0x7f0a000e;
+		public static final int store_picture_title = 0x7f0a000d;
+		public static final int wallet_buy_button_place_holder = 0x7f0a002f;
 	}
 	public static final class style {
+		public static final int Bubble_TextAppearance_Dark = 0x7f0b0090;
+		public static final int Bubble_TextAppearance_Light = 0x7f0b0091;
+		public static final int ClusterIcon_TextAppearance = 0x7f0b0092;
 		public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog = 0x7f0b0063;
 		public static final int TextAppearance_AppCompat_Base_SearchResult = 0x7f0b006d;
 		public static final int TextAppearance_AppCompat_Base_SearchResult_Subtitle = 0x7f0b006f;
@@ -422,6 +574,11 @@ public final class R {
 		public static final int Theme_Base_AppCompat_Light_DialogWhenLarge = 0x7f0b0086;
 		public static final int Theme_Base_AppCompat_Light_DialogWhenLarge_Base = 0x7f0b008a;
 		public static final int Theme_Base_Light = 0x7f0b007f;
+		public static final int Theme_IAPTheme = 0x7f0b008b;
+		public static final int WalletFragmentDefaultButtonTextAppearance = 0x7f0b008e;
+		public static final int WalletFragmentDefaultDetailsHeaderTextAppearance = 0x7f0b008d;
+		public static final int WalletFragmentDefaultDetailsTextAppearance = 0x7f0b008c;
+		public static final int WalletFragmentDefaultStyle = 0x7f0b008f;
 		public static final int Widget_AppCompat_ActionBar = 0x7f0b0000;
 		public static final int Widget_AppCompat_ActionBar_Solid = 0x7f0b0002;
 		public static final int Widget_AppCompat_ActionBar_TabBar = 0x7f0b0011;
@@ -544,12 +701,31 @@ public final class R {
 		public static final int[] ActivityChooserView = { 0x7f01006a, 0x7f01006b };
 		public static final int ActivityChooserView_expandActivityOverflowButtonDrawable = 1;
 		public static final int ActivityChooserView_initialActivityCount = 0;
+		public static final int[] AdsAttrs = { 0x7f01006e, 0x7f01006f, 0x7f010070 };
+		public static final int AdsAttrs_adSize = 0;
+		public static final int AdsAttrs_adSizes = 1;
+		public static final int AdsAttrs_adUnitId = 2;
 		public static final int[] CompatTextView = { 0x7f01006d };
 		public static final int CompatTextView_textAllCaps = 0;
 		public static final int[] LinearLayoutICS = { 0x7f01002e, 0x7f010055, 0x7f010056 };
 		public static final int LinearLayoutICS_divider = 0;
 		public static final int LinearLayoutICS_dividerPadding = 2;
 		public static final int LinearLayoutICS_showDividers = 1;
+		public static final int[] MapAttrs = { 0x7f010071, 0x7f010072, 0x7f010073, 0x7f010074, 0x7f010075, 0x7f010076, 0x7f010077, 0x7f010078, 0x7f010079, 0x7f01007a, 0x7f01007b, 0x7f01007c, 0x7f01007d, 0x7f01007e };
+		public static final int MapAttrs_cameraBearing = 1;
+		public static final int MapAttrs_cameraTargetLat = 2;
+		public static final int MapAttrs_cameraTargetLng = 3;
+		public static final int MapAttrs_cameraTilt = 4;
+		public static final int MapAttrs_cameraZoom = 5;
+		public static final int MapAttrs_mapType = 0;
+		public static final int MapAttrs_uiCompass = 6;
+		public static final int MapAttrs_uiRotateGestures = 7;
+		public static final int MapAttrs_uiScrollGestures = 8;
+		public static final int MapAttrs_uiTiltGestures = 9;
+		public static final int MapAttrs_uiZoomControls = 10;
+		public static final int MapAttrs_uiZoomGestures = 11;
+		public static final int MapAttrs_useViewLifecycle = 12;
+		public static final int MapAttrs_zOrderOnTop = 13;
 		public static final int[] MenuGroup = { 0x0101000e, 0x010100d0, 0x01010194, 0x010101de, 0x010101df, 0x010101e0 };
 		public static final int MenuGroup_android_checkableBehavior = 5;
 		public static final int MenuGroup_android_enabled = 0;
@@ -612,5 +788,22 @@ public final class R {
 		public static final int View_android_focusable = 0;
 		public static final int View_paddingEnd = 2;
 		public static final int View_paddingStart = 1;
+		public static final int[] WalletFragmentOptions = { 0x7f01007f, 0x7f010080, 0x7f010081, 0x7f010082 };
+		public static final int WalletFragmentOptions_appTheme = 0;
+		public static final int WalletFragmentOptions_environment = 1;
+		public static final int WalletFragmentOptions_fragmentMode = 3;
+		public static final int WalletFragmentOptions_fragmentStyle = 2;
+		public static final int[] WalletFragmentStyle = { 0x7f010083, 0x7f010084, 0x7f010085, 0x7f010086, 0x7f010087, 0x7f010088, 0x7f010089, 0x7f01008a, 0x7f01008b, 0x7f01008c, 0x7f01008d };
+		public static final int WalletFragmentStyle_buyButtonAppearance = 3;
+		public static final int WalletFragmentStyle_buyButtonHeight = 0;
+		public static final int WalletFragmentStyle_buyButtonText = 2;
+		public static final int WalletFragmentStyle_buyButtonWidth = 1;
+		public static final int WalletFragmentStyle_maskedWalletDetailsBackground = 6;
+		public static final int WalletFragmentStyle_maskedWalletDetailsButtonBackground = 8;
+		public static final int WalletFragmentStyle_maskedWalletDetailsButtonTextAppearance = 7;
+		public static final int WalletFragmentStyle_maskedWalletDetailsHeaderTextAppearance = 5;
+		public static final int WalletFragmentStyle_maskedWalletDetailsLogoImageType = 10;
+		public static final int WalletFragmentStyle_maskedWalletDetailsLogoTextColor = 9;
+		public static final int WalletFragmentStyle_maskedWalletDetailsTextAppearance = 4;
 	}
 }

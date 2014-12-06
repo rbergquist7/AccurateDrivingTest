@@ -28,5 +28,17 @@
     <string name="view_past_evaluations">View Past Evaluations</string>
     <string name="edit_account">Edit Account</string>
     <string name="title_activity_during_evaluation"></string>
-
+    <string name="title_activity_add_route">AddRoute</string>
+    <!-- END USER MENU STRINGS -->
+    
+    <!-- BEGIN ADD ROUTE STRINGS -->
+	<string name="add_waypoint">Add Waypoint</string>
+    <string name="enter_street_address">Enter Address</string>
+    <string name="title_activity_add_route_two">AddRouteTwo</string>
+    <string name="remove_waypoint">Remove Waypoint</string>
+    <string name="enter_route_name">Enter route name</string>
+    <string name="save_route">Save Route</string>
+    <string name="view_routes">View Routes</string>
+    <string name="load_route">Load Selected\nRoute</string>
+	<!-- END ADD ROUTE STRINGS -->
 </resources>

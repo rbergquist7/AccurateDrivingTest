@@ -19,4 +19,9 @@ public class UserMenu extends ActionBarActivity {
 		Intent beginEvaluation = new Intent(UserMenu.this,DuringEvaluation.class);                               
         startActivity(beginEvaluation);  
 	}
+	
+	public void toAddRoute(View view) {
+		Intent addRoute = new Intent(UserMenu.this, AddRoute.class);
+		startActivity(addRoute);
+	}
 }

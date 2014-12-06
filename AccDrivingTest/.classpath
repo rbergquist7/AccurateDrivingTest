@@ -5,7 +5,9 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry exported="true" kind="lib" path="/Users/ryanbergquist/Documents/adt-bundle-mac-x86_64-20140702/sdk/extras/android/support/v7/appcompat/libs/android-support-v4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/ryanbergquist/Documents/adt-bundle-mac-x86_64-20140702/sdk/extras/android/support/v7/appcompat/libs/android-support-v7-appcompat.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/parker/Documents/workspace/appcompat_v7/libs/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/parker/Documents/workspace/appcompat_v7/libs/android-support-v7-appcompat.jar"/>
+	<classpathentry kind="lib" path="/Users/parker/Desktop/pig-0.14.0-core-h1.jar"/>
+	<classpathentry kind="lib" path="/Users/parker/Desktop/pig-0.14.0-core-h2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
