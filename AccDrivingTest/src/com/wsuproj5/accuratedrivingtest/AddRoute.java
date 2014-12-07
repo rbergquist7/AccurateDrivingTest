@@ -70,9 +70,11 @@ public class AddRoute extends ActionBarActivity {
 	int maxRouteIndex;
 	int workingIndex;
 	int selectedRoute = -1;
+	boolean loadingRoute = false;
 	private static final int VISIBLE = 0;
 	private static final int INVISIBLE = 4;
 	
+	//TODO: Compile data fragments into one fragment
 	private PlaceholderFragment routeLines;
 	private PlaceholderFragment tableData;
 	private String routeDelimiter = "!--ROUTEDELIMITER--!";
@@ -88,7 +90,6 @@ public class AddRoute extends ActionBarActivity {
 	   ///      load tasks from preference
         SharedPreferences prefs = getSharedPreferences("existingRoutes", Context.MODE_PRIVATE);
         getExistingRoutes(prefs);
-        buildExistingRoutesTable();
         /*
         try {
             existingWaypoints = (ArrayList<List<String>>) ObjectSerializer.deserialize(prefs.getString("existingWayPoints", ObjectSerializer.serialize(new ArrayList<List<String>>())));
@@ -112,6 +113,8 @@ public class AddRoute extends ActionBarActivity {
         else {
 	        // the data is available in dataFragment.getData()
 			routeListPoints = routeLines.getRouteList();
+			selectedRoute = routeLines.getSelectedRoute();
+			loadingRoute = routeLines.isLoadingRoute();
 			rebuildMap();
         }
         // create the fragment and data the first time
@@ -128,11 +131,15 @@ public class AddRoute extends ActionBarActivity {
 			rebuildTable();
         }
 		
+        buildExistingRoutesTable();
+        
 		nextWaypoint = (AutoCompleteTextView) findViewById(R.id.nextWaypoint);
 		nextWaypoint.setAdapter(new PlacesAutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line));
+		if (loadingRoute)
+			viewRoutes((View) null);
 	}
 	
-	private void buildExistingRoutesTable() {
+	private void buildExistingRoutesTable() { //TODO: Restore selection if one existed
 		TableLayout waypointList = (TableLayout) findViewById(R.id.routeList);
 		for (int i = 0; i < maxRouteIndex; i++) {
 			TableRow newRow = new TableRow(this);
@@ -142,18 +149,21 @@ public class AddRoute extends ActionBarActivity {
 			newTextView.setText("Route " + i);
 			newRow.setClickable(true);
 			newRow.setTag(i);
+			if (selectedRoute == i) {
+				newRow.setBackgroundColor(Color.BLUE);
+			}
 			newRow.setOnClickListener(new View.OnClickListener() {
 
-    @Override
-    public void onClick(View v) {
-         TableRow tableRow = (TableRow) v;
-         tableRow.setBackgroundColor(Color.BLUE);
-         TableLayout waypointList = (TableLayout) findViewById(R.id.routeList);
-         if (selectedRoute != -1)
-        	 waypointList.getChildAt(selectedRoute).setBackgroundColor(Color.TRANSPARENT);
-         selectedRoute = (Integer) tableRow.getTag();
-    }
-});
+			    @Override
+			    public void onClick(View v) {
+			         TableRow tableRow = (TableRow) v;
+			         tableRow.setBackgroundColor(Color.BLUE);
+			         TableLayout waypointList = (TableLayout) findViewById(R.id.routeList);
+			         if (selectedRoute != -1)
+			        	 waypointList.getChildAt(selectedRoute).setBackgroundColor(Color.TRANSPARENT);
+			         selectedRoute = (Integer) tableRow.getTag();
+			    }
+			});
 		}
 	}
 
@@ -194,7 +204,8 @@ public class AddRoute extends ActionBarActivity {
 			waypointList.addView(newRow);
 
 			TableLayout.LayoutParams params = (TableLayout.LayoutParams) newRow.getLayoutParams();
-			params.width=TableLayout.LayoutParams.MATCH_PARENT;
+			params.width = TableLayout.LayoutParams.MATCH_PARENT;
+			params.height = TableLayout.LayoutParams.WRAP_CONTENT;
 			newRow.setLayoutParams(params);
 			newRow.setWeightSum(15f);
 			TextView newTextView = new TextView(this);
@@ -202,12 +213,12 @@ public class AddRoute extends ActionBarActivity {
 			newRow.addView(newTextView);
 			TableRow.LayoutParams paramsTextView = new TableRow.LayoutParams(
 				    TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-				paramsTextView.weight = 14.0f;
+				paramsTextView.weight = 10.0f;
 				newTextView.setLayoutParams(paramsTextView);
 			newRow.addView(newButton);
 			TableRow.LayoutParams paramsButton = new TableRow.LayoutParams(
 				    TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-				paramsButton.weight = 1.0f;
+				paramsButton.weight = 5.0f;
 				newButton.setLayoutParams(paramsButton);
 			newButton.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
@@ -241,6 +252,8 @@ public class AddRoute extends ActionBarActivity {
         // store the data in the fragment
         routeLines.setData(routeListPoints);
         tableData.setWaypoint(waypointListStrings);
+        routeLines.setSelectedRoute(selectedRoute);
+        routeLines.setLoadingRoute(loadingRoute);
     }
   
   	public void replacePath(List<LatLng> newPath) {
@@ -276,6 +289,7 @@ public class AddRoute extends ActionBarActivity {
   	}
   	
   	public void viewRoutes(View v) {
+  		loadingRoute = true;
   		RelativeLayout viewRoutes = (RelativeLayout) findViewById(R.id.editRouteView);
     	viewRoutes.setVisibility(VISIBLE);
     	RelativeLayout editRoute = (RelativeLayout) findViewById(R.id.createRouteView);
@@ -283,6 +297,7 @@ public class AddRoute extends ActionBarActivity {
   	}
   	
   	public void returnToEdit(View v) {
+  		loadingRoute = false;
   		RelativeLayout viewRoutes = (RelativeLayout) findViewById(R.id.editRouteView);
     	viewRoutes.setVisibility(INVISIBLE);
     	RelativeLayout editRoute = (RelativeLayout) findViewById(R.id.createRouteView);
@@ -291,6 +306,12 @@ public class AddRoute extends ActionBarActivity {
     		workingIndex = selectedRoute;
     		waypointListStrings = existingRoutes.get(selectedRoute);
     		rebuildTable();
+    		mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+    		map = mapFragment.getMap();
+    		map.clear();
+    		routeListPoints.clear();
+            TableLayout waypointList = (TableLayout) findViewById(R.id.routeList);
+           	waypointList.getChildAt(selectedRoute).setBackgroundColor(Color.TRANSPARENT);
     		RetrieveRoute retrieveRoute = new RetrieveRoute(new ArrayList<String>(waypointListStrings));
     		retrieveRoute.execute((URL) null);
     		selectedRoute = -1;
@@ -350,7 +371,8 @@ public class AddRoute extends ActionBarActivity {
 		    
 		CameraPosition cameraPosition = new CameraPosition.Builder()
 			.target(route.get(0)) // Sets the center of the map to new location
-			.zoom(map.getCameraPosition().zoom) // Sets the zoom
+			.zoom(10) // Sets the zoom
+			//.zoom(map.getCameraPosition().zoom) // Sets the zoom
 			.bearing(0) // Sets the orientation of the camera to east
 			.tilt(0) // Sets the tilt of the camera to 30 degrees
 			.build(); // Creates a CameraPosition from the builder
@@ -402,7 +424,7 @@ public class AddRoute extends ActionBarActivity {
 		}
 		
 	}
-	
+	//TODO: Put all AutoComplete code in a different class file
 	private class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements Filterable {
 		private ArrayList<String> resultList;
 		
@@ -526,7 +548,7 @@ public class AddRoute extends ActionBarActivity {
 	
 	static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
 	static final JacksonFactory JSON_FACTORY = new JacksonFactory();
-	
+	//TODO: Compile the three different direction fetchers into one
 	private class DirectionsFetcher extends AsyncTask<URL, Integer, String> {
 		private List<LatLng> latLngs = new ArrayList<LatLng>();
 		@Override
@@ -654,6 +676,8 @@ public class AddRoute extends ActionBarActivity {
 				if (currentRoutes.size() > 1) {
 					RetrieveRoute retrieveRoute = new RetrieveRoute(currentRoutes);
 		    		retrieveRoute.execute((URL) null);
+				} else {
+					previousWaypoint = currentWaypoint;
 				}
 			}
 
@@ -666,6 +690,8 @@ public class AddRoute extends ActionBarActivity {
 		 // data objects we want to retain
 	    private ArrayList<List<LatLng>> latLngList;
 	    private List<String> waypointList;
+	    private int selectedRoute;
+	    private boolean loadingRoute;
 		
 		public PlaceholderFragment() {
 		}
@@ -691,8 +717,24 @@ public class AddRoute extends ActionBarActivity {
 	        this.waypointList = data;
 	    }
 	    
+	    public void setSelectedRoute(int selectedRoute) {
+	    	this.selectedRoute = selectedRoute;
+	    }
+	    
+	    public int getSelectedRoute() {
+	    	return this.selectedRoute;
+	    }
+	    
 	    public ArrayList<List<LatLng>> getRouteList() {
 	    	return this.latLngList;
+	    }
+	    
+	    public boolean isLoadingRoute() {
+	    	return this.loadingRoute;
+	    }
+	    
+	    public void setLoadingRoute(boolean loadingRoute) {
+	    	this.loadingRoute = loadingRoute;
 	    }
 		
 	}

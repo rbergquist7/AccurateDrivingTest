@@ -13,11 +13,7 @@
 		android:layout_width="0dp"
 		android:layout_height="fill_parent"
 		android:layout_weight="3"
-		android:alignmentMode="alignBounds"
-		android:orientation="vertical"
-		android:padding="16dp"
-		android:weightSum="10"
-		android:useDefaultMargins="true" >
+		android:padding="16dp" >
 		 
 	    <RelativeLayout
 	        android:id="@+id/editRouteView"
@@ -46,16 +42,16 @@
 		
 	    <RelativeLayout
 	        android:id="@+id/createRouteView"
-	        android:orientation="vertical"
 	        android:layout_width="match_parent" 
 	        android:layout_height="match_parent"
-	        android:weightSum="10"
 	        android:layout_alignParentTop="true" >
 		
 		    <TableLayout 
 		        android:id="@+id/waypointList"
-		        android:layout_width="fill_parent"
+		        android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:stretchColumns="*"
+  				android:shrinkColumns="*"
 		    	>
 		        
 		    </TableLayout>
