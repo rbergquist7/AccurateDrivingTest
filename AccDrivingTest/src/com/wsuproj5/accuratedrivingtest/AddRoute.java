@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.pig.impl.util.ObjectSerializer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +49,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -448,15 +446,14 @@ public class AddRoute extends ActionBarActivity {
 				@Override
 				protected FilterResults performFiltering(CharSequence constraint) {
 					FilterResults filterResults = new FilterResults();
-					if (false) {
-					//if (constraint != null) {
+					/*//if (constraint != null) {
 						// Retrieve the autocomplete results.
 						resultList = autocomplete(constraint.toString());
 						
 						// Assign the data to the FilterResults
 						filterResults.values = resultList;
 						filterResults.count = resultList.size();
-					}
+					*/
 					return filterResults;
 				}
 
@@ -481,6 +478,7 @@ public class AddRoute extends ActionBarActivity {
 
 	private static final String API_KEY = "AIzaSyBfa2SpUqCAqB_T5MjDl9h0ePdnfSLZmQ8";
 
+	@SuppressWarnings("unused")
 	private ArrayList<String> autocomplete(String input) {
 	    ArrayList<String> resultList = null;
 
