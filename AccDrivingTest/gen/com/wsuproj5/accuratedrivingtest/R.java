@@ -1486,7 +1486,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050029;
         public static final int action_menu_presenter=0x7f05002a;
         public static final int action_mode_close_button=0x7f050037;
-        public static final int action_settings=0x7f05007a;
+        public static final int action_settings=0x7f050075;
         public static final int activity_chooser_view_content=0x7f050038;
         public static final int add_waypoint=0x7f050056;
         public static final int always=0x7f05001f;
@@ -1518,7 +1518,6 @@ containing a value of this type.
         public static final int ifRoom=0x7f05001e;
         public static final int image=0x7f05003a;
         public static final int listMode=0x7f050015;
-        public static final int listView1=0x7f050079;
         public static final int list_item=0x7f05003c;
         public static final int map=0x7f050059;
         public static final int match_parent=0x7f05000d;
@@ -1542,7 +1541,6 @@ containing a value of this type.
         public static final int none=0x7f050001;
         public static final int normal=0x7f050002;
         public static final int obd_data_view=0x7f050066;
-        public static final int paired=0x7f050077;
         public static final int production=0x7f050008;
         public static final int progress_circular=0x7f05002b;
         public static final int progress_horizontal=0x7f05002c;
@@ -1554,7 +1552,6 @@ containing a value of this type.
         public static final int sandbox=0x7f050009;
         public static final int satellite=0x7f050003;
         public static final int save_route=0x7f050058;
-        public static final int search=0x7f050078;
         public static final int search_badge=0x7f050045;
         public static final int search_bar=0x7f050044;
         public static final int search_button=0x7f050046;
@@ -1580,8 +1577,6 @@ containing a value of this type.
         public static final int text=0x7f050000;
         public static final int title=0x7f05003e;
         public static final int top_action_bar=0x7f050033;
-        public static final int turnOff=0x7f050076;
-        public static final int turnOn=0x7f050075;
         public static final int up=0x7f050034;
         public static final int useLogo=0x7f050017;
         public static final int waypointList=0x7f050054;
@@ -1655,10 +1650,6 @@ containing a value of this type.
         public static final int user_menu=0x7f0c0004;
     }
     public static final class string {
-        public static final int Find=0x7f070047;
-        public static final int Hello=0x7f070048;
-        public static final int List=0x7f070046;
-        public static final int Text=0x7f070043;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f070024;
@@ -1706,11 +1697,11 @@ containing a value of this type.
         /**  END USER MENU STRINGS 
  BEGIN ADD ROUTE STRINGS 
          */
-        public static final int add_waypoint=0x7f070050;
+        public static final int add_waypoint=0x7f07004a;
         public static final int app_name=0x7f070030;
         /**  BEGIN USER MENU STRINGS 
          */
-        public static final int begin_evaluation=0x7f070049;
+        public static final int begin_evaluation=0x7f070043;
         public static final int comment_menu=0x7f070036;
         /**   Text for notification shown when the Android Wear apps needs to be updated. Only shown on the wearable. [CHAR LIMIT=NONE] 
          */
@@ -1811,40 +1802,38 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070020;
-        public static final int create_and_edit_routes=0x7f07004a;
-        public static final int create_and_edit_tests=0x7f07004b;
+        public static final int create_and_edit_routes=0x7f070044;
+        public static final int create_and_edit_tests=0x7f070045;
         public static final int create_calendar_message=0x7f070005;
         public static final int create_calendar_title=0x7f070004;
         public static final int decline=0x7f070003;
-        public static final int edit_account=0x7f07004d;
+        public static final int edit_account=0x7f070047;
         public static final int edit_message=0x7f070032;
         public static final int enter_comment=0x7f07003c;
-        public static final int enter_route_name=0x7f070054;
-        public static final int enter_street_address=0x7f070051;
+        public static final int enter_route_name=0x7f07004e;
+        public static final int enter_street_address=0x7f07004b;
         public static final int hello_world=0x7f070038;
-        public static final int load_route=0x7f070057;
+        public static final int load_route=0x7f070051;
         public static final int obd_data_menu=0x7f070033;
-        public static final int off=0x7f070045;
-        public static final int on=0x7f070044;
-        public static final int remove_waypoint=0x7f070053;
+        public static final int remove_waypoint=0x7f07004d;
         public static final int return_from_OBD_data_menu=0x7f07003d;
         public static final int return_from_comment_menu=0x7f070039;
         public static final int return_from_route_progress_menu=0x7f07003e;
         public static final int return_from_test_progress_menu=0x7f07003f;
         public static final int route_progress_menu=0x7f070034;
-        public static final int save_route=0x7f070055;
+        public static final int save_route=0x7f07004f;
         public static final int store_picture_message=0x7f070001;
         public static final int store_picture_title=0x7f070000;
         public static final int test_progress_menu=0x7f070035;
-        public static final int title_activity_add_route=0x7f07004f;
-        public static final int title_activity_add_route_two=0x7f070052;
+        public static final int title_activity_add_route=0x7f070049;
+        public static final int title_activity_add_route_two=0x7f07004c;
         public static final int title_activity_display_message=0x7f070037;
-        public static final int title_activity_during_evaluation=0x7f07004e;
+        public static final int title_activity_during_evaluation=0x7f070048;
         public static final int title_activity_splash__screen=0x7f070040;
         public static final int title_activity_user_menu=0x7f070042;
         public static final int view_comment_templates=0x7f07003a;
-        public static final int view_past_evaluations=0x7f07004c;
-        public static final int view_routes=0x7f070056;
+        public static final int view_past_evaluations=0x7f070046;
+        public static final int view_routes=0x7f070050;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

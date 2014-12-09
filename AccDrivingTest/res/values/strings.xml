@@ -20,14 +20,7 @@
     <string name="title_activity_splash__screen"></string>
     <string name="accurate_driving_test">Accurate Driving\nTest</string>
     <string name="title_activity_user_menu">UserMenu</string>
-    
-    <string name="Text">Status: -</string>
-    <string name="on">Turn On</string>
-    <string name="off">Turn Off</string>
-    <string name="List">List paired Devices</string>
-    <string name="Find">Search new Devices / Cancel</string>
-    <string name="Hello">hello</string>
-	
+   
     <!-- BEGIN USER MENU STRINGS -->
     <string name="begin_evaluation">Begin Evaluation</string>
     <string name="create_and_edit_routes">Create and Edit Routes</string>
