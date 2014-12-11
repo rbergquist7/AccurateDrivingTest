@@ -64,6 +64,10 @@
             android:name=".AddRoute"
             android:label="@string/title_activity_add_route" >
         </activity>
+        <activity
+            android:name=".CreateTest"
+            android:label="@string/title_activity_create_test" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,22 +1,8 @@
 package com.wsuproj5.accuratedrivingtest;
 
-import java.util.Set;
-
-
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 
 
@@ -36,5 +22,10 @@ public class UserMenu extends ActionBarActivity {
 	   public void toAddRoute(View view) {
 		   Intent addRoute = new Intent(UserMenu.this, AddRoute.class);
 		   startActivity(addRoute);
+	   }
+	   
+	   public void toCreateTest(View view) {
+		   Intent createTest = new Intent(UserMenu.this, CreateTest.class);
+		   startActivity(createTest);
 	   }
 	}

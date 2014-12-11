@@ -29,6 +29,7 @@
 	    android:layout_width="0px"
 	    android:layout_height="wrap_content"
 	    android:text="@string/create_and_edit_tests"
+	    android:onClick="toCreateTest"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignLeft="@+id/Button_Create_And_Edit_Routes"
    		android:layout_alignRight="@+id/Button_Create_And_Edit_Routes"

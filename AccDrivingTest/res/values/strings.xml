@@ -29,6 +29,7 @@
     <string name="edit_account">Edit Account</string>
     <string name="title_activity_during_evaluation"></string>
     <string name="title_activity_add_route">AddRoute</string>
+    <string name="title_activity_create_test">CreateTest</string>
     <!-- END USER MENU STRINGS -->
     
     <!-- BEGIN ADD ROUTE STRINGS -->

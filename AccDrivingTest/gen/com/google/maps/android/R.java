@@ -8,18 +8,18 @@ package com.google.maps.android;
 
 public final class R {
 	public static final class drawable {
-		public static final int bubble_mask = 0x7f020057;
-		public static final int bubble_shadow = 0x7f020058;
+		public static final int bubble_mask = 0x7f020033;
+		public static final int bubble_shadow = 0x7f020034;
 	}
 	public static final class id {
-		public static final int text = 0x7f050000;
+		public static final int text = 0x7f080032;
 	}
 	public static final class layout {
 		public static final int text_bubble = 0x7f03001e;
 	}
 	public static final class style {
-		public static final int Bubble_TextAppearance_Dark = 0x7f060000;
-		public static final int Bubble_TextAppearance_Light = 0x7f060001;
-		public static final int ClusterIcon_TextAppearance = 0x7f060002;
+		public static final int Bubble_TextAppearance_Dark = 0x7f0600f0;
+		public static final int Bubble_TextAppearance_Light = 0x7f0600f1;
+		public static final int ClusterIcon_TextAppearance = 0x7f0600f2;
 	}
 }
