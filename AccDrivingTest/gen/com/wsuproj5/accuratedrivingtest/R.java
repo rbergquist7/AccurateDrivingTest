@@ -1723,12 +1723,9 @@ containing a value of this type.
         public static final int gtm_analytics=0x7f050000;
     }
     public static final class string {
-        public static final int Find=0x7f0b0058;
-        public static final int List=0x7f0b0057;
-        /**  END ADD ROUTE STRINGS 
-  BLUTOOTH STRINGS 
-         */
-        public static final int Status=0x7f0b0054;
+        public static final int Find=0x7f0b0059;
+        public static final int List=0x7f0b0058;
+        public static final int Status=0x7f0b0055;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1895,8 +1892,8 @@ containing a value of this type.
         public static final int hello_world=0x7f0b0038;
         public static final int load_route=0x7f0b0053;
         public static final int obd_data_menu=0x7f0b0033;
-        public static final int off=0x7f0b0056;
-        public static final int on=0x7f0b0055;
+        public static final int off=0x7f0b0057;
+        public static final int on=0x7f0b0056;
         public static final int remove_waypoint=0x7f0b004f;
         public static final int return_from_OBD_data_menu=0x7f0b003d;
         public static final int return_from_comment_menu=0x7f0b0039;
@@ -1914,7 +1911,10 @@ containing a value of this type.
         public static final int title_activity_during_evaluation=0x7f0b0048;
         public static final int title_activity_splash__screen=0x7f0b0040;
         public static final int title_activity_user_menu=0x7f0b0042;
-        public static final int title_obd_info=0x7f0b0059;
+        /**  END ADD ROUTE STRINGS 
+  BLUTOOTH STRINGS 
+         */
+        public static final int title_obd_info=0x7f0b0054;
         public static final int view_comment_templates=0x7f0b003a;
         public static final int view_past_evaluations=0x7f0b0046;
         public static final int view_routes=0x7f0b0052;
