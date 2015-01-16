@@ -46,7 +46,7 @@ public class OBDinfo extends Activity {
 	    	  Toast.makeText(getApplicationContext(),"Your device does not support Bluetooth",
 	         		 Toast.LENGTH_LONG).show();
 	      } else {
-		      text = (TextView) findViewById(R.id.text);
+		      text = (TextView) findViewById(R.id.obd);
 		      onBtn = (Button)findViewById(R.id.turnOn);
 		      onBtn.setOnClickListener(new OnClickListener() {
 				

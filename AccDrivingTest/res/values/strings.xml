@@ -52,6 +52,7 @@
     <string name="List">List paired Devices</string>
     <string name="Find">Search new Devices / Cancel</string>
     <string name="Hello">hello</string>
+    <string name="title_obd_info">OBD Information</string>
     <!-- END BLUTOOTH STRINGS -->
 	
 
