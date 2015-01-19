@@ -40,16 +40,10 @@
       android:layout_marginTop="80dp" >
    
 	   <Button
-	      android:id="@+id/paired"
+	      android:id="@+id/pair"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
-	      android:text="@string/List" />
-	     
-	   <Button
-	      android:id="@+id/search"
-	      android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-	      android:text="@string/Find" />
+	      android:text="@string/FindNew" />
 
 	   <ListView
 	       android:id="@+id/listView1"

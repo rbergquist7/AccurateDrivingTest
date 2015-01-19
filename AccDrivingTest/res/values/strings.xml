@@ -49,8 +49,7 @@
     <string name="Status">Status: -</string>
     <string name="on">Turn On</string>
     <string name="off">Turn Off</string>
-    <string name="List">List paired Devices</string>
-    <string name="Find">Search new Devices / Cancel</string>
+    <string name="FindNew">Find device to connect to</string>
     <!-- END BLUTOOTH STRINGS -->
 	
 
