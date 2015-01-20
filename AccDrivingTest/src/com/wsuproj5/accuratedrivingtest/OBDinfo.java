@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
+
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.View;
@@ -140,6 +144,21 @@ public class OBDinfo extends Activity {
 	    	  	int position = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
 	    	  	String deviceAddress = (String) devices.get(position);
 	                             // TODO save deviceAddress
+	    	  	BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+	    	  	BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress); 
+	    	  	UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+	    	  	BluetoothSocket socket;
+	    	  	try {
+					socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
+					alertDialog.setTitle("Choose Bluetooth device");
+					alertDialog.show();
+					socket.connect();
+				
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    	  	
 	      	} 
 	      }
 	      );
