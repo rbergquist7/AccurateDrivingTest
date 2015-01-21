@@ -153,7 +153,7 @@ public class OBDinfo extends Activity {
 					alertDialog.setTitle("Choose Bluetooth device");
 					alertDialog.show();
 					socket.connect();
-				
+					socket.getInputStream();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
