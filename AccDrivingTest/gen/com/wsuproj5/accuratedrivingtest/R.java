@@ -1487,7 +1487,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f090002;
         public static final int action_menu_presenter=0x7f090003;
         public static final int action_mode_close_button=0x7f090037;
-        public static final int action_settings=0x7f09007d;
+        public static final int action_settings=0x7f09007e;
         public static final int activity_chooser_view_content=0x7f090038;
         public static final int add_waypoint=0x7f090056;
         public static final int all_test=0x7f09005b;
@@ -1554,6 +1554,7 @@ containing a value of this type.
         public static final int routeList=0x7f090051;
         public static final int routeName=0x7f090057;
         public static final int route_progress_data_view=0x7f09006c;
+        public static final int route_spinner=0x7f09007d;
         public static final int sandbox=0x7f090021;
         public static final int satellite=0x7f09001c;
         public static final int save_route=0x7f090058;
@@ -1661,8 +1662,8 @@ containing a value of this type.
         public static final int user_menu=0x7f0c0005;
     }
     public static final class string {
-        public static final int FindNew=0x7f0a0058;
-        public static final int Status=0x7f0a0055;
+        public static final int FindNew=0x7f0a0059;
+        public static final int Status=0x7f0a0056;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0a0001;
@@ -1710,7 +1711,7 @@ containing a value of this type.
         /**  END USER MENU STRINGS 
  BEGIN ADD ROUTE STRINGS 
          */
-        public static final int add_waypoint=0x7f0a004c;
+        public static final int add_waypoint=0x7f0a004d;
         public static final int app_name=0x7f0a0030;
         /**  BEGIN USER MENU STRINGS 
          */
@@ -1823,26 +1824,27 @@ containing a value of this type.
         public static final int edit_account=0x7f0a0047;
         public static final int edit_message=0x7f0a0032;
         public static final int enter_comment=0x7f0a003c;
-        public static final int enter_route_name=0x7f0a0050;
-        public static final int enter_street_address=0x7f0a004d;
+        public static final int enter_route_name=0x7f0a0051;
+        public static final int enter_street_address=0x7f0a004e;
         public static final int go_to_obd_connection=0x7f0a004b;
         public static final int hello_world=0x7f0a0038;
-        public static final int load_route=0x7f0a0053;
+        public static final int load_route=0x7f0a0054;
         public static final int obd_data_menu=0x7f0a0033;
-        public static final int off=0x7f0a0057;
-        public static final int on=0x7f0a0056;
-        public static final int remove_waypoint=0x7f0a004f;
+        public static final int off=0x7f0a0058;
+        public static final int on=0x7f0a0057;
+        public static final int remove_waypoint=0x7f0a0050;
         public static final int return_from_OBD_data_menu=0x7f0a003d;
         public static final int return_from_comment_menu=0x7f0a0039;
         public static final int return_from_route_progress_menu=0x7f0a003e;
         public static final int return_from_test_progress_menu=0x7f0a003f;
         public static final int route_progress_menu=0x7f0a0034;
-        public static final int save_route=0x7f0a0051;
+        public static final int save_route=0x7f0a0052;
+        public static final int select_your_route=0x7f0a004c;
         public static final int store_picture_message=0x7f0a000e;
         public static final int store_picture_title=0x7f0a000d;
         public static final int test_progress_menu=0x7f0a0035;
         public static final int title_activity_add_route=0x7f0a0049;
-        public static final int title_activity_add_route_two=0x7f0a004e;
+        public static final int title_activity_add_route_two=0x7f0a004f;
         public static final int title_activity_create_test=0x7f0a004a;
         public static final int title_activity_display_message=0x7f0a0037;
         public static final int title_activity_during_evaluation=0x7f0a0048;
@@ -1851,10 +1853,10 @@ containing a value of this type.
         /**  END ADD ROUTE STRINGS 
   BLUTOOTH STRINGS 
          */
-        public static final int title_obd_info=0x7f0a0054;
+        public static final int title_obd_info=0x7f0a0055;
         public static final int view_comment_templates=0x7f0a003a;
         public static final int view_past_evaluations=0x7f0a0046;
-        public static final int view_routes=0x7f0a0052;
+        public static final int view_routes=0x7f0a0053;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

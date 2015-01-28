@@ -31,6 +31,7 @@
     <string name="title_activity_add_route">AddRoute</string>
     <string name="title_activity_create_test">CreateTest</string>
     <string name="go_to_obd_connection">Go To OBD Connection</string>
+    <string name="select_your_route">Select your route:</string>
     <!-- END USER MENU STRINGS -->
     
     <!-- BEGIN ADD ROUTE STRINGS -->
