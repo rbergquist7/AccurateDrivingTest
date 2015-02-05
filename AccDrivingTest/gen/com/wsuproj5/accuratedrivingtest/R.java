@@ -1529,7 +1529,9 @@ containing a value of this type.
         public static final int Button_OBD_Data_Menu=0x7f0a005f;
         public static final int Button_Test_Progress_Menu=0x7f0a0061;
         public static final int Button_View_Past_Evaluations=0x7f0a007d;
+        public static final int DeviceName=0x7f0a0082;
         public static final int Field_Comment=0x7f0a0066;
+        public static final int MacAddress=0x7f0a0083;
         public static final int Route_Progress_Menu_Button=0x7f0a0060;
         public static final int action_bar=0x7f0a0032;
         public static final int action_bar_activity_content=0x7f0a0001;
@@ -1542,7 +1544,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0002;
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_close_button=0x7f0a003a;
-        public static final int action_settings=0x7f0a0080;
+        public static final int action_scan=0x7f0a0085;
+        public static final int action_settings=0x7f0a0084;
         public static final int activity_chooser_view_content=0x7f0a003b;
         public static final int add_waypoint=0x7f0a0059;
         public static final int adjust_height=0x7f0a001b;
@@ -1551,6 +1554,7 @@ containing a value of this type.
         public static final int always=0x7f0a0010;
         public static final int beginning=0x7f0a0017;
         public static final int book_now=0x7f0a0029;
+        public static final int btnSearch=0x7f0a0081;
         public static final int buyButton=0x7f0a0025;
         public static final int buy_now=0x7f0a002a;
         public static final int buy_with_google=0x7f0a002b;
@@ -1566,6 +1570,7 @@ containing a value of this type.
         public static final int editRouteView=0x7f0a0053;
         public static final int edit_query=0x7f0a0046;
         public static final int end=0x7f0a0018;
+        public static final int etCommandPrompt=0x7f0a0076;
         public static final int expand_activities_button=0x7f0a003c;
         public static final int expanded_menu=0x7f0a0042;
         public static final int grayscale=0x7f0a002e;
@@ -1574,17 +1579,21 @@ containing a value of this type.
         public static final int home=0x7f0a0000;
         public static final int homeAsUp=0x7f0a000b;
         public static final int hybrid=0x7f0a001d;
+        public static final int ibSendMessage=0x7f0a0077;
         public static final int icon=0x7f0a0040;
         public static final int ifRoom=0x7f0a0012;
         public static final int image=0x7f0a003d;
         public static final int listMode=0x7f0a0007;
-        public static final int listView1=0x7f0a0078;
+        public static final int listView=0x7f0a0080;
         public static final int list_item=0x7f0a003f;
+        public static final int llEditor=0x7f0a0075;
         public static final int map=0x7f0a005c;
         public static final int match_parent=0x7f0a0027;
         public static final int menu_OBD_data=0x7f0a0068;
         public static final int menu_OBD_data_left=0x7f0a0069;
         public static final int menu_OBD_data_right=0x7f0a006a;
+        public static final int menu_clear_code=0x7f0a0089;
+        public static final int menu_clr_scr=0x7f0a0087;
         public static final int menu_comments=0x7f0a0052;
         public static final int menu_comments_left=0x7f0a0063;
         public static final int menu_comments_middle=0x7f0a0065;
@@ -1592,18 +1601,18 @@ containing a value of this type.
         public static final int menu_route_progress=0x7f0a006c;
         public static final int menu_route_progress_left=0x7f0a006d;
         public static final int menu_route_progress_right=0x7f0a006e;
+        public static final int menu_send_cmd=0x7f0a0086;
         public static final int menu_test_progress=0x7f0a0070;
         public static final int menu_test_progress_left=0x7f0a0071;
         public static final int menu_test_progress_right=0x7f0a0072;
+        public static final int menu_toggle_obd_mode=0x7f0a0088;
         public static final int middle=0x7f0a0019;
         public static final int monochrome=0x7f0a002f;
         public static final int never=0x7f0a0013;
         public static final int nextWaypoint=0x7f0a0058;
         public static final int none=0x7f0a001a;
         public static final int normal=0x7f0a0008;
-        public static final int obd=0x7f0a0074;
         public static final int obd_data_view=0x7f0a006b;
-        public static final int pair=0x7f0a0077;
         public static final int production=0x7f0a0022;
         public static final int progress_circular=0x7f0a0004;
         public static final int progress_horizontal=0x7f0a0005;
@@ -1625,6 +1634,7 @@ containing a value of this type.
         public static final int search_plate=0x7f0a004c;
         public static final int search_src_text=0x7f0a004d;
         public static final int search_voice_btn=0x7f0a0051;
+        public static final int secure_connect_scan=0x7f0a008a;
         public static final int selected_test=0x7f0a005d;
         public static final int selectionDetails=0x7f0a0026;
         public static final int shortcut=0x7f0a0044;
@@ -1641,8 +1651,8 @@ containing a value of this type.
         public static final int text=0x7f0a0006;
         public static final int title=0x7f0a0041;
         public static final int top_action_bar=0x7f0a0036;
-        public static final int turnOff=0x7f0a0076;
-        public static final int turnOn=0x7f0a0075;
+        public static final int tvConnectionStatus=0x7f0a0074;
+        public static final int tvMonitor=0x7f0a0078;
         public static final int up=0x7f0a0037;
         public static final int useLogo=0x7f0a000f;
         public static final int waypointList=0x7f0a0057;
@@ -1703,27 +1713,43 @@ containing a value of this type.
         public static final int activity_add_route=0x7f030018;
         public static final int activity_create_test=0x7f030019;
         public static final int activity_during_evaluation=0x7f03001a;
-        public static final int activity_main=0x7f03001b;
-        public static final int activity_obd_info=0x7f03001c;
+        public static final int activity_elm_main=0x7f03001b;
+        public static final int activity_main=0x7f03001c;
         public static final int activity_splash__screen=0x7f03001d;
         public static final int activity_user_menu=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
-        public static final int text_bubble=0x7f030020;
+        public static final int dialog_paired_devices=0x7f03001f;
+        public static final int list_footer_search=0x7f030020;
+        public static final int list_paired_devices=0x7f030021;
+        public static final int support_simple_spinner_dropdown_item=0x7f030022;
+        public static final int text_bubble=0x7f030023;
     }
     public static final class menu {
         public static final int add_route=0x7f0d0000;
         public static final int during_evaluation=0x7f0d0001;
         public static final int main=0x7f0d0002;
-        public static final int obd_info=0x7f0d0003;
-        public static final int splash__screen=0x7f0d0004;
-        public static final int user_menu=0x7f0d0005;
+        public static final int menu_main=0x7f0d0003;
+        public static final int obd_info=0x7f0d0004;
+        public static final int option_menu=0x7f0d0005;
+        public static final int splash__screen=0x7f0d0006;
+        public static final int user_menu=0x7f0d0007;
     }
     public static final class raw {
         public static final int gtm_analytics=0x7f050000;
     }
     public static final class string {
-        public static final int FindNew=0x7f0b0058;
-        public static final int Status=0x7f0b0055;
+        public static final int BT_connecting=0x7f0b007f;
+        public static final int BT_connection_status=0x7f0b007e;
+        public static final int BT_status_connected_to=0x7f0b0081;
+        public static final int BT_status_not_connected=0x7f0b0080;
+        public static final int CIA=0x7f0b0066;
+        public static final int CT=0x7f0b0067;
+        /**   Get Data Screen 
+         */
+        public static final int MPH=0x7f0b0064;
+        public static final int OT=0x7f0b0069;
+        public static final int RPM=0x7f0b0065;
+        public static final int RX=0x7f0b0070;
+        public static final int TX=0x7f0b006f;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1766,6 +1792,7 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
         public static final int accept=0x7f0b000f;
         public static final int accurate_driving_test=0x7f0b0041;
+        public static final int action_scan=0x7f0b0075;
         public static final int action_settings=0x7f0b0031;
         public static final int add_comment=0x7f0b003b;
         /**  END USER MENU STRINGS 
@@ -1776,6 +1803,10 @@ containing a value of this type.
         /**  BEGIN USER MENU STRINGS 
          */
         public static final int begin_evaluation=0x7f0b0043;
+        public static final int blank=0x7f0b0071;
+        public static final int bt_not_available=0x7f0b0083;
+        public static final int bt_not_enabled_leaving=0x7f0b0056;
+        public static final int button_scan=0x7f0b005f;
         public static final int comment_menu=0x7f0b0036;
         /**   Text for notification shown when the Android Wear apps needs to be updated. Only shown on the wearable. [CHAR LIMIT=NONE] 
          */
@@ -1881,17 +1912,39 @@ containing a value of this type.
         public static final int create_calendar_message=0x7f0b0012;
         public static final int create_calendar_title=0x7f0b0011;
         public static final int decline=0x7f0b0010;
+        public static final int developedby=0x7f0b0063;
+        public static final int dialog_close_btn=0x7f0b0079;
+        public static final int dialog_search_btn=0x7f0b0078;
+        public static final int dialog_title_1=0x7f0b0076;
+        public static final int dialog_title_2=0x7f0b0077;
+        public static final int discoverable=0x7f0b0062;
         public static final int edit_account=0x7f0b0047;
         public static final int edit_message=0x7f0b0032;
         public static final int enter_comment=0x7f0b003c;
         public static final int enter_route_name=0x7f0b0050;
         public static final int enter_street_address=0x7f0b004d;
-        public static final int go_to_obd_connection=0x7f0b004b;
+        public static final int erasecodes=0x7f0b0073;
+        /**   Get Trouble Codes Screen 
+         */
+        public static final int found=0x7f0b0072;
+        public static final int getcodes=0x7f0b006c;
+        public static final int getdata=0x7f0b006b;
         public static final int hello_world=0x7f0b0038;
+        public static final int imageView=0x7f0b0084;
+        public static final int insecure_connect=0x7f0b0061;
+        public static final int load=0x7f0b0068;
         public static final int load_route=0x7f0b0053;
+        public static final int logo=0x7f0b006d;
+        public static final int menu_clr_screen=0x7f0b007b;
+        public static final int menu_obd_clear_code=0x7f0b007d;
+        public static final int menu_obd_mode=0x7f0b007c;
+        public static final int menu_send_cmd=0x7f0b007a;
+        public static final int no_command=0x7f0b0082;
+        public static final int nocodesfound=0x7f0b0074;
+        public static final int none_found=0x7f0b005c;
+        public static final int none_paired=0x7f0b005b;
+        public static final int not_connected=0x7f0b0055;
         public static final int obd_data_menu=0x7f0b0033;
-        public static final int off=0x7f0b0057;
-        public static final int on=0x7f0b0056;
         public static final int remove_waypoint=0x7f0b004f;
         public static final int return_from_OBD_data_menu=0x7f0b003d;
         public static final int return_from_comment_menu=0x7f0b0039;
@@ -1899,6 +1952,18 @@ containing a value of this type.
         public static final int return_from_test_progress_menu=0x7f0b003f;
         public static final int route_progress_menu=0x7f0b0034;
         public static final int save_route=0x7f0b0051;
+        /**   DeviceListActivity 
+         */
+        public static final int scanning=0x7f0b0059;
+        /**  Options Menu 
+         */
+        public static final int secure_connect=0x7f0b0060;
+        public static final int select_device=0x7f0b005a;
+        /**  END ADD ROUTE STRINGS 
+  BLUTOOTH STRINGS 
+  BluetoothChat 
+         */
+        public static final int send=0x7f0b0054;
         public static final int store_picture_message=0x7f0b000e;
         public static final int store_picture_title=0x7f0b000d;
         public static final int test_progress_menu=0x7f0b0035;
@@ -1907,19 +1972,22 @@ containing a value of this type.
         public static final int title_activity_create_test=0x7f0b004a;
         public static final int title_activity_display_message=0x7f0b0037;
         public static final int title_activity_during_evaluation=0x7f0b0048;
+        public static final int title_activity_elm_main=0x7f0b004b;
         public static final int title_activity_splash__screen=0x7f0b0040;
         public static final int title_activity_user_menu=0x7f0b0042;
-        /**  END ADD ROUTE STRINGS 
-  BLUTOOTH STRINGS 
-         */
-        public static final int title_obd_info=0x7f0b0054;
+        public static final int title_connecting=0x7f0b0057;
+        public static final int title_not_connected=0x7f0b0058;
+        public static final int title_other_devices=0x7f0b005e;
+        public static final int title_paired_devices=0x7f0b005d;
         public static final int view_comment_templates=0x7f0b003a;
         public static final int view_past_evaluations=0x7f0b0046;
         public static final int view_routes=0x7f0b0052;
+        public static final int voltage=0x7f0b006e;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
         public static final int wallet_buy_button_place_holder=0x7f0b002f;
+        public static final int zero=0x7f0b006a;
     }
     public static final class style {
         /** 

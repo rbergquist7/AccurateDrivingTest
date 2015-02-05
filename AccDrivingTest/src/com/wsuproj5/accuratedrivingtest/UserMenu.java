@@ -29,8 +29,8 @@ public class UserMenu extends ActionBarActivity {
 		   startActivity(createTest);
 	   }
 	   
-	   public void toOBDinfo(View view) {
-		   Intent obdInfo = new Intent(UserMenu.this, OBDinfo.class);
-		   startActivity(obdInfo);
+	   public void toELMmain(View view) {
+		   Intent obdMain = new Intent(UserMenu.this, MainElmActivity.class);
+		   startActivity(obdMain);
 	   }
 	}

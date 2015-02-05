@@ -30,7 +30,7 @@
     <string name="title_activity_during_evaluation"></string>
     <string name="title_activity_add_route">AddRoute</string>
     <string name="title_activity_create_test">CreateTest</string>
-    <string name="go_to_obd_connection">Go To OBD Connection</string>
+    <string name="title_activity_elm_main">ObdMain</string>
     <!-- END USER MENU STRINGS -->
     
     <!-- BEGIN ADD ROUTE STRINGS -->
@@ -45,11 +45,77 @@
 	<!-- END ADD ROUTE STRINGS -->
 	
 	<!--  BLUTOOTH STRINGS -->
-    <string name="title_obd_info">OBD Information</string>
-    <string name="Status">Status: -</string>
-    <string name="on">Turn On</string>
-    <string name="off">Turn Off</string>
-    <string name="FindNew">Find device to connect to</string>
+	
+    <!--  BluetoothChat -->
+    <string name="send">Send</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_connecting">connecting</string>
+    <string name="title_not_connected">not connected</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+
+    <!-- Options Menu -->
+    <string name="secure_connect">Connect to OBD-II Adapter</string>
+    <string name="insecure_connect">Connect a device - Insecure</string>
+    <string name="discoverable">Make discoverable</string>
+    
+    
+    
+    <string name="developedby">Developed By: Ryan James Cristobal and Jonathan Luong</string>
+    
+    
+    <!--  Get Data Screen -->
+    <string name="MPH">MPH</string>
+    <string name="RPM">RPM</string>
+    <string name="CIA">Intake Air Temperature</string>
+    <string name="CT">Coolant Temperature</string>
+    <string name="load">Engine Load</string>
+    <string name="OT">Oil Temperature</string>
+    <string name="zero">0</string>
+    <string name="getdata">Get Vehicle Operating Data</string>
+    <string name="getcodes">Check Trouble Codes</string>
+    <string name="logo">Application Logo</string>
+    <string name="voltage">Voltage</string>
+    <string name="TX">TX: </string>
+    <string name="RX">RX: </string>
+    <string name="blank"> </string>
+    
+    <!--  Get Trouble Codes Screen -->
+    <string name="found">Trouble Codes Found:</string>
+    <string name="erasecodes">Clear Trouble Codes</string>
+    <string name="nocodesfound">No Trouble Codes Found!</string>
+    
+    
+    
+    <string name="action_scan">Scan around &#8230;</string>
+
+    <string name="dialog_title_1">Paired devices</string>
+    <string name="dialog_title_2">Scan in progress &#8230;</string>
+    <string name="dialog_search_btn">Scan devices around &#8230;</string>
+    <string name="dialog_close_btn">Close</string>
+    
+    <string name="menu_send_cmd">Send Default Commands</string>
+    <string name="menu_clr_screen">Clear Screen Logs</string>
+    <string name="menu_obd_mode">Toggle Simulator/OBD mode</string>
+    <string name="menu_obd_clear_code">Clear Code</string>
+
+    <string name="BT_connection_status">Connection Status</string>
+    <string name="BT_connecting">Connecting &#8230;</string>
+    <string name="BT_status_not_connected">Not connected</string>
+    <string name="BT_status_connected_to">Connected to</string>
+
+    <string name="no_command">Please enter a command</string>
+    <string name="bt_not_available">Bluetooth device is unavailable</string>
+
+    <string name="imageView">imageView</string>
     <!-- END BLUTOOTH STRINGS -->
 	
 
