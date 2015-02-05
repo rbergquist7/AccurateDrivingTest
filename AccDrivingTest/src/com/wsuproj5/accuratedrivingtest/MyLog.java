@@ -1,8 +1,6 @@
 package com.wsuproj5.accuratedrivingtest;
 
-/**
- * Created by admin on 12/29/14
- */
+
 public class MyLog
 {
     private static boolean LOG = true;
@@ -17,14 +15,18 @@ public class MyLog
 
     public static void e(String tag, String string)
     {
-//        if(LOG)
-        android.util.Log.e(tag, string);
+        if(LOG)
+        {
+        	android.util.Log.e(tag, string);        	
+        }
     }
 
     public static void e(String tag, String string, Throwable tr)
     {
-//        if(LOG)
-        android.util.Log.e(tag, string, tr);
+        if(LOG)
+        {        	
+        	android.util.Log.e(tag, string, tr);
+        }
     }
 
     public static void d(String tag, String string)

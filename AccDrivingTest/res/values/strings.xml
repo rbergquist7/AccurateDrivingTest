@@ -30,7 +30,7 @@
     <string name="title_activity_during_evaluation"></string>
     <string name="title_activity_add_route">AddRoute</string>
     <string name="title_activity_create_test">CreateTest</string>
-    <string name="title_activity_elm_main">ObdMain</string>
+    <string name="title_activity_elm_main">Test OBD Connection</string>
     <!-- END USER MENU STRINGS -->
     
     <!-- BEGIN ADD ROUTE STRINGS -->
@@ -69,7 +69,7 @@
     
     
     
-    <string name="developedby">Developed By: Ryan James Cristobal and Jonathan Luong</string>
+    <string name="developedby">Developed By: Ryan Bergquist</string>
     
     
     <!--  Get Data Screen -->
