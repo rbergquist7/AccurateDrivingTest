@@ -63,7 +63,7 @@
             android:label="@string/title_activity_during_evaluation" >
         </activity>
         <activity
-            android:name=".AddRoute"
+            android:name="com.wsuproj5.accuratedrivingtest.addroute.AddRoute"
             android:label="@string/title_activity_add_route" >
         </activity>
         <activity

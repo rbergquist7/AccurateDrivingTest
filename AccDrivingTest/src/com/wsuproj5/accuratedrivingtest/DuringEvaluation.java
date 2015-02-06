@@ -31,8 +31,11 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.maps.android.PolyUtil;
-import com.wsuproj5.accuratedrivingtest.AddRoute.DirectionsResult;
-import com.wsuproj5.accuratedrivingtest.AddRoute.PlaceholderFragment;
+import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.DirectionsFetcher;
+import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.DirectionsResult;
+import com.wsuproj5.accuratedrivingtest.addroute.AddRoute;
+import com.wsuproj5.accuratedrivingtest.addroute.CreateRouteMap;
+import com.wsuproj5.accuratedrivingtest.addroute.AddRoute.PlaceholderFragment;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -91,6 +94,8 @@ public class DuringEvaluation extends ActionBarActivity implements
     
     SharedPreferences mPrefs;
     
+    GoogleMapsQuery googleMapsQuery;
+    CreateRouteMap createRouteMap;
     MapFragment mapFragment;
     GoogleMap map;
     
@@ -99,18 +104,24 @@ public class DuringEvaluation extends ActionBarActivity implements
 	public final static String EXTRA_MESSAGE = "com.wsuproj5.accuratedrivingtest.MESSAGE";
 	
     List<LatLng>points = new ArrayList<LatLng>();
-	ArrayList<List<LatLng>> routeListPoints = new ArrayList<List<LatLng>>();
+	public ArrayList<List<LatLng>> routeListPoints = new ArrayList<List<LatLng>>();
 	private static final int VISIBLE = 0;
 	private static final int INVISIBLE = 4;
 	private String routeToLoad = "";
 	List<String> newRoute = new ArrayList<String>();
 	
 	private PlaceholderFragment routeLines;
+
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_during_evaluation);
+		
+		//Order must not change
+		createRouteMap = new CreateRouteMap(this);
+		googleMapsQuery = new GoogleMapsQuery(this);
 		
 		// Open the shared preferences
         mPrefs = getSharedPreferences("SharedPreferences",
@@ -299,8 +310,8 @@ public class DuringEvaluation extends ActionBarActivity implements
 				*/
 			}
 		}
-		RetrieveRoute retrieveRoute = new RetrieveRoute(newRoute);
-		retrieveRoute.execute();
+		DirectionsFetcher directionsFetcher = googleMapsQuery.new DirectionsFetcher(GoogleMapsQuery.routeTotal, newRoute);
+		directionsFetcher.execute();
 	}
 	
 	/*
@@ -376,82 +387,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    	LinearLayout testProgress = (LinearLayout) findViewById(R.id.menu_test_progress);
 	    	testProgress.setVisibility(INVISIBLE);
 	    }
-	    
-		static final HttpTransport HTTP_TRANSPORT = AndroidHttp.newCompatibleTransport();
-		static final JacksonFactory JSON_FACTORY = new JacksonFactory();
-	    
-	    private class RetrieveRoute extends AsyncTask<URL, Integer, String> {
-			private List<LatLng> latLngs = new ArrayList<LatLng>();
-			private List<String> currentRoutes;
-			private String origin;
-			private String destination;
-			
-			public RetrieveRoute(List<String> routes) {
-		        super();
-		        currentRoutes = routes;
-		        origin = currentRoutes.remove(0);
-		        destination = currentRoutes.get(0);
-		    }
-			
-			@Override
-			protected String doInBackground(URL... params) {
-				try {
-					HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-					@Override
-					public void initialize(HttpRequest request) {
-					request.setParser(new JsonObjectParser(JSON_FACTORY));
-					}
-					});
-
-					GenericUrl url = new GenericUrl("http://maps.googleapis.com/maps/api/directions/json");
-					url.put("origin", origin);
-					url.put("destination", destination);
-					url.put("sensor",false);
-
-					HttpRequest request = requestFactory.buildGetRequest(url);
-					HttpResponse httpResponse = request.execute();
-					DirectionsResult directionsResult = httpResponse.parseAs(DirectionsResult.class);
-					String encodedPoints = directionsResult.routes.get(0).overviewPolyLine.points;
-					latLngs = PolyUtil.decode(encodedPoints);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-				return null;
-				}
-
-				protected void onProgressUpdate(Integer... progress) {
-				}
-
-				protected void onPostExecute(String result) {
-					//clearMarkers();
-					addMarkersToMap(latLngs);
-					if (currentRoutes.size() > 1) {
-						RetrieveRoute retrieveRoute = new RetrieveRoute(currentRoutes);
-			    		retrieveRoute.execute((URL) null);
-				}
-
-			}
-	    }
-	    
-	    private void addMarkersToMap(List<LatLng> route) {
-			routeListPoints.add(route);
-			MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
-			GoogleMap map = mapFragment.getMap();
-			map.addPolyline(new PolylineOptions()
-				.addAll(route)
-				.width(5)
-				.color(Color.BLUE));
-			if (routeListPoints.size() == 1) {   
-				CameraPosition cameraPosition = new CameraPosition.Builder()
-					.target(route.get(0)) // Sets the center of the map to new location
-					.zoom(10) // Sets the zoom
-					//.zoom(map.getCameraPosition().zoom) // Sets the zoom
-					.bearing(0)
-					.tilt(0)
-					.build(); // Creates a CameraPosition from the builder
-				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-			}
-		}
 	    
 	    // Define a DialogFragment that displays the error dialog
 	    public static class ErrorDialogFragment extends DialogFragment {

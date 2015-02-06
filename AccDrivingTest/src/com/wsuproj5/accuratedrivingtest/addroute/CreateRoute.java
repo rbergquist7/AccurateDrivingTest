@@ -1,4 +1,4 @@
-package com.wsuproj5.accuratedrivingtest;
+package com.wsuproj5.accuratedrivingtest.addroute;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -7,8 +7,10 @@ import java.util.List;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.wsuproj5.accuratedrivingtest.AddRoute.DirectionsFetcher;
-import com.wsuproj5.accuratedrivingtest.AddRoute.RoutePatch;
+import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery;
+import com.wsuproj5.accuratedrivingtest.R;
+import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.*;
+import com.wsuproj5.accuratedrivingtest.R.id;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,9 +27,12 @@ import android.widget.TextView;
 public class CreateRoute {
 	
 	public AddRoute addRoute;
+	DirectionsFetcher directionsFetcher;
+	private RouteState routeState;
 	
 	public CreateRoute(AddRoute addRoute) {
 		this.addRoute = addRoute;
+		this.routeState = addRoute.routeState;
 	}
 	
 	public void addWaypoint(View view) {
@@ -62,12 +67,13 @@ public class CreateRoute {
 		newButton.setText("X");
 		newTextView.setText(waypoint);
 		
-		if (addRoute.previousWaypoint == null)
-			addRoute.previousWaypoint = waypoint;
+		if (routeState.origin == null)
+			routeState.origin = waypoint;
 		else {
-			addRoute.currentWaypoint = waypoint;
-			addRoute.directionsFetcher = addRoute.new DirectionsFetcher();
-			addRoute.directionsFetcher.execute((URL) null);
+			routeState.terminus = waypoint;
+			directionsFetcher = addRoute.googleMapsQuery.new DirectionsFetcher(GoogleMapsQuery.routeSegment, routeState.origin, routeState.terminus);
+			routeState.origin = routeState.terminus;
+			directionsFetcher.execute((URL) null);
 		}
 		addRoute.nextWaypoint.setText("");
 	}
@@ -107,8 +113,9 @@ public class CreateRoute {
 			newButton.setText("X");
 			newTextView.setText(waypoint);
 		}
-		if (waypoint != "")
-			addRoute.previousWaypoint = waypoint;
+		if (waypoint != "") {
+			routeState.origin = addRoute.waypointListStrings.get(addRoute.waypointListStrings.size() - 1);
+		}
 	}
 	
 	public void removeWaypoint(View view) {
@@ -143,15 +150,15 @@ public class CreateRoute {
 					addRoute.waypointListStrings.remove(i);
 					addRoute.routeListPoints.remove(i);
 					table.removeView(currentRow);
-					RoutePatch routePatch = addRoute.new RoutePatch();
+					DirectionsFetcher routePatch = addRoute.googleMapsQuery.new DirectionsFetcher(GoogleMapsQuery.routePatch, addRoute.newOrigin, addRoute.newTerminus);
 					routePatch.execute((URL) null);
 				}
 			}
-			if (removedWaypoint == addRoute.previousWaypoint) {
+			if (removedWaypoint == routeState.origin) {
 				if (addRoute.waypointListStrings.size() != 0)
-					addRoute.previousWaypoint = addRoute.waypointListStrings.get(addRoute.waypointListStrings.size() - 1);
+					routeState.origin = addRoute.waypointListStrings.get(addRoute.waypointListStrings.size() - 1);
 				else
-					addRoute.previousWaypoint = null;
+					routeState.origin = null;
 			}
 		}
 	}

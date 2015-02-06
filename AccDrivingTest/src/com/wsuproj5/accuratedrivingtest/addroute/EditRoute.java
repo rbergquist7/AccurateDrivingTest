@@ -1,11 +1,14 @@
-package com.wsuproj5.accuratedrivingtest;
+package com.wsuproj5.accuratedrivingtest.addroute;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.maps.MapFragment;
-import com.wsuproj5.accuratedrivingtest.AddRoute.RetrieveRoute;
+import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery;
+import com.wsuproj5.accuratedrivingtest.R;
+import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.*;
+import com.wsuproj5.accuratedrivingtest.R.id;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,9 +21,11 @@ import android.widget.TextView;
 public class EditRoute {
 	
 	AddRoute addRoute;
+	RouteState routeState;
 	
 	public EditRoute(AddRoute addRoute) {
 		this.addRoute = addRoute;
+		this.routeState = addRoute.routeState;
 	}
 	
 	//Builds the table that exists in "View Routes" button view
@@ -93,7 +98,8 @@ public class EditRoute {
     		addRoute.routeListPoints.clear();
             TableLayout waypointList = (TableLayout) addRoute.findViewById(R.id.routeList);
            	waypointList.getChildAt(addRoute.selectedRoute).setBackgroundColor(Color.TRANSPARENT);
-    		RetrieveRoute retrieveRoute = addRoute.new RetrieveRoute(new ArrayList<String>(addRoute.waypointListStrings));
+    		DirectionsFetcher retrieveRoute = addRoute.googleMapsQuery.new DirectionsFetcher(GoogleMapsQuery.routeTotal, new ArrayList<String>(addRoute.waypointListStrings));
+    		routeState.origin = addRoute.waypointListStrings.get(addRoute.waypointListStrings.size() - 1);
     		retrieveRoute.execute((URL) null);
     		addRoute.selectedRoute = -1;
     	}
