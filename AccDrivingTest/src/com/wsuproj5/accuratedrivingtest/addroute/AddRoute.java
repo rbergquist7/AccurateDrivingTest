@@ -8,9 +8,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery;
 import com.wsuproj5.accuratedrivingtest.R;
-import com.wsuproj5.accuratedrivingtest.R.id;
-import com.wsuproj5.accuratedrivingtest.R.layout;
-import com.wsuproj5.accuratedrivingtest.addroute.AutoComplete.PlacesAutoCompleteAdapter;
 
 
 import android.support.v7.app.ActionBarActivity;
