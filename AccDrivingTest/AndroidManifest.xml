@@ -32,6 +32,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+    	<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAvq0dYo4TdZhOKta15QFgZlPdFiyTbFz0" />
@@ -66,7 +69,7 @@
             android:label="@string/title_activity_during_evaluation" >
         </activity>
         <activity
-            android:name=".AddRoute"
+            android:name="com.wsuproj5.accuratedrivingtest.addroute.AddRoute"
             android:label="@string/title_activity_add_route" >
         </activity>
         <activity
