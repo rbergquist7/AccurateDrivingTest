@@ -10,7 +10,7 @@ import java.util.List;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
+//import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -62,7 +62,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
 	GooglePlayServicesClient.OnConnectionFailedListener,
 	LocationListener {
-	
 	/*
      * Define a request code to send to Google Play services
      * This code is returned in Activity.onActivityResult
@@ -86,7 +85,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     // Define an object that holds accuracy and frequency parameters
     LocationRequest mLocationRequest;
 	
-    LocationClient mLocationClient;
+ //   LocationClient mLocationClient;
     // Global variable to hold the current location
     Location mCurrentLocation;
     
@@ -133,7 +132,7 @@ public class DuringEvaluation extends ActionBarActivity implements
          * Create a new location client, using the enclosing class to
          * handle callbacks.
          */
-        mLocationClient = new LocationClient(this, this, this);
+    //    mLocationClient = new LocationClient(this, this, this);
         
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create();
@@ -271,7 +270,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
         // Connect the client.
-        mLocationClient.connect();
+   //     mLocationClient.connect();
         //mCurrentLocation = mLocationClient.getLastLocation();
         Log.d("Location Update:",
                 "We have connected location client.");
@@ -283,7 +282,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     @Override
     protected void onStop() {
         // Disconnecting the client invalidates it.
-        mLocationClient.disconnect();
+    //    mLocationClient.disconnect();
         super.onStop();
     }
 	
@@ -325,7 +324,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
 	    // If already requested, start periodic updates
 	    //if (mUpdatesRequested) {
-	        mLocationClient.requestLocationUpdates(mLocationRequest, this);
+	 //       mLocationClient.requestLocationUpdates(mLocationRequest, this);
 	        
 	    //}
 	}

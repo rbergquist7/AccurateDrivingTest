@@ -24,6 +24,7 @@ public class CreateTest extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_test);
 		setLists();
+		
 	}
 
 	private void setLists() {

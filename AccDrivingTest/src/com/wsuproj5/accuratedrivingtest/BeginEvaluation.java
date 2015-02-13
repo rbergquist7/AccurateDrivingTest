@@ -37,10 +37,10 @@ import java.util.Set;
 import de.greenrobot.event.EventBus;
 
 
-public class MainElmActivity extends ActionBarActivity implements
+public class BeginEvaluation extends ActionBarActivity implements
         PairedDevicesDialog.PairedDeviceDialogListener
 {
-    private static final String TAG = MainElmActivity.class.getSimpleName();
+    private static final String TAG = BeginEvaluation.class.getSimpleName();
     private static final String TAG_DIALOG = "dialog";
     private static final String NO_BLUETOOTH = "Oops, your device doesn't support bluetooth";
     private static final String[] PIDS = {
@@ -221,7 +221,7 @@ public class MainElmActivity extends ActionBarActivity implements
             displayMessage(NO_BLUETOOTH);
             displayLog(NO_BLUETOOTH);
             
-            MainElmActivity.this.finish();
+            BeginEvaluation.this.finish();
         }
         // log
         displayLog("Bluetooth found.");
@@ -722,3 +722,15 @@ public class MainElmActivity extends ActionBarActivity implements
         return -1;
     }
 }
+
+//show route selected
+//show tests selected
+
+/*until the backend is set up, have user enter driver and evaluator name*/
+
+//show evaluator
+//show driver
+
+//show obd connecion
+
+//bundle settings and begin evaluation
