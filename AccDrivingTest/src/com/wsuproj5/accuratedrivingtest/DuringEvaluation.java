@@ -1,6 +1,5 @@
 package com.wsuproj5.accuratedrivingtest;
 
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,11 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -21,21 +20,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonObjectParser;
-import com.google.api.client.json.jackson.JacksonFactory;
-import com.google.maps.android.PolyUtil;
 import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.DirectionsFetcher;
-import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.DirectionsResult;
 import com.wsuproj5.accuratedrivingtest.addroute.AddRoute;
 import com.wsuproj5.accuratedrivingtest.addroute.CreateRouteMap;
-import com.wsuproj5.accuratedrivingtest.addroute.AddRoute.PlaceholderFragment;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -51,7 +38,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,8 +45,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class DuringEvaluation extends ActionBarActivity implements 
-	GooglePlayServicesClient.ConnectionCallbacks,
-	GooglePlayServicesClient.OnConnectionFailedListener,
+	GoogleApiClient.ConnectionCallbacks,
+	GoogleApiClient.OnConnectionFailedListener,
 	LocationListener {
 	
 	/*
@@ -86,7 +72,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     // Define an object that holds accuracy and frequency parameters
     LocationRequest mLocationRequest;
 	
-    LocationClient mLocationClient;
+    GoogleApiClient mLocationClient;
     // Global variable to hold the current location
     Location mCurrentLocation;
     
@@ -133,7 +119,11 @@ public class DuringEvaluation extends ActionBarActivity implements
          * Create a new location client, using the enclosing class to
          * handle callbacks.
          */
-        mLocationClient = new LocationClient(this, this, this);
+        mLocationClient = new GoogleApiClient.Builder(this)
+        .addApi(LocationServices.API)
+        .addConnectionCallbacks(this)
+        .addOnConnectionFailedListener(this)
+        .build();
         
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create();
@@ -321,27 +311,18 @@ public class DuringEvaluation extends ActionBarActivity implements
 	 */
 	@Override
 	public void onConnected(Bundle dataBundle) {
-	    // Display the connection status
-	    Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-	    // If already requested, start periodic updates
-	    //if (mUpdatesRequested) {
-	        mLocationClient.requestLocationUpdates(mLocationRequest, this);
-	        
-	    //}
+	    mLocationRequest = LocationRequest.create();
+	    mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+	    mLocationRequest.setInterval(1000); // Update location every second //TODO: Change this from hardcode
+	
+	    LocationServices.FusedLocationApi.requestLocationUpdates(
+	        mLocationClient, mLocationRequest, this);
 	}
 	
-	/*
-	 * Called by Location Services if the connection to the
-	 * location client drops because of an error.
-	 */
 	@Override
-	public void onDisconnected() {
-	    // Display the connection status
-	    Toast.makeText(this, "Disconnected. Please re-connect.",
-	            Toast.LENGTH_SHORT).show();
+	public void onConnectionSuspended(int arg) {
+		Toast.makeText(this, "Connection Suspended", Toast.LENGTH_SHORT).show();
 	}
-	
-	
 
 	 public void extendCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
