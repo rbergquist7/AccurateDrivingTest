@@ -4,84 +4,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BeginEvaluation">
-    
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/tvConnectionStatus"
-        android:gravity="center"
-        android:text="@string/BT_connection_status"/>
 
+	<Button
+	    android:id="@+id/btn_edit_route"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentStart="true"
+	    android:text="Edit Routes" />
 
-	<LinearLayout android:id="@+id/uname_block"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvConnectionStatus"
-            android:orientation="horizontal">  
+	<Button
+	    android:id="@+id/btn_edit_tests"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentStart="true"
+	    android:layout_alignRight="@+id/btn_edit_route"
+	    android:layout_alignEnd="@+id/btn_edit_route"
+	    android:layout_below="@+id/btn_edit_route"
+	    android:layout_marginTop="20dp"
+	    android:text="Edit Tests" />
 
-            <TextView android:id="@+id/Evaluator_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_username"
-             />
+	<Spinner
+	    android:id="@+id/route_spinner1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/btn_edit_route"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginStart="20dp"
+	    android:layout_toRightOf="@+id/btn_edit_route"
+	    android:layout_toEndOf="@+id/btn_edit_route"
+	    android:prompt="@string/select_your_route" />
 
-            <EditText
-                android:id="@+id/fld_Evaluator_name"
-                android:layout_width="212dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/lbl_enter_username" />
+	<Spinner
+	    android:id="@+id/test_spinner"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/btn_edit_tests"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginStart="20dp"
+	    android:layout_toRightOf="@+id/btn_edit_tests"
+	    android:layout_toEndOf="@+id/btn_edit_tests"
+	    android:prompt="@string/select_your_route" />
 
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/pwd_block"
+	 <LinearLayout android:id="@+id/driver_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/uname_block"
+        android:layout_below="@id/btn_edit_tests"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/pwd"
+            android:id="@+id/driver"
             android:layout_width="106dp"
             android:layout_height="wrap_content"
-            android:text="@string/lbl_pwd" />
+            android:text="@string/lbl_driver_name" />
 
         <EditText
             android:id="@+id/fld_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/lbl_enter_pwd" />
+            android:hint="@string/lbl_enter_driver_name" />
+
+    </LinearLayout>
+
+	<LinearLayout android:id="@+id/evaluator_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/driver_block"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/evaluator"
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
+            android:text="Evaluators Name: " />
+
+        <TextView
+            android:id="@+id/evaluators_name"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Evaluators Name Here" />
 
     </LinearLayout>
     
-	<LinearLayout android:id="@+id/driverName_block"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/pwd_block"
-            android:orientation="horizontal">  
-
-            <TextView
-                android:id="@+id/Drivername"
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_driver_name" />
-
-            <EditText
-                android:id="@+id/fld_Drivername"
-                android:layout_width="212dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/lbl_enter_driver_name" />
-
-    </LinearLayout>
-
 	<Button
-    android:id="@+id/btn_login"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_below="@+id/driverName_block"
-    android:text="@string/lbl_login" />
-
+	    android:id="@+id/btn_begin_evaluaton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentStart="true"
+		android:layout_marginTop="20dp"
+	    android:layout_below="@id/evaluator_block"
+	    android:text="Begin Evaluation" />
 </RelativeLayout>
