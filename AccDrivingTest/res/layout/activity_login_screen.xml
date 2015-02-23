@@ -3,16 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BeginEvaluation">
-    
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/tvConnectionStatus"
-        android:gravity="center"
-        android:text="@string/BT_connection_status"/>
-
+    tools:context=".LoginScreen">
 
 	<LinearLayout android:id="@+id/uname_block"
             android:layout_width="wrap_content"
@@ -55,33 +46,29 @@
 
     </LinearLayout>
     
-	<LinearLayout android:id="@+id/driverName_block"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/pwd_block"
-            android:orientation="horizontal">  
-
-            <TextView
-                android:id="@+id/Drivername"
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_driver_name" />
-
-            <EditText
-                android:id="@+id/fld_Drivername"
-                android:layout_width="212dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/lbl_enter_driver_name" />
-
-    </LinearLayout>
-
 	<Button
     android:id="@+id/btn_login"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
-    android:layout_below="@+id/driverName_block"
+	android:layout_marginStart="0dp"
+	android:layout_marginLeft="60dp"
+    android:layout_below="@+id/pwd_block"
+	android:onClick="toUserMenu"
     android:text="@string/lbl_login" />
+
+	<Button
+	    android:id="@+id/Button01"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/btn_login"
+	    android:layout_alignBottom="@+id/btn_login"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginStart="20dp"
+	    android:layout_toRightOf="@+id/btn_login"
+	    android:layout_toEndOf="@+id/btn_login"
+		android:onClick="checkPassword"
+	    android:text="@string/lbl_login_as_user" />
 
 </RelativeLayout>

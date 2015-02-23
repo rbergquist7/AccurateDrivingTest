@@ -20,6 +20,8 @@
     <string name="title_activity_splash__screen"></string>
     <string name="accurate_driving_test">Accurate Driving\nTest</string>
     <string name="title_activity_user_menu">UserMenu</string>
+    <string name="title_activity_login_screen">Login Screen</string>
+    <string name="title_activity_begin_evaluation">Begin Evaluation</string>
    
     <!-- BEGIN USER MENU STRINGS -->
     <string name="begin_evaluation">Begin Evaluation</string>
@@ -118,6 +120,15 @@
     <string name="bt_not_available">Bluetooth device is unavailable</string>
 
     <string name="imageView">imageView</string>
+    <string name="lbl_username">Evaluators Name</string>
+ 	<string name="lbl_enter_username">Enter Evaluator Name</string>
+	<string name="lbl_pwd">Password</string>
+ 	<string name="lbl_enter_pwd">Enter your password</string>
+ 	<string name="lbl_driver_name">Driver Name</string>
+ 	<string name="lbl_enter_driver_name">Enter Driver Name</string>
+     <string name="lbl_login">Login</string>
+     <string name="lbl_login_as_user">Continue</string>
+ 	
     <!-- END BLUTOOTH STRINGS -->
 	
 

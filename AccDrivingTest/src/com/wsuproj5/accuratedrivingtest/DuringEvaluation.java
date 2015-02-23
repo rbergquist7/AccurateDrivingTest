@@ -135,7 +135,7 @@ public class DuringEvaluation extends ActionBarActivity implements
         // Set the update interval to 5 seconds
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         // Set the fastest update interval to 1 second
-        //mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         
         // Start with updates turned off
         mUpdatesRequested = false;
@@ -150,7 +150,7 @@ public class DuringEvaluation extends ActionBarActivity implements
             routeLines = new PlaceholderFragment();
             fm.beginTransaction().add(routeLines, "routeLines").commit();
             // load the data from the web
-            //routeLines.setData(loadMyData());
+       //     routeLines.setData(loadMyData());
         }
         else {
 	        // the data is available in dataFragment.getData()
@@ -262,8 +262,8 @@ public class DuringEvaluation extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
         // Connect the client.
-   //     mLocationClient.connect();
-        //mCurrentLocation = mLocationClient.getLastLocation();
+        mLocationClient.connect();
+     //   mCurrentLocation = mLocationClient.getLastLocation();
         Log.d("Location Update:",
                 "We have connected location client.");
     }
@@ -274,7 +274,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     @Override
     protected void onStop() {
         // Disconnecting the client invalidates it.
-    //    mLocationClient.disconnect();
+        mLocationClient.disconnect();
         super.onStop();
     }
 	
@@ -329,11 +329,11 @@ public class DuringEvaluation extends ActionBarActivity implements
 	 public void extendCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(VISIBLE);
-	    	//Intent intent = new Intent(this, DisplayMessageActivity.class);
-	    	//EditText editText = (EditText) findViewById(R.id.edit_message);
-	    	//String message = editText.getText().toString();
-	    	//intent.putExtra(EXTRA_MESSAGE, message);
-	    	//startActivity(intent);
+//	    	Intent intent = new Intent(this, DisplayMessageActivity.class);
+//	    	EditText editText = (EditText) findViewById(R.id.edit_message);
+//	    	String message = editText.getText().toString();
+//	    	intent.putExtra(EXTRA_MESSAGE, message);
+//	    	startActivity(intent);
 	    }
 	    
 	    public void hideCommentMenu(View view) {

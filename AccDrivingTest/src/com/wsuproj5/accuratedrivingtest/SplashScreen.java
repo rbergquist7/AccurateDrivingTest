@@ -33,7 +33,7 @@ public class SplashScreen extends ActionBarActivity {
 		     }
 
 		     public void onFinish() {
-		    	 Intent userMenu = new Intent(SplashScreen.this,UserMenu.class);                               
+		    	 Intent userMenu = new Intent(SplashScreen.this,LoginScreen.class);                               
 		         startActivity(userMenu);
 		     }
 		  }.start();
@@ -52,7 +52,8 @@ public class SplashScreen extends ActionBarActivity {
 	}
 	
 	public void toUserMenu(View view) {
-		Intent userMenu = new Intent(SplashScreen.this,UserMenu.class);                               
-        startActivity(userMenu);
+		
+		Intent LoginScreen = new Intent(SplashScreen.this,LoginScreen.class);                               
+        startActivity(LoginScreen);
 	}
 }

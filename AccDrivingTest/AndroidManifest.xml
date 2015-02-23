@@ -61,6 +61,14 @@
             android:label="@string/title_activity_splash__screen" >
         </activity>
         <activity
+            android:name=".LoginScreen"
+            android:label="@string/title_activity_login_screen" >
+        </activity>
+        <activity
+            android:name=".BeginEvaluation"
+            android:label="@string/title_activity_begin_evaluation" >
+        </activity>
+        <activity
             android:name=".UserMenu"
             android:label="@string/title_activity_user_menu" >
         </activity>
