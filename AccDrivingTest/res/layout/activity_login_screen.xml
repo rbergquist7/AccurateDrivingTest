@@ -55,11 +55,11 @@
 	android:layout_marginStart="0dp"
 	android:layout_marginLeft="60dp"
     android:layout_below="@+id/pwd_block"
-	android:onClick="toUserMenu"
+    android:onClick="checkPassword"
     android:text="@string/lbl_login" />
 
 	<Button
-	    android:id="@+id/Button01"
+	    android:id="@+id/btn_continue"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignBaseline="@+id/btn_login"
@@ -68,7 +68,7 @@
 	    android:layout_marginStart="20dp"
 	    android:layout_toRightOf="@+id/btn_login"
 	    android:layout_toEndOf="@+id/btn_login"
-		android:onClick="checkPassword"
+		android:onClick="toUserMenu"
 	    android:text="@string/lbl_login_as_user" />
 
 </RelativeLayout>

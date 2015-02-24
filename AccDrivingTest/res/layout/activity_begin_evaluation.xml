@@ -11,6 +11,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentStart="true"
+	    android:onClick="toAddRoute"
 	    android:text="Edit Routes" />
 
 	<Button
@@ -22,6 +23,7 @@
 	    android:layout_alignRight="@+id/btn_edit_route"
 	    android:layout_alignEnd="@+id/btn_edit_route"
 	    android:layout_below="@+id/btn_edit_route"
+	    android:onClick="toCreateTest"
 	    android:layout_marginTop="20dp"
 	    android:text="Edit Tests" />
 
@@ -61,7 +63,7 @@
             android:text="@string/lbl_driver_name" />
 
         <EditText
-            android:id="@+id/fld_pwd"
+            android:id="@+id/enter_drivers_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -83,16 +85,17 @@
             android:text="Evaluators Name: " />
 
         <TextView
-            android:id="@+id/evaluators_name"
+            android:id="@+id/evaluators2_name"
             android:layout_width="207dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:text=""
             android:hint="Evaluators Name Here" />
 
     </LinearLayout>
     
 	<Button
-	    android:id="@+id/btn_begin_evaluaton"
+	    android:id="@+id/btn_begin_evaluation"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentLeft="true"

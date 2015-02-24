@@ -42,12 +42,9 @@ public class UserMenu extends ActionBarActivity {
 		}
 	   
 	   public void toBeginEvaluation(View view) {
-			//TODO: Change this intent to go to the pre-evaluation screen
-			Intent duringEvaluation = new Intent(UserMenu.this,DuringEvaluation.class);  
-			Spinner sItems = (Spinner) findViewById(R.id.route_spinner);
-			String selected = sItems.getSelectedItem().toString();
-			duringEvaluation.putExtra("route", selected);
-	        startActivity(duringEvaluation);  
+			//TODO: Change this intent to go to the pre-evaluation screen 
+		   Intent beginEvaluation = new Intent(UserMenu.this,BeginEvaluation.class);
+		   startActivity(beginEvaluation);
 	   }
 	   public void toAddRoute(View view) {
 		   Intent addRoute = new Intent(UserMenu.this, AddRoute.class);
