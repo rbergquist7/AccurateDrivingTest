@@ -1,14 +1,24 @@
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent" >
     
-    <fragment
-          android:id="@+id/map"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:name="com.google.android.gms.maps.MapFragment"/>
+	
+	<TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/tvConnectionStatus"
+        android:gravity="center"
+        android:text="@string/BT_connection_status"/>
 
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvConnectionStatus" />
+    
 	<Button
 	    android:id="@+id/Button_OBD_Data_Menu"
 	    android:layout_width="0px"
@@ -106,6 +116,7 @@
 		    android:id="@+id/menu_comments_middle"
 		    android:layout_weight="6"
 		    android:orientation="vertical"
+			android:background="#DEB887"
 		    android:weightSum="3">
 		    
 		    <Button
@@ -133,6 +144,7 @@
 		    android:id="@+id/menu_comments_right"
 		    android:layout_weight="2"
 		    android:orientation="vertical"
+		    android:background="#DEB887"
 		    android:weightSum="3">
 		    
 		    <Button
@@ -202,7 +214,9 @@
 		    android:id="@+id/menu_OBD_data_right"
 		    android:layout_weight="8"
 		    android:orientation="vertical"
+		    android:background="#DEB887"
 		    android:weightSum="3">
+			
 		    
 		    <Button
 			    android:layout_width="wrap_content"
@@ -335,6 +349,7 @@
 		    android:layout_weight="8"
 		    android:layout_alignParentBottom="true"
 		    android:orientation="vertical"
+			android:background="#DEB887"
 		    android:weightSum="3">
 		    
 		    <Button

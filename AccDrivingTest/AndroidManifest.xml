@@ -37,7 +37,7 @@
             android:value="@integer/google_play_services_version" />
        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAvq0dYo4TdZhOKta15QFgZlPdFiyTbFz0" />
+            android:value="AIzaSyD42NNCas6vfpcC6pwaHHz0w3mu0o81W14" />
 
         <activity
             android:name=".MainActivity"
@@ -61,6 +61,14 @@
             android:label="@string/title_activity_splash__screen" >
         </activity>
         <activity
+            android:name=".LoginScreen"
+            android:label="@string/title_activity_login_screen" >
+        </activity>
+        <activity
+            android:name=".BeginEvaluation"
+            android:label="@string/title_activity_begin_evaluation" >
+        </activity>
+        <activity
             android:name=".UserMenu"
             android:label="@string/title_activity_user_menu" >
         </activity>
@@ -80,25 +88,7 @@
             android:name=".MainElmActivity"
             android:label="@string/title_activity_elm_main" >
         </activity>
-        
-        <!-- <activity
-            android:name=".OBDinfo"
-            android:label="@string/title_activity_obd_main" >
-        </activity> -->
-        <!-- <activity android:name=".OBDinfo"
-        		 android:label="@string/title_activity_obd_main">
-         </activity>
-            
-        <activity android:name=".BluetoothChat"
-                  android:label="@string/app_name"
-                  android:configChanges="orientation|keyboardHidden"
-                  android:screenOrientation = "landscape">
-            
-        </activity>
-        <activity android:name=".DeviceListActivity"
-                  android:label="@string/select_device"
-                  android:theme="@android:style/Theme.Holo.Dialog"
-                  android:configChanges="orientation|keyboardHidden" /> -->
+     
     </application>
 
 </manifest>

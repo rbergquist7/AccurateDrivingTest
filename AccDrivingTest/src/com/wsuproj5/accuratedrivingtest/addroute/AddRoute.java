@@ -47,6 +47,7 @@ public class AddRoute extends ActionBarActivity {
 	List<String> waypointListStrings = new ArrayList<String>();
 	ArrayList<List<String>> existingRoutes = new ArrayList<List<String>>();
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

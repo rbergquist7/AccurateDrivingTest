@@ -15,7 +15,7 @@
         android:orderInCategory="100"
         android:title="@string/menu_send_cmd"
         app:showAsAction="never"/>
-
+    
     <item
         android:id="@+id/menu_clr_scr"
         android:orderInCategory="100"

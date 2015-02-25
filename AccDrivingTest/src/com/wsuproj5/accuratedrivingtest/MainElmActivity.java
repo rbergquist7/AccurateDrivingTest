@@ -79,12 +79,17 @@ public class MainElmActivity extends ActionBarActivity implements
 
     // Widgets
     private TextView mConnectionStatus;
+    
+    //Monitor is where we want to set the text after parsing a the response
+    //currently it appends the text and sets the display, then sends the next response
+    //assuming a pointer exist. stops recursion when finished with default commands.
+    //if instead of stopping we reset the pointer. call clear when reseting the pointer
+    //show monitor if user clicks show obd info.
     private TextView mMonitor;
     private EditText mCommandPrompt;
     private ImageButton mBtnSend;
     
     // Variable def
-    private boolean inSimulatorMode = false;
     private static StringBuilder mSbCmdResp;
     private static StringBuilder mPartialResponse;
     private String mConnectedDeviceName;
@@ -130,25 +135,15 @@ public class MainElmActivity extends ActionBarActivity implements
                     readMessage = readMessage.trim();
                     readMessage = readMessage.toUpperCase();
                     displayLog(mConnectedDeviceName + ": " + readMessage);
-                    if (!inSimulatorMode)
+                    char lastChar = readMessage.charAt(readMessage.length() - 1);
+                    if (lastChar == '>')
                     {
-                        char lastChar = readMessage.charAt(readMessage.length() - 1);
-                        if (lastChar == '>')
-                        {
-                            parseResponse(mPartialResponse.toString() + readMessage);
-                            mPartialResponse.setLength(0);
-                        }
-                        else 
-                        {
-                            mPartialResponse.append(readMessage);
-                        }
+                        parseResponse(mPartialResponse.toString() + readMessage);
+                        mPartialResponse.setLength(0);
                     }
-                    else
+                    else 
                     {
-                        mSbCmdResp.append("R>>");
-                        mSbCmdResp.append(readMessage);
-                        mSbCmdResp.append("\n");
-                        mMonitor.setText(mSbCmdResp.toString());
+                        mPartialResponse.append(readMessage);
                     }
                     break;
 
@@ -314,39 +309,29 @@ public class MainElmActivity extends ActionBarActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_scan:
-                queryPairedDevices();
+    	if(item.getItemId() == R.id.action_scan){
+    		queryPairedDevices();
                 setupMonitor();
                 return true;
-            
-            case R.id.menu_send_cmd:
-                mCMDPointer = -1;
-                sendDefaultCommands();
-                return true;
-            
-            case R.id.menu_clr_scr:
-                mSbCmdResp.setLength(0);
-                mMonitor.setText("");
-                return true;
-            
-            case R.id.menu_toggle_obd_mode:
-                inSimulatorMode = !inSimulatorMode;
-                if(inSimulatorMode)
-                {
-                    displayMessage("Simulator mode enabled.");
-                }
-                else 
-                {
-                    displayMessage("Simulator mode disabled.");
-                }
-                return true;
-
-            case R.id.menu_clear_code:
-                sendOBD2CMD("04");
-                return true;
-        }
+    	}
+    	else if(item.getItemId() == R.id.menu_send_cmd){
+    		mCMDPointer = -1;
+    		sendDefaultCommands();
+    		return true;
+    		
+    	}
+    	else if(item.getItemId() == R.id.menu_clr_scr){
+    		mSbCmdResp.setLength(0);
+    		mMonitor.setText("");
+    		return true;
+    		
+    	}
+    	
+    	else if(item.getItemId() == R.id.menu_clear_code){
+    		sendOBD2CMD("04");
+    		return true;
+    		
+    	}
 
         return super.onOptionsItemSelected(item);
     }
@@ -464,11 +449,7 @@ public class MainElmActivity extends ActionBarActivity implements
         }
     }
 
-    /**
-     * Callback method for once a new device detected.
-     *
-     * @param device BluetoothDevice
-     */
+   
     public void onEvent(BluetoothDevice device)
     {
         if (mDeviceList == null)
@@ -545,12 +526,7 @@ public class MainElmActivity extends ActionBarActivity implements
 
     private void sendDefaultCommands()
     {
-        if(inSimulatorMode)
-        {
-            displayMessage("You are in simulator mode!");
-            return;
-        }
-        
+
         if (mCMDPointer >= INIT_COMMANDS.length)
         {
             mCMDPointer = -1;
