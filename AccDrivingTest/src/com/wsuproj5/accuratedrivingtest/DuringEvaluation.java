@@ -5,8 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+//instead of always running all. only get MPH, get rest only when needed. when hit display 
+//obd, get it one time, show pass/fail from HPH, connection = T/F,
+//possibly add refresh button. removes memory issue since dont need so many loops running
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -86,7 +91,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     // Define an object that holds accuracy and frequency parameters
     LocationRequest mLocationRequest;
 	int counter = 0;
-
+	boolean routeDrawn = false;
     GoogleApiClient mLocationClient;
     // Global variable to hold the current location
     Location mCurrentLocation;
@@ -118,7 +123,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     private static final String NO_BLUETOOTH = "Oops, your device doesn't support bluetooth";
     
     // Commands
-    private static final String[] INIT_COMMANDS = {"AT Z", "AT SP 0", "0105", "010C", "010D", "0131"};
+    private static final String[] INIT_COMMANDS = {"0105", "010C", "010D", "0131"};
     private int mCMDPointer = -1;
 
     // Intent request codes
@@ -146,7 +151,9 @@ public class DuringEvaluation extends ActionBarActivity implements
     private TextView mConnectionStatus;
     
     // Variable def
+    private int highestSpeed = 0;
     private TextView mMonitor;
+    private TextView mTest_progress;
     private static StringBuilder mSbCmdResp;
     private static StringBuilder mPartialResponse;
     private String mConnectedDeviceName;
@@ -170,7 +177,7 @@ public class DuringEvaluation extends ActionBarActivity implements
                         case BluetoothIOGateway.STATE_CONNECTED:
                             mConnectionStatus.setText(getString(R.string.BT_status_connected_to) + " " + mConnectedDeviceName);
                             mConnectionStatus.setBackgroundColor(Color.GREEN);
-                            sendDefaultCommands();
+//                            sendDefaultCommands();
                             break;
 
                         case BluetoothIOGateway.STATE_LISTEN:
@@ -238,6 +245,9 @@ public class DuringEvaluation extends ActionBarActivity implements
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_during_evaluation);
         mMonitor = (TextView) findViewById(R.id.obd_data_view);
+        mTest_progress = (TextView) findViewById(R.id.test_progress_data_view);
+        mTest_progress.setText("Passing...For now!");
+
      //   mMonitor.setMovementMethod(new ScrollingMovementMethod());
 		mConnectionStatus = (TextView) findViewById(R.id.tvConnectionStatus);
 	        
@@ -322,11 +332,23 @@ public class DuringEvaluation extends ActionBarActivity implements
 	// Define the callback method that receives location updates
     @Override
     public void onLocationChanged(Location location) {
+//    	this.mCMDPointer = -1;
+//    	sendOBD2CMD(INIT_COMMANDS[3]);
+//    	String response = mSbCmdResp.toString();
+//    	mMonitor.setText(response);
     	
-    	mSbCmdResp.setLength(0);
-		//mMonitor.setText(mMonitor.getText() + " i ");
-    	mMonitor.setText("");
     	sendDefaultCommands();
+    	/*
+    	sendOBD2CMD(INIT_COMMANDS[0]);
+    	sendOBD2CMD(INIT_COMMANDS[1]);
+    	sendOBD2CMD(INIT_COMMANDS[2]);
+    	sendOBD2CMD(INIT_COMMANDS[3]);
+    	*/
+//    	if(Integer.getInteger(response.substring(4, 6) ) > 25){
+//    		mMonitor.setText("FAIL");
+//    		displayLog("Fail");
+//    	}
+    	
 //    	
         // Report to the UI that the location was updated
     	DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -360,20 +382,48 @@ public class DuringEvaluation extends ActionBarActivity implements
 	        mp.title("Me ");
 	
 	        map.addMarker(mp);
+	        Iterator<LatLng> lt = points.iterator();
+	        while(lt.hasNext()){
+	        	LatLng point = lt.next();
+	        	map.addPolyline(new PolylineOptions()
+	        	.add(point)
+	        	.width(5)
+	        	.color(Color.RED));
+	        	
+	        }
+//	        Polyline line = map.addPolyline(new PolylineOptions()
+//	        .addAll(points)
+//	        .width(5)
+//	        .color(Color.RED));
 	        
-	        Polyline line = map.addPolyline(new PolylineOptions()
-	        .addAll(points)
-	        .width(5)
-	        .color(Color.RED));
+	        //if route is not drawn, go into if statement, when route is loaded, there 
+	        //next() will be valid and enter loop. once in loop, set routeDrawn to true
+	        //drawning route once may save some memory
+	       //if(routeDrawn == false){
 	        
-	        Polyline route = map.addPolyline(new PolylineOptions()
-	        .addAll(routeListPoints.get(0))
-	        .width(5)
-	        .color(Color.BLUE));
+	        Iterator<List<LatLng>> it = routeListPoints.iterator();
+	        	while (it.hasNext()) {
+	        		List<LatLng> waypoint = it.next();
+	        		map.addPolyline(new PolylineOptions()
+	        		.addAll(waypoint)
+	        		.width(5)
+	        		.color(Color.BLUE));
+	        	//	routeDrawn = true;
+	        	}
+//	        }else{
+//	        	String notice = "loading route, please wait...";
+//	            Toast.makeText(this, notice, Toast.LENGTH_SHORT).show();
+//	            routeDrawn = false;
+//	        }
+//	        
+//	        Polyline route = map.addPolyline(new PolylineOptions()
+//	        .addAll(routeListPoints.get(0))
+//	        .width(5)
+//	        .color(Color.BLUE));
 	        
 	        CameraPosition cameraPosition = new CameraPosition.Builder()
 	        .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to new location
-	        .zoom(map.getCameraPosition().zoom)                   // Sets the zoom
+	        .zoom(map.getCameraPosition().zoom).zoom(25)                   // Sets the zoom
 	        .bearing(0)                // Sets the orientation of the camera to east
 	        .tilt(0)                   // Sets the tilt of the camera to 30 degrees
 	        .build();                   // Creates a CameraPosition from the builder
@@ -552,11 +602,15 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    public void revealOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(VISIBLE);
+			//mMonitor.setText(mMonitor.getText() + " i ");
+	    	sendDefaultCommands();
 	    }
 	    
 	    public void hideOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(INVISIBLE);
+	    	mSbCmdResp.setLength(0);
+	    	mMonitor.setText("");
 	    }
 	    
 	    public void revealRouteProgress(View view) {
@@ -744,7 +798,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 			   return this.gpsPoints;
 		   }
 
-		public List<String> getWaypointList() {
+		   public List<String> getWaypointList() {
 				return waypointList;
 			}
 
@@ -946,12 +1000,12 @@ public class DuringEvaluation extends ActionBarActivity implements
     {
         if (mIOGateway.getState() != BluetoothIOGateway.STATE_CONNECTED)
         {
-        	if(deviceHolder == true){
+        	if(deviceHolder == true){ //may need to chage to this.device.getBondedState() == Bluetooth.StateConnected
         		mIOGateway.connect(this.device, true);
         		return;
         	}
 
-            displayMessage(getString(R.string.bt_not_available) + " attempting to reconnect...");
+           	mMonitor.setText(getString(R.string.bt_not_available) + " attempting to reconnect...");
             return;
         }
         
@@ -964,8 +1018,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     private void sendDefaultCommands()
     {
-        
-        if (mCMDPointer >= INIT_COMMANDS.length)
+        if (mCMDPointer >= INIT_COMMANDS.length-1)
         {
            mCMDPointer = -1;
             //return;
@@ -976,7 +1029,7 @@ public class DuringEvaluation extends ActionBarActivity implements
         {
             mCMDPointer = 0;
         }
-        
+        //remove recursion. multiple threads mixed up on stack? dont know why this would be an issue but lets try
         sendOBD2CMD(INIT_COMMANDS[mCMDPointer]);
     }
     
@@ -984,14 +1037,14 @@ public class DuringEvaluation extends ActionBarActivity implements
     {        
         switch (mCMDPointer)
         {
-            case 0: // CMD: AT Z, no parse needed
-            case 1: // CMD: AT SP 0, no parse needed
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append("\n");
-                break;
-            
-            case 2: // CMD: 0105, Engine coolant temperature
+//            case 0: // CMD: AT Z, no parse needed
+//            case 1: // CMD: AT SP 0, no parse needed
+//                mSbCmdResp.append("R>>");
+//                mSbCmdResp.append(buffer);
+//                mSbCmdResp.append("\n");
+//                break;
+//            
+            case 0: // CMD: 0105, Engine coolant temperature
                 int ect = showEngineCoolantTemperature(buffer);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
@@ -1002,7 +1055,7 @@ public class DuringEvaluation extends ActionBarActivity implements
                 mSbCmdResp.append("\n");
                 break;
 
-            case 3: // CMD: 010C, EngineRPM
+            case 1: // CMD: 010C, EngineRPM
                 int eRPM = showEngineRPM(buffer);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
@@ -1012,7 +1065,7 @@ public class DuringEvaluation extends ActionBarActivity implements
                 mSbCmdResp.append("\n");
                 break;
 
-            case 4: // CMD: 010D, Vehicle Speed
+            case 2: // CMD: 010D, Vehicle Speed
                 int vs = showVehicleSpeed(buffer);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
@@ -1022,7 +1075,7 @@ public class DuringEvaluation extends ActionBarActivity implements
                 mSbCmdResp.append("\n");
                 break;
             
-            case 5: // CMD: 0131
+            case 3: // CMD: 0131
                 int dt = showDistanceTraveled(buffer);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
@@ -1109,6 +1162,12 @@ public class DuringEvaluation extends ActionBarActivity implements
         	
         	String temp = buf.substring(4, 6);
         	
+        	if(highestSpeed < Integer.valueOf(temp,16)){
+        		highestSpeed = Integer.valueOf(temp, 16);
+        		if (highestSpeed > 15){
+        			mTest_progress.setText("Failed");
+        		}
+        	}
         	return Integer.valueOf(temp, 16);
             
         }

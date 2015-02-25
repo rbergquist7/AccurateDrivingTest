@@ -124,8 +124,8 @@
  	<string name="lbl_enter_username">Enter Evaluator Name</string>
 	<string name="lbl_pwd">Password</string>
  	<string name="lbl_enter_pwd">Enter your password</string>
- 	<string name="lbl_driver_name">Driver Name</string>
- 	<string name="lbl_enter_driver_name">Enter Driver Name</string>
+ 	<string name="lbl_driver_name">Drivers License</string>
+ 	<string name="lbl_enter_driver_name">Enter Drivers License Number</string>
      <string name="lbl_login">Login</string>
      <string name="lbl_login_as_user">Continue</string>
  	

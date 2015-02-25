@@ -31,7 +31,7 @@ public class LoginScreen extends ActionBarActivity{
 	    		  {
 	    			  public void onClick(View view)
 	    			  {
-	    				  Log.v("EditText", mEdit_password.getText().toString());
+	    				  Log.d("evaluators_name", mEdit_password.getText().toString());
 	    				  edit.putString("evaluator_name", mEdit_Evaluator_name.getText().toString());
 	    				  edit.commit();
 	    				  Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
