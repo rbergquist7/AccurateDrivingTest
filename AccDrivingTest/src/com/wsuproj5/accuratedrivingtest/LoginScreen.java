@@ -21,10 +21,10 @@ public class LoginScreen extends ActionBarActivity{
 	      final EditText mEdit_password = (EditText)findViewById(R.id.fld_pwd);
 
 	      
-	      SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+	      final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
 	      
 	   // We need an editor object to make changes
-	      final SharedPreferences.Editor edit = pref.edit();
+	     // final SharedPreferences.Editor edit = pref.edit();
 	    
 	      mButton_login.setOnClickListener(
 	    		  new View.OnClickListener()
@@ -32,8 +32,8 @@ public class LoginScreen extends ActionBarActivity{
 	    			  public void onClick(View view)
 	    			  {
 	    				  Log.d("evaluators_name", mEdit_password.getText().toString());
-	    				  edit.putString("evaluator_name", mEdit_Evaluator_name.getText().toString());
-	    				  edit.commit();
+	    				  pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
+	    				//  edit.commit();
 	    				  Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
 	    			      startActivity(userMenu);
 	    			  }

@@ -45,9 +45,10 @@ public class BeginEvaluation extends ActionBarActivity{
 		/*evaluators name is a text field, so get Evaluators name from login screen
 		 * and fill the text field after variable is set
 		 */
-			   SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-			   
-			   String username = pref.getString("evaluator_name", "");
+			 //  SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+			      final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+ 
+			   String username = pref.getString("evaluator_name");
 			   Log.d("username", username);
 			   
 			   final TextView evaluator_name = (TextView)findViewById(R.id.evaluators2_name);
@@ -57,10 +58,11 @@ public class BeginEvaluation extends ActionBarActivity{
 			   /*get drivers name from the text field*/
 			   EditText drivers_name = (EditText)findViewById(R.id.enter_drivers_name);
 			   
-			   SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-			   final SharedPreferences.Editor edit = pref.edit();
-			   edit.putString("drivers_name",drivers_name.getText().toString());
-			   edit.commit();
+			 //  SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+			      final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+		//	   final SharedPreferences.Editor edit = pref.edit();
+			   pref.put("drivers_name",drivers_name.getText().toString());
+		//	   edit.commit();
 			 //  Log.d("driver name", drivers_name.getText().toString());
 
 

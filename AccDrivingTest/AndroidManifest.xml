@@ -74,6 +74,7 @@
         </activity>
         <activity
             android:name=".DuringEvaluation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_during_evaluation" >
         </activity>
         <activity
