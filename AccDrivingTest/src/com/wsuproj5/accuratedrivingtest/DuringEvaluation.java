@@ -25,7 +25,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.DirectionsFetcher;
 import com.wsuproj5.accuratedrivingtest.addroute.AddRoute;
@@ -36,7 +35,6 @@ import de.greenrobot.event.EventBus;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -116,14 +114,14 @@ public class DuringEvaluation extends ActionBarActivity implements
 	
 	private PlaceholderFragment routeLines;
 
-    private static final String TAG = MainElmActivity.class.getSimpleName();
+	private static final String TAG = MainActivity.class.getSimpleName();
     private static final String TAG_DIALOG = "dialog";
     private static final String NO_BLUETOOTH = "Oops, your device doesn't support bluetooth";
+   
     
     // Commands
     private static final String[] INIT_COMMANDS = {"AT Z", "AT SP 0", "0105", "010C", "010D", "0131"};
-    private static final String[] RUN_COMMANDS = {"AT SP 0", "010C", "010D", "0131"};
-    private static int mCMDPointer = -1;
+    private int mCMDPointer = -1;
 
     // Intent request codes
     private static final int REQUEST_ENABLE_BT = 101;
@@ -140,31 +138,22 @@ public class DuringEvaluation extends ActionBarActivity implements
     public static final String TOAST = "toast_message";
 
     // Bluetooth
-    private static BluetoothIOGateway mIOGateway;
+    private BluetoothIOGateway mIOGateway;
     private static BluetoothAdapter mBluetoothAdapter;
-    private static DeviceBroadcastReceiver mReceiver;
-    private static PairedDevicesDialog dialog;
-    private static List<BluetoothDevice> mDeviceList;
+    private DeviceBroadcastReceiver mReceiver;
+    private PairedDevicesDialog dialog;
+    private List<BluetoothDevice> mDeviceList;
 
     // Widgets
-    private static TextView mConnectionStatus;
+    private TextView mConnectionStatus;
+    private TextView mMonitor;
     
     // Variable def
-    private static int MPH = 0;
-    private static int RPM = 0;
-    private static int distTraveled = 0;
-    static BluetoothDevice device;
-    static boolean deviceHolder = false;
-    private static TextView mMonitor;
-    private TextView mTest_progress;
-    
+    int commandNumber = 0;
     private static StringBuilder mSbCmdResp;
     private static StringBuilder mPartialResponse;
-    private static String mConnectedDeviceName;
-    private static String stateConnected;
-    private static String stateConnecting;
-    private static String stateNotConnected;
-    private static final Handler mMsgHandler = new Handler()
+    private String mConnectedDeviceName;
+    private final Handler mMsgHandler = new Handler()
     {
         @Override
         public void handleMessage(Message msg)
@@ -175,18 +164,19 @@ public class DuringEvaluation extends ActionBarActivity implements
                     switch (msg.arg1)
                     {
                         case BluetoothIOGateway.STATE_CONNECTING:
-                            mConnectionStatus.setText(stateConnecting);
+                            mConnectionStatus.setText(getString(R.string.BT_connecting));
                             mConnectionStatus.setBackgroundColor(Color.YELLOW);
                             break;
 
                         case BluetoothIOGateway.STATE_CONNECTED:
-                            mConnectionStatus.setText(stateConnected + " " + mConnectedDeviceName);
+                            mConnectionStatus.setText(getString(R.string.BT_status_connected_to) + " " + mConnectedDeviceName);
                             mConnectionStatus.setBackgroundColor(Color.GREEN);
+                           // sendDefaultCommands();
                             break;
 
                         case BluetoothIOGateway.STATE_LISTEN:
                         case BluetoothIOGateway.STATE_NONE:
-                            mConnectionStatus.setText(stateNotConnected);
+                            mConnectionStatus.setText(getString(R.string.BT_status_not_connected));
                             mConnectionStatus.setBackgroundColor(Color.RED);
                             break;
 
@@ -201,27 +191,21 @@ public class DuringEvaluation extends ActionBarActivity implements
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     readMessage = readMessage.trim();
-                    readMessage = readMessage.toUpperCase(Locale.US);
-                   // displayLog(mConnectedDeviceName + ": " + readMessage);
-                    if(readMessage.length() <= 1){
-                        mPartialResponse.setLength(0);
-                    	break;
-                    }
-                    try{
-                    	char lastChar = readMessage.charAt(readMessage.length() - 1);
-                    	if (lastChar == '>')
-	                    {
-	                        parseResponse(mPartialResponse.toString() + readMessage);
-	                        mPartialResponse.setLength(0);
-	                    }
-	                    else 
-	                    {
-	                        mPartialResponse.append(readMessage);
-	                    }
-                    }
-                    finally{
-                    	
-                    }
+                    readMessage = readMessage.toUpperCase();
+                    displayLog(mConnectedDeviceName + ": " + readMessage);
+                   // if(readMessage.length() == 1) break;
+                 //   char lastChar = 
+                    if (readMessage.charAt(readMessage.length() - 1) == '>')
+	                {
+	                    parseResponse(mPartialResponse.toString() + readMessage);
+	                    mPartialResponse.setLength(0);
+	                }
+	                else 
+	                {
+	                    mPartialResponse.append(readMessage);
+	                }
+                    
+                   
                     break;
 
                 case MESSAGE_WRITE:
@@ -229,15 +213,15 @@ public class DuringEvaluation extends ActionBarActivity implements
 
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    //displayLog("Me: " + writeMessage);
+                    displayLog("Me: " + writeMessage);
                     mSbCmdResp.append("W>>");
                     mSbCmdResp.append(writeMessage);
                     mSbCmdResp.append("\n");
-                    //mMonitor.setText(mSbCmdResp.toString());
+                    mMonitor.setText(mSbCmdResp.toString());
                     break;
 
                 case MESSAGE_TOAST:
-                    //displayMessage(msg.getData().getString(TOAST));
+                    displayMessage(msg.getData().getString(TOAST));
                     break;
 
                 case MESSAGE_DEVICE_NAME:
@@ -247,24 +231,19 @@ public class DuringEvaluation extends ActionBarActivity implements
             }
         }
 
-		
-
     };
-
-	
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_during_evaluation);
+
         mMonitor = (TextView) findViewById(R.id.obd_data_view);
-       	mMonitor.setText(getString(R.string.bt_not_available) + " attempting to reconnect...");
-        mTest_progress = (TextView) findViewById(R.id.test_progress_data_view);
-        mTest_progress.setText("Passing...For now!");
-        DuringEvaluation.stateConnecting = getString(R.string.BT_connecting);
-        DuringEvaluation.stateConnected = getString(R.string.BT_status_connected_to);
-        DuringEvaluation.stateNotConnected = getString(R.string.BT_status_not_connected);
-     //   mMonitor.setMovementMethod(new ScrollingMovementMethod());
+       	mMonitor.setText(getString(R.string.bt_not_available) + " attempting to connect...");
+       // mTest_progress = (TextView) findViewById(R.id.test_progress_data_view);
+       // mTest_progress.setText("Passing...For now!");
 		mConnectionStatus = (TextView) findViewById(R.id.tvConnectionStatus);
 	        
 	        // make sure user has Bluetooth hardware
@@ -348,10 +327,13 @@ public class DuringEvaluation extends ActionBarActivity implements
 	// Define the callback method that receives location updates
     @Override
     public void onLocationChanged(Location location) {
+
+    	//x.sendOBD2CMD(MPH_COMMAND);
+    	//sendOBD2CMD(RPM_COMMAND);
 //    	commandNumber = 3;
-//    	sendDefaultCommands();
+//    	sendOBD2CMD("010C");
     	
-        // Report to the UI that the location was updated
+    	// Report to the UI that the location was updated
     	DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.US);
     	Date date = new Date(location.getTime());
     	String formatted = format.format(date);
@@ -410,8 +392,10 @@ public class DuringEvaluation extends ActionBarActivity implements
 	        
 
         }
-//        mMonitor.setText("MPH: " + getMPH());
-//    	mMonitor.setText(mMonitor.getText() + "\n" + "RPM: " + getRPM());
+     //   mSbCmdResp.setLength(0);
+       // mMonitor.setText(x.getmMonitor());
+    //    mMonitor.append("\nRPM: " + getRPM() + "\n");
+//    	mMonitor.append("RPM: " + getRPM());
     	
     }
     
@@ -587,18 +571,16 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    public void revealOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(VISIBLE);
-	    	DuringEvaluation.mSbCmdResp.setLength(0);
-	    	DuringEvaluation.sendDefaultCommands();
-//	    	mMonitor.setText("MPH: " + getMPH());
-//	    	mMonitor.setText(mMonitor.getText() + "\n" + "RPM: " + getRPM());
+	    	commandNumber = 3;
+	    	sendOBD2CMD("010C");
+	    	
 
 	    }
 	    
 	    public void hideOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(INVISIBLE);
-	    	DuringEvaluation.mSbCmdResp.setLength(0);
-	    	DuringEvaluation.mMonitor.setText("");
+	    	
 	    }
 	    
 	    public void revealRouteProgress(View view) {
@@ -645,54 +627,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	     * Handle results returned to the FragmentActivity
 	     * by Google Play services
 	     */
-	    @Override
-	    protected void onActivityResult(
-	            int requestCode, int resultCode, Intent data) {
-
-	            super.onActivityResult(requestCode, resultCode, data);
-
-
-	            switch (requestCode)
-	            {
-	                case REQUEST_ENABLE_BT:
-	                    if (resultCode == RESULT_CANCELED)
-	                    {
-	                        displayMessage("Bluetooth not enabled :(");
-	                        displayLog("Bluetooth not enabled :(");
-	                        return;
-	                    }
-
-	                    if (resultCode == RESULT_OK)
-	                    {
-	                        displayLog("Bluetooth enabled");
-
-	                        queryPairedDevices();
-	                        setupMonitor();
-	                    }
-
-	                    break;
-	                case CONNECTION_FAILURE_RESOLUTION_REQUEST :
-	                	/*
-	                	 * If the result code is Activity.RESULT_OK, try
-	                	 * to connect again
-	                	 */
-	                	switch (resultCode) {
-	                	case Activity.RESULT_OK :
-	                		/*
-	                		 * Try the request again
-	                		 */
-	                		
-	                		break;
-	                	}
-	                	
-
-	                default:
-	                    // nothing at the moment
-	            }
-
-
-	     }
-
+	   
 	    private boolean servicesConnected() {
 	        // Check that Google Play services is available
 	        int resultCode =
@@ -829,42 +764,73 @@ public class DuringEvaluation extends ActionBarActivity implements
 			
 		}
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu)
-		{
-			// Inflate the menu; this adds items to the action bar if it is present.
-			getMenuInflater().inflate(R.menu.menu_main, menu);
-			return true;
-		}
-		@Override
-	    public boolean onOptionsItemSelected(MenuItem item)
-	    {
-	    	if(item.getItemId() == R.id.action_scan){
-	    		queryPairedDevices();
-	                setupMonitor();
-	                return true;
-	    	}
-	    	else if(item.getItemId() == R.id.menu_send_cmd){
-	    		mCMDPointer = -1;
-	    		sendDefaultCommands();
-	    		return true;
-	    		
-	    	}
-	    	else if(item.getItemId() == R.id.menu_clr_scr){
-	    		mSbCmdResp.setLength(0);
-	    		mMonitor.setText("");
-	    		return true;
-	    		
-	    	}
-	    	else if(item.getItemId() == R.id.menu_clear_code){
-	    		sendOBD2CMD("04");
-	    		return true;
-	    		
-	    	}
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-	        return super.onOptionsItemSelected(item);
-	    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_scan:
+                queryPairedDevices();
+                setupMonitor();
+                return true;
+            
+            case R.id.menu_send_cmd:
+                mCMDPointer = -1;
+                sendDefaultCommands();
+                return true;
+            
+            case R.id.menu_clr_scr:
+                mSbCmdResp.setLength(0);
+                mMonitor.setText("");
+                return true;
+           
+            case R.id.menu_clear_code:
+                sendOBD2CMD("04");
+                return true;
+        }
 
-		private void setupMonitor()
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        switch (requestCode)
+        {
+            case REQUEST_ENABLE_BT:
+                if (resultCode == RESULT_CANCELED)
+                {
+                    displayMessage("Bluetooth not enabled :(");
+                    displayLog("Bluetooth not enabled :(");
+                    return;
+                }
+
+                if (resultCode == RESULT_OK)
+                {
+                    displayLog("Bluetooth enabled");
+
+                    queryPairedDevices();
+                    setupMonitor();
+                }
+
+                break;
+
+            default:
+                // nothing at the moment
+        }
+    }
+    
+    private void setupMonitor()
     {
         // Start mIOGateway
         if (mIOGateway == null)
@@ -906,6 +872,20 @@ public class DuringEvaluation extends ActionBarActivity implements
             scanAroundDevices();
         }
     }
+
+    private void showChooserDialog(DialogFragment dialogFragment)
+    {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        android.support.v4.app.Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
+        if (prev != null)
+        {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        dialogFragment.show(ft, "dialog");
+    }
+
     private void scanAroundDevices()
     {
         displayLog("Try to scan around devices...");
@@ -921,7 +901,22 @@ public class DuringEvaluation extends ActionBarActivity implements
         // Start scanning
         mBluetoothAdapter.startDiscovery();
     }
-    
+
+    private void cancelScanning()
+    {        
+        if (mBluetoothAdapter.isDiscovering())
+        {
+            mBluetoothAdapter.cancelDiscovery();
+
+            displayLog("Scanning canceled.");
+        }
+    }
+
+    /**
+     * Callback method for once a new device detected.
+     *
+     * @param device BluetoothDevice
+     */
     public void onEvent(BluetoothDevice device)
     {
         if (mDeviceList == null)
@@ -962,12 +957,9 @@ public class DuringEvaluation extends ActionBarActivity implements
         cancelScanning();
 
         displayLog("Selected device: " + device.getName() + " (" + device.getAddress() + ")");
+        
         // Attempt to connect to the device
         mIOGateway.connect(device, true);
-        if(mIOGateway.getState() == BluetoothIOGateway.STATE_CONNECTED){
-        	DuringEvaluation.device = device;
-        	deviceHolder = true;
-        }
     }
 
     @Override
@@ -984,59 +976,42 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     
 
-    private static void sendOBD2CMD(String sendMsg)
+    private void sendOBD2CMD(String sendMsg)
     {
-    	 if (mIOGateway.getState() != BluetoothIOGateway.STATE_CONNECTED)
-         {
-    		 mIOGateway.connect(device, true);
-             return;
-         }
-    	 
-     
+        if (mIOGateway.getState() != BluetoothIOGateway.STATE_CONNECTED)
+        {
+            displayMessage(getString(R.string.bt_not_available));
+            return;
+        }
         
         String strCMD = sendMsg;
         strCMD += '\r';
         
         byte[] byteCMD = strCMD.getBytes();
         mIOGateway.write(byteCMD);
-        
     }
 
-    private static void sendDefaultCommands()
+    private void sendDefaultCommands()
     {
-        if (DuringEvaluation.mCMDPointer >= INIT_COMMANDS.length)
+        
+        if (mCMDPointer >= INIT_COMMANDS.length)
         {
-        	DuringEvaluation.mCMDPointer = -1;
+            mCMDPointer = -1;
             return;
         }
         
         // reset pointer
-        if (DuringEvaluation.mCMDPointer < 0)
+        if (mCMDPointer < 0)
         {
-        	DuringEvaluation.mCMDPointer = 0;
-        }
-        //remove recursion. multiple threads mixed up on stack? dont know why this would be an issue but lets try
-        DuringEvaluation.sendOBD2CMD(INIT_COMMANDS[mCMDPointer]);
-    }
-    private static void sendRunCommands()
-    {    	
-        if (DuringEvaluation.mCMDPointer >= DuringEvaluation.RUN_COMMANDS.length)
-        {
-        	DuringEvaluation.mCMDPointer = -1;
-            return;
+            mCMDPointer = 0;
         }
         
-        // reset pointer
-        if (DuringEvaluation.mCMDPointer < 0)
-        {
-        	DuringEvaluation.mCMDPointer = 0;
-        }
-        //remove recursion. multiple threads mixed up on stack? dont know why this would be an issue but lets try
-        DuringEvaluation.sendOBD2CMD(RUN_COMMANDS[mCMDPointer]);
+        sendOBD2CMD(INIT_COMMANDS[mCMDPointer]);
     }
-    private static void parseResponse(String buffer)
+    
+    private void parseResponse(String buffer)
     {        
-        switch (DuringEvaluation.mCMDPointer)
+        switch (commandNumber)
         {
             case 0: // CMD: AT Z, no parse needed
             case 1: // CMD: AT SP 0, no parse needed
@@ -1058,18 +1033,18 @@ public class DuringEvaluation extends ActionBarActivity implements
 
             case 3: // CMD: 010C, EngineRPM
                 int eRPM = showEngineRPM(buffer);
-                setRPM(eRPM);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
                 mSbCmdResp.append( " (Eng. RPM: ");
                 mSbCmdResp.append(eRPM);
                 mSbCmdResp.append(")");
                 mSbCmdResp.append("\n");
+                commandNumber = 4;
+    	    	sendOBD2CMD("010D");
                 break;
 
             case 4: // CMD: 010D, Vehicle Speed
                 int vs = showVehicleSpeed(buffer);
-                setMPH(vs);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
                 mSbCmdResp.append( " (Vehicle Speed: ");
@@ -1080,7 +1055,6 @@ public class DuringEvaluation extends ActionBarActivity implements
             
             case 5: // CMD: 0131
                 int dt = showDistanceTraveled(buffer);
-                setDistTraveled(dt);
                 mSbCmdResp.append("R>>");
                 mSbCmdResp.append(buffer);
                 mSbCmdResp.append( " (Distance traveled since codes cleared: ");
@@ -1096,148 +1070,16 @@ public class DuringEvaluation extends ActionBarActivity implements
         }
 
         
-        DuringEvaluation.mMonitor.setText(mSbCmdResp.toString());
+        mMonitor.setText(mSbCmdResp.toString());
         
         if (mCMDPointer >= 0)
         {
             mCMDPointer++;
             sendDefaultCommands();
         }
-    }   
-    private static void parseResponse2(String buffer)
-    {        
-        switch (mCMDPointer)
-        {
-            case 0: // CMD: AT SP 0, no parse needed
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append("\n");
-                break;
-            case 1: // CMD: 010C, EngineRPM
-                int eRPM = showEngineRPM(buffer);
-            //    if(eRPM == -1) break;
-                setRPM(eRPM);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Eng. RPM: ");
-//                mSbCmdResp.append(eRPM);
-//                mSbCmdResp.append(")");
-//                mSbCmdResp.append("\n");
-                break;
-
-            case 2: // CMD: 010D, Vehicle Speed
-                int vs = showVehicleSpeed(buffer);
-            //    if(vs == -1) break;
-                setMPH(vs);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Vehicle Speed: ");
-//                mSbCmdResp.append(vs);
-//                mSbCmdResp.append("Km/h)");
-//                mSbCmdResp.append("\n");
-                break;
-            
-            case 3: // CMD: 0131
-                int dt = showDistanceTraveled(buffer);
-               // if(dt == -1) break;
-                setDistTraveled(dt);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Distance traveled since codes cleared: ");
-//                mSbCmdResp.append(dt);
-//                mSbCmdResp.append("Km)");
-//                mSbCmdResp.append("\n");
-                break;
-            
-            default:
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append("\n");
-        }
-//
-       // String response = mSbCmdResp.toString();
-       // displayLog("response: " + response);
-        mMonitor.setText(mSbCmdResp.toString());
-		//mSbCmdResp.setLength(0);
-		//mMonitor.setText("");
-        if (mCMDPointer >= 0)
-        {
-            mCMDPointer++;
-           // mSbCmdResp.setLength(0);
-            sendRunCommands();
-        }
-    }    
-//    private void parseResponse(String buffer)
-//    {        
-//        switch (mCMDPointer)
-//        {
-//            case 0: // CMD: AT Z, no parse needed
-//            case 1: // CMD: AT SP 0, no parse needed
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append("\n");
-//                break;
-//            
-//            case 2: // CMD: 0105, Engine coolant temperature
-//                int ect = showEngineCoolantTemperature(buffer);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Eng. Coolant Temp is ");
-//                mSbCmdResp.append(ect);
-//                mSbCmdResp.append((char) 0x00B0);
-//                mSbCmdResp.append("C)");
-//                mSbCmdResp.append("\n");
-//                break;
-//
-//            case 3: // CMD: 010C, EngineRPM
-//                int eRPM = showEngineRPM(buffer);
-//                setRPM(eRPM);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Eng. RPM: ");
-//                mSbCmdResp.append(eRPM);
-//                mSbCmdResp.append(")");
-//                mSbCmdResp.append("\n");
-//                break;
-//
-//            case 4: // CMD: 010D, Vehicle Speed
-//                int vs = showVehicleSpeed(buffer);
-//                setMPH(vs);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Vehicle Speed: ");
-//                mSbCmdResp.append(vs);
-//                mSbCmdResp.append("Km/h)");
-//                mSbCmdResp.append("\n");
-//                break;
-//            
-//            case 5: // CMD: 0131
-//                int dt = showDistanceTraveled(buffer);
-//                setDistTraveled(dt);
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append( " (Distance traveled since codes cleared: ");
-//                mSbCmdResp.append(dt);
-//                mSbCmdResp.append("Km)");
-//                mSbCmdResp.append("\n");
-//                break;
-//            
-//            default:
-//                mSbCmdResp.append("R>>");
-//                mSbCmdResp.append(buffer);
-//                mSbCmdResp.append("\n");
-//        }
-//
-//        
-//   //     mMonitor.setText(mSbCmdResp.toString());
-//        
-//        if (mCMDPointer >= 0)
-//        {
-//            mCMDPointer++;
-//            sendDefaultCommands();
-//        }
-//    }  
-    private static String cleanResponse(String text)
+    }
+    
+    private String cleanResponse(String text)
     {
         text = text.trim();
         text = text.replace("\t", "");
@@ -1247,141 +1089,110 @@ public class DuringEvaluation extends ActionBarActivity implements
         return text;
     }
     
-    private static int showEngineCoolantTemperature(String buffer)
+    private int showEngineCoolantTemperature(String buffer)
     {
         String buf = buffer;
         buf = cleanResponse(buf);
         
         if (buf.contains("4105"))
         {
-        	buf = buf.substring(buf.indexOf("4105"));
-        	
-        	String temp = buf.substring(4, 6);
-        	int A = Integer.valueOf(temp, 16);
-        	A -= 40;
-        	
-        	return A;
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("4105"));
+
+                String temp = buf.substring(4, 6);
+                int A = Integer.valueOf(temp, 16);
+                A -= 40;
+
+                return A;
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
         
         return -1;
     }
     
-    private static int showEngineRPM(String buffer)
+    private int showEngineRPM(String buffer)
     {
         String buf = buffer;
         buf = cleanResponse(buf);
         
         if (buf.contains("410C"))
         {
-        	buf = buf.substring(buf.indexOf("410C"));
-        	
-        	String MSB = buf.substring(4, 6);
-        	String LSB = buf.substring(6, 8);
-        	int A = Integer.valueOf(MSB, 16);
-        	int B = Integer.valueOf(LSB, 16);
-        	
-        	return  ((A * 256) + B) / 4;
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("410C"));
+                
+                String MSB = buf.substring(4, 6);
+                String LSB = buf.substring(6, 8);
+                int A = Integer.valueOf(MSB, 16);
+                int B = Integer.valueOf(LSB, 16);
+                
+                return  ((A * 256) + B) / 4;
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
         
         return -1;
     }
     
-    private static int showVehicleSpeed(String buffer)
+    private int showVehicleSpeed(String buffer)
     {
         String buf = buffer;
         buf = cleanResponse(buf);
         
         if (buf.contains("410D"))
         {
-        	buf = buf.substring(buf.indexOf("410D"));
-        	
-        	String temp = buf.substring(4, 6);
-        	
-//        	if(highestSpeed < Integer.valueOf(temp,16)){
-//        		highestSpeed = Integer.valueOf(temp, 16);
-//        		if (highestSpeed > 15){
-//        			mTest_progress.setText("Failed");
-//        		}
-//        	}
-        	return Integer.valueOf(temp, 16);
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("410D"));
+
+                String temp = buf.substring(4, 6);
+
+                return Integer.valueOf(temp, 16);
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
         
         return -1;
     }
     
-    private static int showDistanceTraveled(String buffer)
+    private int showDistanceTraveled(String buffer)
     {
         String buf = buffer;
         buf = cleanResponse(buf);
         
         if (buf.contains("4131"))
         {
-        	buf = buf.substring(buf.indexOf("4131"));
-        	
-        	String MSB = buf.substring(4, 6);
-        	String LSB = buf.substring(6, 8);
-        	int A = Integer.valueOf(MSB, 16);
-        	int B = Integer.valueOf(LSB, 16);
-        	
-        	return (A * 256) + B;
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("4131"));
+
+                String MSB = buf.substring(4, 6);
+                String LSB = buf.substring(6, 8);
+                int A = Integer.valueOf(MSB, 16);
+                int B = Integer.valueOf(LSB, 16);
+
+                return (A * 256) + B;
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
 
         return -1;
     }
-
-
-    private void cancelScanning()
-    {        
-        if (mBluetoothAdapter.isDiscovering())
-        {
-            mBluetoothAdapter.cancelDiscovery();
-
-            displayLog("Scanning canceled.");
-        }
-    }
-
-	private void showChooserDialog(DialogFragment dialogFragment)
-	    {
-	        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-	        android.support.v4.app.Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
-	        if (prev != null)
-	        {
-	            ft.remove(prev);
-	        }
-	        ft.addToBackStack(null);
-
-	        dialogFragment.show(ft, "dialog");
-	    }
-
-	public int getRPM() {
-		return RPM;
-	}
-
-	public static void setRPM(int rPM) {
-		RPM = rPM;
-	}
-
-	public int getMPH() {
-		return MPH;
-	}
-
-	public static void setMPH(int mPH) {
-		MPH = mPH;
-	}
-
-	public int getDistTraveled() {
-		return distTraveled;
-	}
-
-	public static void setDistTraveled(int distTravele) {
-		distTraveled = distTravele;
-	}
-	
-	
-
 }
+
+
 

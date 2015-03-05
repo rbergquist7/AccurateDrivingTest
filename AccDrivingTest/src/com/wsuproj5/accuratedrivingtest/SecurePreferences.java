@@ -10,6 +10,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
@@ -18,6 +19,9 @@ import android.util.Base64;
 public class SecurePreferences {
 
 	public static class SecurePreferencesException extends RuntimeException {
+
+		
+		private static final long serialVersionUID = 0;
 
 		public SecurePreferencesException(Throwable e) {
 			super(e);
@@ -67,7 +71,7 @@ public class SecurePreferences {
 		}
 	}
 
-	protected void initCiphers(String secureKey) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException,
+	@SuppressLint("TrulyRandom") protected void initCiphers(String secureKey) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException,
 			InvalidAlgorithmParameterException {
 		IvParameterSpec ivSpec = getIv();
 		SecretKeySpec secretKey = getSecretKey(secureKey);
@@ -100,7 +104,6 @@ public class SecurePreferences {
 			preferences.edit().remove(toKey(key)).commit();
 		}
 		else {
-			String k = toKey(key).toString();
 			putValue(toKey(key), value);
 		}
 	}
