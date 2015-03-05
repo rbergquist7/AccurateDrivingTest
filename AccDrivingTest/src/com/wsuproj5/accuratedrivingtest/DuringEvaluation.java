@@ -149,7 +149,11 @@ public class DuringEvaluation extends ActionBarActivity implements
     private TextView mMonitor;
     
     // Variable def
+    boolean sendAll = false;
     int commandNumber = 0;
+    private int MPH = 0;
+    private int RPM = 0;
+    private int distanceTraveled = 0;
     private static StringBuilder mSbCmdResp;
     private static StringBuilder mPartialResponse;
     private String mConnectedDeviceName;
@@ -193,19 +197,26 @@ public class DuringEvaluation extends ActionBarActivity implements
                     readMessage = readMessage.trim();
                     readMessage = readMessage.toUpperCase();
                     displayLog(mConnectedDeviceName + ": " + readMessage);
-                   // if(readMessage.length() == 1) break;
-                 //   char lastChar = 
-                    if (readMessage.charAt(readMessage.length() - 1) == '>')
-	                {
-	                    parseResponse(mPartialResponse.toString() + readMessage);
-	                    mPartialResponse.setLength(0);
-	                }
-	                else 
-	                {
-	                    mPartialResponse.append(readMessage);
-	                }
-                    
-                   
+                    //int temp = readMessage.length();
+                    if(readMessage.length() == 0){
+                    	displayLog("breaking, length of read message was zero");
+                    	break;
+                    }
+                    char lastChar = readMessage.charAt(readMessage.length() - 1);
+                    if (lastChar == '>')
+                    {
+                        if(sendAll == true) {
+                        	parseResponse(mPartialResponse.toString() + readMessage);
+                        }
+                        else{
+                        	parseResponse_single_command(mPartialResponse.toString() + readMessage);
+                        }
+                        mPartialResponse.setLength(0);
+                    }
+                    else 
+                    {
+                        mPartialResponse.append(readMessage);
+                    }
                     break;
 
                 case MESSAGE_WRITE:
@@ -373,7 +384,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    	   .color(Color.RED));
 	    	   
 	       }
-	       if(routeListPoints != null){
+	       if(routeListPoints != null && routeListPoints.size() > 0){
 	    	   map.addPolyline(new PolylineOptions()
 	    	   .addAll(routeListPoints.get(0))
 	    	   .width(5)
@@ -566,6 +577,8 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    public void hideCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(INVISIBLE);
+	    	mSbCmdResp.setLength(0);
+            mMonitor.setText("");
 	    }
 	    
 	    public void revealOBDDataMenu(View view) {
@@ -993,10 +1006,23 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     private void sendDefaultCommands()
     {
-        
+    	
+        if(sendAll == false){
+        	//choose what parser to use
+        	sendAll = true;
+        	
+        	//clear out cmd response and clear monitor
+        	mSbCmdResp.setLength(0);
+            mMonitor.setText("");
+        }
         if (mCMDPointer >= INIT_COMMANDS.length)
         {
+        	sendAll = false;
             mCMDPointer = -1;
+            
+            mMonitor.append("\n\n MPH: " + getMPH());
+            mMonitor.append("\n RPM: " + getRPM());
+            mMonitor.append("\n Distance Traveled: " + getDistanceTraveled() + "\n");
             return;
         }
         
@@ -1011,72 +1037,143 @@ public class DuringEvaluation extends ActionBarActivity implements
     
     private void parseResponse(String buffer)
     {        
-        switch (commandNumber)
-        {
-            case 0: // CMD: AT Z, no parse needed
-            case 1: // CMD: AT SP 0, no parse needed
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append("\n");
-                break;
-            
-            case 2: // CMD: 0105, Engine coolant temperature
-                int ect = showEngineCoolantTemperature(buffer);
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append( " (Eng. Coolant Temp is ");
-                mSbCmdResp.append(ect);
-                mSbCmdResp.append((char) 0x00B0);
-                mSbCmdResp.append("C)");
-                mSbCmdResp.append("\n");
-                break;
-
-            case 3: // CMD: 010C, EngineRPM
-                int eRPM = showEngineRPM(buffer);
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append( " (Eng. RPM: ");
-                mSbCmdResp.append(eRPM);
-                mSbCmdResp.append(")");
-                mSbCmdResp.append("\n");
-                commandNumber = 4;
-    	    	sendOBD2CMD("010D");
-                break;
-
-            case 4: // CMD: 010D, Vehicle Speed
-                int vs = showVehicleSpeed(buffer);
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append( " (Vehicle Speed: ");
-                mSbCmdResp.append(vs);
-                mSbCmdResp.append("Km/h)");
-                mSbCmdResp.append("\n");
-                break;
-            
-            case 5: // CMD: 0131
-                int dt = showDistanceTraveled(buffer);
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append( " (Distance traveled since codes cleared: ");
-                mSbCmdResp.append(dt);
-                mSbCmdResp.append("Km)");
-                mSbCmdResp.append("\n");
-                break;
-            
-            default:
-                mSbCmdResp.append("R>>");
-                mSbCmdResp.append(buffer);
-                mSbCmdResp.append("\n");
-        }
-
-        
-        mMonitor.setText(mSbCmdResp.toString());
-        
-        if (mCMDPointer >= 0)
-        {
-            mCMDPointer++;
-            sendDefaultCommands();
-        }
+    	switch (mCMDPointer)
+    	{
+    	case 0: // CMD: AT Z, no parse needed
+    	case 1: // CMD: AT SP 0, no parse needed
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	case 2: // CMD: 0105, Engine coolant temperature
+    		int ect = showEngineCoolantTemperature(buffer);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Eng. Coolant Temp is ");
+    		mSbCmdResp.append(ect);
+    		mSbCmdResp.append((char) 0x00B0);
+    		mSbCmdResp.append("C)");
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	case 3: // CMD: 010C, EngineRPM
+    		int eRPM = showEngineRPM(buffer);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Eng. RPM: ");
+    		mSbCmdResp.append(eRPM);
+    		mSbCmdResp.append(")");
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	case 4: // CMD: 010D, Vehicle Speed
+    		int vs = showVehicleSpeed(buffer);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Vehicle Speed: ");
+    		mSbCmdResp.append(vs);
+    		mSbCmdResp.append("Km/h)");
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	case 5: // CMD: 0131
+    		int dt = showDistanceTraveled(buffer);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Distance traveled since codes cleared: ");
+    		mSbCmdResp.append(dt);
+    		mSbCmdResp.append("Km)");
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	default:
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append("\n");
+    	}
+    	
+    	
+    	mMonitor.setText(mSbCmdResp.toString());
+    	
+    	if (mCMDPointer >= 0)
+    	{
+    		mCMDPointer++;
+    		sendDefaultCommands();
+    	}
+    }
+    private void parseResponse_single_command(String buffer)
+    {        
+    	switch (commandNumber)
+    	{
+    	case 0: // CMD: AT Z, no parse needed
+    	case 1: // CMD: AT SP 0, no parse needed
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	case 2: // CMD: 0105, Engine coolant temperature
+    		int ect = showEngineCoolantTemperature(buffer);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Eng. Coolant Temp is ");
+    		mSbCmdResp.append(ect);
+    		mSbCmdResp.append((char) 0x00B0);
+    		mSbCmdResp.append("C)");
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	case 3: // CMD: 010C, EngineRPM
+    		int eRPM = showEngineRPM(buffer);
+    		if(eRPM != -1) setRPM(eRPM);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Eng. RPM: ");
+    		mSbCmdResp.append(eRPM);
+    		mSbCmdResp.append(")");
+    		mSbCmdResp.append("\n");
+    		commandNumber = 4;
+    		sendOBD2CMD("010D");
+    		break;
+    		
+    	case 4: // CMD: 010D, Vehicle Speed
+    		int vs = showVehicleSpeed(buffer);
+    		if(vs != -1) setMPH(vs);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Vehicle Speed: ");
+    		mSbCmdResp.append(vs);
+    		mSbCmdResp.append("Km/h)");
+    		mSbCmdResp.append("\n");
+    		commandNumber = -1;
+    		break;
+    		
+    	case 5: // CMD: 0131
+    		int dt = showDistanceTraveled(buffer);
+    		if(dt != -1) setDistanceTraveled(dt);
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append( " (Distance traveled since codes cleared: ");
+    		mSbCmdResp.append(dt);
+    		mSbCmdResp.append("Km)");
+    		mSbCmdResp.append("\n");
+    		break;
+    		
+    	default:
+    		mSbCmdResp.append("R>>");
+    		mSbCmdResp.append(buffer);
+    		mSbCmdResp.append("\n");
+    	}
+    	
+    	
+    	mMonitor.setText(mSbCmdResp.toString());
+    	if(commandNumber == -1){
+    		mMonitor.append("\n\n MPH: " + getMPH());
+            mMonitor.append("\n RPM: " + getRPM());
+            mMonitor.append("\n Distance Traveled: " + getDistanceTraveled() + "\n");
+    	}
+    	
     }
     
     private String cleanResponse(String text)
@@ -1192,6 +1289,30 @@ public class DuringEvaluation extends ActionBarActivity implements
 
         return -1;
     }
+
+	public int getMPH() {
+		return MPH;
+	}
+
+	public void setMPH(int mPH) {
+		MPH = mPH;
+	}
+
+	public int getRPM() {
+		return RPM;
+	}
+
+	public void setRPM(int rPM) {
+		RPM = rPM;
+	}
+
+	public int getDistanceTraveled() {
+		return distanceTraveled;
+	}
+
+	public void setDistanceTraveled(int distanceTraveled) {
+		this.distanceTraveled = distanceTraveled;
+	}
 }
 
 

@@ -24,14 +24,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-
 
 import de.greenrobot.event.EventBus;
 
@@ -42,7 +38,7 @@ public class MainElmActivity extends ActionBarActivity implements
     private static final String TAG = MainElmActivity.class.getSimpleName();
     private static final String TAG_DIALOG = "dialog";
     private static final String NO_BLUETOOTH = "Oops, your device doesn't support bluetooth";
-   
+
     // Commands
     private static final String[] INIT_COMMANDS = {"AT Z", "AT SP 0", "0105", "010C", "010D", "0131"};
     private int mCMDPointer = -1;
@@ -173,7 +169,7 @@ public class MainElmActivity extends ActionBarActivity implements
     {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_elm_main);
 
         // log
         displayLog("=>\n***************\n     ELM 327 started\n***************");
@@ -464,7 +460,7 @@ public class MainElmActivity extends ActionBarActivity implements
     {
         if (mDeviceList == null)
         {
-            mDeviceList = new ArrayList<BluetoothDevice>(10);
+            mDeviceList = new ArrayList<>(10);
         }
 
         mDeviceList.add(device);
@@ -479,7 +475,7 @@ public class MainElmActivity extends ActionBarActivity implements
         else
         {
             dialog = new PairedDevicesDialog();
-            dialog.setAdapter(new PairedListAdapter(this, new HashSet<BluetoothDevice>(mDeviceList)), true);
+            dialog.setAdapter(new PairedListAdapter(this, new HashSet<>(mDeviceList)), true);
             showChooserDialog(dialog);
         }
     }
