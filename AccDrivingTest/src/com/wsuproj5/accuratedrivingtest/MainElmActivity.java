@@ -71,7 +71,6 @@ public class MainElmActivity extends ActionBarActivity implements
     private ImageButton mBtnSend;
     
     // Variable def
-    private boolean inSimulatorMode = false;
     private static StringBuilder mSbCmdResp;
     private static StringBuilder mPartialResponse;
     private String mConnectedDeviceName;
@@ -117,25 +116,19 @@ public class MainElmActivity extends ActionBarActivity implements
                     readMessage = readMessage.trim();
                     readMessage = readMessage.toUpperCase();
                     displayLog(mConnectedDeviceName + ": " + readMessage);
-                    if (!inSimulatorMode)
-                    {
-                        char lastChar = readMessage.charAt(readMessage.length() - 1);
-                        if (lastChar == '>')
-                        {
-                            parseResponse(mPartialResponse.toString() + readMessage);
-                            mPartialResponse.setLength(0);
-                        }
-                        else 
-                        {
-                            mPartialResponse.append(readMessage);
-                        }
+                    if(readMessage.length() == 0){
+                    	displayLog("breaking, length of read message was zero");
+                    	break;
                     }
-                    else
+                    char lastChar = readMessage.charAt(readMessage.length() - 1);
+                    if (lastChar == '>')
                     {
-                        mSbCmdResp.append("R>>");
-                        mSbCmdResp.append(readMessage);
-                        mSbCmdResp.append("\n");
-                        mMonitor.setText(mSbCmdResp.toString());
+                    	parseResponse(mPartialResponse.toString() + readMessage);
+                    	mPartialResponse.setLength(0);
+                    }
+                    else 
+                    {
+                    	mPartialResponse.append(readMessage);
                     }
                     break;
 
@@ -317,19 +310,6 @@ public class MainElmActivity extends ActionBarActivity implements
                 mSbCmdResp.setLength(0);
                 mMonitor.setText("");
                 return true;
-            
-            case R.id.menu_toggle_obd_mode:
-                inSimulatorMode = !inSimulatorMode;
-                if(inSimulatorMode)
-                {
-                    displayMessage("Simulator mode enabled.");
-                }
-                else 
-                {
-                    displayMessage("Simulator mode disabled.");
-                }
-                return true;
-
             case R.id.menu_clear_code:
                 sendOBD2CMD("04");
                 return true;
@@ -532,12 +512,6 @@ public class MainElmActivity extends ActionBarActivity implements
 
     private void sendDefaultCommands()
     {
-        if(inSimulatorMode)
-        {
-            displayMessage("You are in simulator mode!");
-            return;
-        }
-        
         if (mCMDPointer >= INIT_COMMANDS.length)
         {
             mCMDPointer = -1;

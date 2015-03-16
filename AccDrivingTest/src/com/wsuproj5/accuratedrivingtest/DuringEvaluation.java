@@ -74,7 +74,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	// Milliseconds per second
     private static final int MILLISECONDS_PER_SECOND = 1000;
     // Update frequency in seconds
-    public static final long UPDATE_INTERVAL_IN_SECONDS = 6;
+    public static final long UPDATE_INTERVAL_IN_SECONDS = 3;
     // Update frequency in milliseconds
     private static final long UPDATE_INTERVAL =
             MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
@@ -91,7 +91,6 @@ public class DuringEvaluation extends ActionBarActivity implements
     GoogleApiClient mLocationClient;
     // Global variable to hold the current location
     Location mCurrentLocation;
-    
     boolean mUpdatesRequested;
     
     SharedPreferences mPrefs;
@@ -306,7 +305,7 @@ public class DuringEvaluation extends ActionBarActivity implements
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         // Set the fastest update interval to 1 second
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        
+
         // Start with updates turned off
         mUpdatesRequested = false;
         
@@ -339,10 +338,10 @@ public class DuringEvaluation extends ActionBarActivity implements
     @Override
     public void onLocationChanged(Location location) {
 
-    	//x.sendOBD2CMD(MPH_COMMAND);
-    	//sendOBD2CMD(RPM_COMMAND);
-//    	commandNumber = 3;
-//    	sendOBD2CMD("010C");
+    	mSbCmdResp.setLength(0);
+        mMonitor.setText("");
+    	commandNumber = 1;
+    	sendOBD2CMD("AT SP 0");
     	
     	// Report to the UI that the location was updated
     	DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.US);
@@ -403,11 +402,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	        
 
         }
-     //   mSbCmdResp.setLength(0);
-       // mMonitor.setText(x.getmMonitor());
-    //    mMonitor.append("\nRPM: " + getRPM() + "\n");
-//    	mMonitor.append("RPM: " + getRPM());
-    	
+
     }
     
     @Override
@@ -584,8 +579,8 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    public void revealOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(VISIBLE);
-	    	commandNumber = 3;
-	    	sendOBD2CMD("010C");
+//	    	commandNumber = 3;
+//	    	sendOBD2CMD("010C");
 	    	
 
 	    }
@@ -1022,7 +1017,6 @@ public class DuringEvaluation extends ActionBarActivity implements
             
             mMonitor.append("\n\n MPH: " + getMPH());
             mMonitor.append("\n RPM: " + getRPM());
-            mMonitor.append("\n Distance Traveled: " + getDistanceTraveled() + "\n");
             return;
         }
         
@@ -1111,6 +1105,8 @@ public class DuringEvaluation extends ActionBarActivity implements
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append("\n");
+    		commandNumber = 3;
+    		sendOBD2CMD("010C");
     		break;
     		
     	case 2: // CMD: 0105, Engine coolant temperature
@@ -1126,7 +1122,12 @@ public class DuringEvaluation extends ActionBarActivity implements
     		
     	case 3: // CMD: 010C, EngineRPM
     		int eRPM = showEngineRPM(buffer);
-    		if(eRPM != -1) setRPM(eRPM);
+    		if(eRPM != -1) {
+    			setRPM(eRPM);
+    		}
+    		else{
+        	//	sendOBD2CMD("010C");
+        	}
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append( " (Eng. RPM: ");
@@ -1139,7 +1140,12 @@ public class DuringEvaluation extends ActionBarActivity implements
     		
     	case 4: // CMD: 010D, Vehicle Speed
     		int vs = showVehicleSpeed(buffer);
-    		if(vs != -1) setMPH(vs);
+    		if(vs != -1){
+    			setMPH(vs);
+    		}
+    		else{
+        	//	sendOBD2CMD("010D");
+    		}
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append( " (Vehicle Speed: ");
@@ -1151,7 +1157,12 @@ public class DuringEvaluation extends ActionBarActivity implements
     		
     	case 5: // CMD: 0131
     		int dt = showDistanceTraveled(buffer);
-    		if(dt != -1) setDistanceTraveled(dt);
+    		if(dt != -1){
+    			setDistanceTraveled(dt);
+    		}
+    		else{
+        	//	sendOBD2CMD("0131");
+    		}
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append( " (Distance traveled since codes cleared: ");
@@ -1171,7 +1182,6 @@ public class DuringEvaluation extends ActionBarActivity implements
     	if(commandNumber == -1){
     		mMonitor.append("\n\n MPH: " + getMPH());
             mMonitor.append("\n RPM: " + getRPM());
-            mMonitor.append("\n Distance Traveled: " + getDistanceTraveled() + "\n");
     	}
     	
     }
