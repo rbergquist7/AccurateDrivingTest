@@ -65,7 +65,7 @@ public class BluetoothIOGateway
         mState = state;
 
         // Give the new state to the Handler so the UI Activity can update
-        mHandler.obtainMessage(MainElmActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+        mHandler.obtainMessage(DuringEvaluation.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
     }
 
     public synchronized int getState()
@@ -172,9 +172,9 @@ public class BluetoothIOGateway
         mConnectedThread.start();
 
         // Send the name of the connected device back to the UI Activity
-        Message msg = mHandler.obtainMessage(MainElmActivity.MESSAGE_DEVICE_NAME);
+        Message msg = mHandler.obtainMessage(DuringEvaluation.MESSAGE_DEVICE_NAME);
         Bundle bundle = new Bundle();
-        bundle.putString(MainElmActivity.DEVICE_NAME, device.getName());
+        bundle.putString(DuringEvaluation.DEVICE_NAME, device.getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -237,9 +237,9 @@ public class BluetoothIOGateway
     private void connectionFailed()
     {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(MainElmActivity.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(DuringEvaluation.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(MainElmActivity.TOAST, "Unable to connect device");
+        bundle.putString(DuringEvaluation.TOAST, "Unable to connect device");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -250,9 +250,9 @@ public class BluetoothIOGateway
     private void connectionLost()
     {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(MainElmActivity.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(DuringEvaluation.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(MainElmActivity.TOAST, "Device connection was lost");
+        bundle.putString(DuringEvaluation.TOAST, "Device connection was lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -500,7 +500,7 @@ public class BluetoothIOGateway
                     bytes = mmInStream.read(buffer);
 
                     // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(MainElmActivity.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
+                    mHandler.obtainMessage(DuringEvaluation.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                 }
                 catch (IOException e)
                 {
@@ -546,7 +546,7 @@ public class BluetoothIOGateway
                 mmOutStream.write(buffer);
 
                 // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(MainElmActivity.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
+                mHandler.obtainMessage(DuringEvaluation.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
             }
             catch (IOException e)
             {

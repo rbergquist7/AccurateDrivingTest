@@ -18,6 +18,7 @@ public class DeviceBroadcastReceiver extends BroadcastReceiver
         {
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             displayLog("Device found: " + device.getName() + " (" + device.getAddress() + ")");
+        
         }
     }
 

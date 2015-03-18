@@ -24,15 +24,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-
-
 
 import de.greenrobot.event.EventBus;
 
@@ -43,21 +38,13 @@ public class MainElmActivity extends ActionBarActivity implements
     private static final String TAG = MainElmActivity.class.getSimpleName();
     private static final String TAG_DIALOG = "dialog";
     private static final String NO_BLUETOOTH = "Oops, your device doesn't support bluetooth";
-    private static final String[] PIDS = {
-            "01", "02", "03", "04", "05", "06", "07", "08",
-            "09", "0A", "0B", "0C", "0D", "0E", "0F", "10",
-            "11", "12", "13", "14", "15", "16", "17", "18",
-            "19", "1A", "1B", "1C", "1D", "1E", "1F", "20"
-    };
-    
+
     // Commands
     private static final String[] INIT_COMMANDS = {"AT Z", "AT SP 0", "0105", "010C", "010D", "0131"};
     private int mCMDPointer = -1;
 
     // Intent request codes
     private static final int REQUEST_ENABLE_BT = 101;
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 102;
-    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 103;
 
     // Message types accessed from the BluetoothIOGateway Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -79,12 +66,6 @@ public class MainElmActivity extends ActionBarActivity implements
 
     // Widgets
     private TextView mConnectionStatus;
-    
-    //Monitor is where we want to set the text after parsing a the response
-    //currently it appends the text and sets the display, then sends the next response
-    //assuming a pointer exist. stops recursion when finished with default commands.
-    //if instead of stopping we reset the pointer. call clear when reseting the pointer
-    //show monitor if user clicks show obd info.
     private TextView mMonitor;
     private EditText mCommandPrompt;
     private ImageButton mBtnSend;
@@ -135,15 +116,19 @@ public class MainElmActivity extends ActionBarActivity implements
                     readMessage = readMessage.trim();
                     readMessage = readMessage.toUpperCase();
                     displayLog(mConnectedDeviceName + ": " + readMessage);
+                    if(readMessage.length() == 0){
+                    	displayLog("breaking, length of read message was zero");
+                    	break;
+                    }
                     char lastChar = readMessage.charAt(readMessage.length() - 1);
                     if (lastChar == '>')
                     {
-                        parseResponse(mPartialResponse.toString() + readMessage);
-                        mPartialResponse.setLength(0);
+                    	parseResponse(mPartialResponse.toString() + readMessage);
+                    	mPartialResponse.setLength(0);
                     }
                     else 
                     {
-                        mPartialResponse.append(readMessage);
+                    	mPartialResponse.append(readMessage);
                     }
                     break;
 
@@ -309,29 +294,26 @@ public class MainElmActivity extends ActionBarActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-    	if(item.getItemId() == R.id.action_scan){
-    		queryPairedDevices();
+        switch (item.getItemId())
+        {
+            case R.id.action_scan:
+                queryPairedDevices();
                 setupMonitor();
                 return true;
-    	}
-    	else if(item.getItemId() == R.id.menu_send_cmd){
-    		mCMDPointer = -1;
-    		sendDefaultCommands();
-    		return true;
-    		
-    	}
-    	else if(item.getItemId() == R.id.menu_clr_scr){
-    		mSbCmdResp.setLength(0);
-    		mMonitor.setText("");
-    		return true;
-    		
-    	}
-    	
-    	else if(item.getItemId() == R.id.menu_clear_code){
-    		sendOBD2CMD("04");
-    		return true;
-    		
-    	}
+            
+            case R.id.menu_send_cmd:
+                mCMDPointer = -1;
+                sendDefaultCommands();
+                return true;
+            
+            case R.id.menu_clr_scr:
+                mSbCmdResp.setLength(0);
+                mMonitor.setText("");
+                return true;
+            case R.id.menu_clear_code:
+                sendOBD2CMD("04");
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -449,12 +431,16 @@ public class MainElmActivity extends ActionBarActivity implements
         }
     }
 
-   
+    /**
+     * Callback method for once a new device detected.
+     *
+     * @param device BluetoothDevice
+     */
     public void onEvent(BluetoothDevice device)
     {
         if (mDeviceList == null)
         {
-            mDeviceList = new ArrayList<BluetoothDevice>(10);
+            mDeviceList = new ArrayList<>(10);
         }
 
         mDeviceList.add(device);
@@ -469,7 +455,7 @@ public class MainElmActivity extends ActionBarActivity implements
         else
         {
             dialog = new PairedDevicesDialog();
-            dialog.setAdapter(new PairedListAdapter(this, new HashSet<BluetoothDevice>(mDeviceList)), true);
+            dialog.setAdapter(new PairedListAdapter(this, new HashSet<>(mDeviceList)), true);
             showChooserDialog(dialog);
         }
     }
@@ -526,7 +512,6 @@ public class MainElmActivity extends ActionBarActivity implements
 
     private void sendDefaultCommands()
     {
-
         if (mCMDPointer >= INIT_COMMANDS.length)
         {
             mCMDPointer = -1;
@@ -627,14 +612,20 @@ public class MainElmActivity extends ActionBarActivity implements
         
         if (buf.contains("4105"))
         {
-        	buf = buf.substring(buf.indexOf("4105"));
-        	
-        	String temp = buf.substring(4, 6);
-        	int A = Integer.valueOf(temp, 16);
-        	A -= 40;
-        	
-        	return A;
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("4105"));
+
+                String temp = buf.substring(4, 6);
+                int A = Integer.valueOf(temp, 16);
+                A -= 40;
+
+                return A;
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
         
         return -1;
@@ -647,15 +638,21 @@ public class MainElmActivity extends ActionBarActivity implements
         
         if (buf.contains("410C"))
         {
-        	buf = buf.substring(buf.indexOf("410C"));
-        	
-        	String MSB = buf.substring(4, 6);
-        	String LSB = buf.substring(6, 8);
-        	int A = Integer.valueOf(MSB, 16);
-        	int B = Integer.valueOf(LSB, 16);
-        	
-        	return  ((A * 256) + B) / 4;
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("410C"));
+                
+                String MSB = buf.substring(4, 6);
+                String LSB = buf.substring(6, 8);
+                int A = Integer.valueOf(MSB, 16);
+                int B = Integer.valueOf(LSB, 16);
+                
+                return  ((A * 256) + B) / 4;
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
         
         return -1;
@@ -668,12 +665,18 @@ public class MainElmActivity extends ActionBarActivity implements
         
         if (buf.contains("410D"))
         {
-        	buf = buf.substring(buf.indexOf("410D"));
-        	
-        	String temp = buf.substring(4, 6);
-        	
-        	return Integer.valueOf(temp, 16);
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("410D"));
+
+                String temp = buf.substring(4, 6);
+
+                return Integer.valueOf(temp, 16);
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
         
         return -1;
@@ -686,15 +689,21 @@ public class MainElmActivity extends ActionBarActivity implements
         
         if (buf.contains("4131"))
         {
-        	buf = buf.substring(buf.indexOf("4131"));
-        	
-        	String MSB = buf.substring(4, 6);
-        	String LSB = buf.substring(6, 8);
-        	int A = Integer.valueOf(MSB, 16);
-        	int B = Integer.valueOf(LSB, 16);
-        	
-        	return (A * 256) + B;
-            
+            try
+            {
+                buf = buf.substring(buf.indexOf("4131"));
+
+                String MSB = buf.substring(4, 6);
+                String LSB = buf.substring(6, 8);
+                int A = Integer.valueOf(MSB, 16);
+                int B = Integer.valueOf(LSB, 16);
+
+                return (A * 256) + B;
+            }
+            catch (IndexOutOfBoundsException | NumberFormatException e)
+            {
+                MyLog.e(TAG, e.getMessage());
+            }
         }
 
         return -1;
