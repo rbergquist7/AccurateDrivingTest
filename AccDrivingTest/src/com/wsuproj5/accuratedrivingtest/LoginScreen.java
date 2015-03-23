@@ -9,16 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.fatfractal.ffef.FFException;
-import com.fatfractal.ffef.FatFractal;
+/*import com.fatfractal.ffef.FFException;
+import com.fatfractal.ffef.FatFractal;*/
 
 public class LoginScreen extends ActionBarActivity{
-	public static FatFractal ff = null;
+	//public static FatFractal ff = null;
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login_screen);
-		ff = MainActivity.getFF();
+		//ff = MainActivity.getFF();
 		Button mButton_login = (Button)findViewById(R.id.btn_login);
 		final EditText mEdit_Evaluator_name = (EditText)findViewById(R.id.fld_Evaluator_name);
 		final EditText mEdit_password = (EditText)findViewById(R.id.fld_pwd);
@@ -31,7 +31,7 @@ public class LoginScreen extends ActionBarActivity{
 	      
 	   // We need an editor object to make changes
 	     // final SharedPreferences.Editor edit = pref.edit();
-		mButton_login.setOnClickListener(
+	/*	mButton_login.setOnClickListener(
 				new View.OnClickListener()
 				{
 					public void onClick(View view)
@@ -49,7 +49,7 @@ public class LoginScreen extends ActionBarActivity{
 	    				  Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
 	    			      startActivity(userMenu);
 	    			  }
-	    		  });
+	    		  });*/
 	      
 	   }
 	

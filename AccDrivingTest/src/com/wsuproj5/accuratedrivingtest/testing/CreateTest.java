@@ -1,16 +1,25 @@
-package com.wsuproj5.accuratedrivingtest;
+package com.wsuproj5.accuratedrivingtest.testing;
 
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.wsuproj5.accuratedrivingtest.R;
+import com.wsuproj5.accuratedrivingtest.R.id;
+import com.wsuproj5.accuratedrivingtest.R.layout;
 
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,27 +27,38 @@ import android.widget.ListView;
 
 public class CreateTest extends ActionBarActivity {
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_test);
-		setLists();
+		JSONObject json = TestingJSON.readTestingJSONLocal(this);
+		setLists(json);
+	}
+	
+	private class JObject extends JSONObject {
+		JSONObject jsonObject;
+		String objectName;
+		public JObject (JSONObject j, String oN) {
+			jsonObject = j;
+			objectName = oN;
+		}
 		
+	    @Override
+	    public String toString(){
+			return objectName;
+	    }
 	}
 
-	private void setLists() {
+	private void setLists(JSONObject json) {
 		ListView rightSide = (ListView) findViewById(R.id.all_test);
 		ListView leftSide = (ListView) findViewById(R.id.selected_test);
 		
-		final ArrayList<String> notselected= getAllCriteria();
-		final ArrayList<String> selected = new ArrayList<String>();
+		final ArrayList<JSONObject> notselected= getAllCriteria(json);
+		final ArrayList<JSONObject> selected = new ArrayList<JSONObject>();
 		
-		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-		        android.R.layout.simple_list_item_1, notselected);
+		final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, notselected);
 			rightSide.setAdapter(adapter);
-		final StableArrayAdapter secondadapter = new StableArrayAdapter(this,
-			        android.R.layout.simple_list_item_1, selected);
+		final StableArrayAdapter secondadapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, selected);
 			leftSide.setAdapter(secondadapter);
 
 			rightSide.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,7 +66,7 @@ public class CreateTest extends ActionBarActivity {
 		      @SuppressLint("NewApi") @Override
 		      public void onItemClick(AdapterView<?> parent, final View view,
 		          int position, long id) {
-		        final String item = (String) parent.getItemAtPosition(position);
+		    	  final JObject item = (JObject) parent.getItemAtPosition(position);
 		        view.animate().setDuration(500).alpha(0)
 		            .withEndAction(new Runnable() {
 		              @Override
@@ -67,7 +87,7 @@ public class CreateTest extends ActionBarActivity {
 			      @SuppressLint("NewApi") @Override
 			      public void onItemClick(AdapterView<?> parent, final View view,
 			          int position, long id) {
-			        final String item = (String) parent.getItemAtPosition(position);
+			        final JObject item = (JObject) parent.getItemAtPosition(position);
 			        view.animate().setDuration(500).alpha(0)
 			            .withEndAction(new Runnable() {
 			              @Override
@@ -87,12 +107,11 @@ public class CreateTest extends ActionBarActivity {
 		  
 		
 	
-	private class StableArrayAdapter extends ArrayAdapter<String> {
+	private class StableArrayAdapter extends ArrayAdapter<JSONObject> {
 	
-	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+	    HashMap<JSONObject, Integer> mIdMap = new HashMap<JSONObject, Integer>();
 	
-	    public StableArrayAdapter(Context context, int textViewResourceId,
-	        List<String> objects) {
+	    public StableArrayAdapter(Context context, int textViewResourceId, List<JSONObject> objects) {
 	      super(context, textViewResourceId, objects);
 	      for (int i = 0; i < objects.size(); ++i) {
 	        mIdMap.put(objects.get(i), i);
@@ -100,31 +119,21 @@ public class CreateTest extends ActionBarActivity {
 	    }
 	}
 
-	private ArrayList<String> getAllCriteria() {
+	private ArrayList<JSONObject> getAllCriteria(JSONObject json) {
 		
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<JSONObject> list = new ArrayList<JSONObject>();
 		
-		list.add("Test Criteria 1");
-		list.add("Test Criteria 2");
-		list.add("Test Criteria 3");
-		list.add("Test Criteria 4");
-		list.add("Test Criteria 5");
-		list.add("Test Criteria 6");
-		list.add("Test Criteria 7");
-		list.add("Test Criteria 8");
-		list.add("Test Criteria 9");
-		list.add("Test Criteria 10");
-		list.add("Test Criteria 11");
-		list.add("Test Criteria 12");
-		list.add("Test Criteria 13");
-		list.add("Test Criteria 14");
-		list.add("Test Criteria 15");
-		list.add("Test Criteria 16");
-		list.add("Test Criteria 17");
-		list.add("Test Criteria 18");
-		list.add("Test Criteria 19");
-		list.add("Test Criteria 20");
-		list.add("Test Criteria 21");
+		Iterator<String> iter = json.keys();
+		while (iter.hasNext()) {
+	        String key = iter.next();
+	        try {
+	        	//Assign our JSONObject to a new JObject that will override the tostring method
+	            JObject value = new JObject((JSONObject) json.get(key), key);
+	            list.add(value);
+	        } catch (JSONException e) {
+	            Log.e("JSON","Error retrieving test criteria.");
+	        }
+	    }
 		
 		return list;
 	}

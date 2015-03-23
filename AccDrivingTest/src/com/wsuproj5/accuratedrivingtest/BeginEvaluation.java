@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wsuproj5.accuratedrivingtest.addroute.AddRoute;
+import com.wsuproj5.accuratedrivingtest.testing.CreateTest;
 
 import android.content.Context;
 import android.content.Intent;
@@ -49,7 +50,7 @@ public class BeginEvaluation extends ActionBarActivity{
 			      final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
  
 			   String username = pref.getString("evaluator_name");
-			   Log.d("username", username);
+			   //Log.d("username", username);
 			   
 			   final TextView evaluator_name = (TextView)findViewById(R.id.evaluators2_name);
 			   evaluator_name.setText(username);

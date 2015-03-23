@@ -82,7 +82,7 @@
             android:label="@string/title_activity_add_route" >
         </activity>
         <activity
-            android:name=".CreateTest"
+            android:name="com.wsuproj5.accuratedrivingtest.testing.CreateTest"
             android:label="@string/title_activity_create_test" >
         </activity>
         <activity
