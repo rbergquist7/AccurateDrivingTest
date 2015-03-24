@@ -14,7 +14,7 @@ import com.fatfractal.ffef.json.FFObjectMapper;
 
 public class MainActivity extends Activity {
 	
-	public static FatFractal ff = null;
+	//public static FatFractal ff = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +25,20 @@ public class MainActivity extends Activity {
         startActivity(splashScreen);   
     }
   
-    public static FatFractal getFF() {
-    	//initialize instance of fatfractal
-        if (ff == null) {
-            String baseUrl = "http://adt.fatfractal.com/accuratedrivingtest";
-            String sslUrl = "https://adt.fatfractal.com/accuratedrivingtest";
-            try {
-                ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
-                FatFractalHttpImpl.addTrustedHost("adt.fatfractal.com");
-                //declare object collections here
-                FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }
-        return ff;
-    }
+//    public static FatFractal getFF() {
+//    	//initialize instance of fatfractal
+//        if (ff == null) {
+//            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest/index.html";
+//            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest/index.html";
+//            try {
+//                ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
+//                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
+//                //declare object collections here
+//                FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
+//            } catch (URISyntaxException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return ff;
+//    }
 }
