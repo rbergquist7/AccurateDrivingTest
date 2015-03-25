@@ -56,13 +56,10 @@ public class BeginEvaluation extends ActionBarActivity{
 	}
 		   private void getDriversName(){
 			   /*get drivers name from the text field*/
-			   EditText drivers_name = (EditText)findViewById(R.id.enter_drivers_name);
+			   EditText drivers_license = (EditText)findViewById(R.id.enter_drivers_name);
 			   
-			 //  SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 			      final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
-		//	   final SharedPreferences.Editor edit = pref.edit();
-			   pref.put("drivers_name",drivers_name.getText().toString());
-		//	   edit.commit();
+			   pref.put("drivers_licence_number",drivers_license.getText().toString());
 			 //  Log.d("driver name", drivers_name.getText().toString());
 
 
@@ -73,6 +70,7 @@ public class BeginEvaluation extends ActionBarActivity{
 			    * check obd connection onCreate of duringEvaluation()
 			    */
 			   getDriversName();
+			   
 			   Intent duringEvaluation = new Intent(BeginEvaluation.this,DuringEvaluation.class);  
 				Spinner sItems = (Spinner) findViewById(R.id.route_spinner1 );
 				String selected = sItems.getSelectedItem().toString();

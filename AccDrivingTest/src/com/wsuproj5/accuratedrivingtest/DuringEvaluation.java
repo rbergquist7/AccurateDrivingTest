@@ -56,6 +56,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,8 @@ public class DuringEvaluation extends ActionBarActivity implements
      * Define a request code to send to Google Play services
      * This code is returned in Activity.onActivityResult
      */
+    final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+    private Driver driver = new Driver();
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	
@@ -194,7 +197,7 @@ public class DuringEvaluation extends ActionBarActivity implements
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     readMessage = readMessage.trim();
-                    readMessage = readMessage.toUpperCase();
+                    readMessage = readMessage.toUpperCase(Locale.US);
                     displayLog(mConnectedDeviceName + ": " + readMessage);
                     //int temp = readMessage.length();
                     if(readMessage.length() == 0){
@@ -256,6 +259,8 @@ public class DuringEvaluation extends ActionBarActivity implements
        // mTest_progress.setText("Passing...For now!");
 		mConnectionStatus = (TextView) findViewById(R.id.tvConnectionStatus);
 	        
+		 driver.setDriver_Licence_Numbere(pref.getString("drivers_licence_number"));
+
 	        // make sure user has Bluetooth hardware
 	        displayLog("Try to check hardware...");
 	        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -558,22 +563,21 @@ public class DuringEvaluation extends ActionBarActivity implements
 	public void onConnectionSuspended(int arg) {
 		Toast.makeText(this, "Connection Suspended", Toast.LENGTH_SHORT).show();
 	}
+	public void saveComment(View view){
+		final EditText add_comment = (EditText)findViewById(R.id.Field_Comment);
+		String Comment_To_Add = add_comment.getText().toString();
+		System.out.println(Comment_To_Add);
 
+	}
 	 public void extendCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(VISIBLE);
-//	    	Intent intent = new Intent(this, DisplayMessageActivity.class);
-//	    	EditText editText = (EditText) findViewById(R.id.edit_message);
-//	    	String message = editText.getText().toString();
-//	    	intent.putExtra(EXTRA_MESSAGE, message);
-//	    	startActivity(intent);
 	    }
 	    
 	    public void hideCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(INVISIBLE);
-	    	mSbCmdResp.setLength(0);
-            mMonitor.setText("");
+
 	    }
 	    
 	    public void revealOBDDataMenu(View view) {

@@ -51,7 +51,6 @@ public class LoginScreen extends ActionBarActivity{
 							Log.d("yes","login worked!");
 							
 							List<User> list = ff.getArrayFromUri("/evaluator");	
-							
 							//if no evaluators exist, create new one with the given password and name
 							if(list.size() == 1){ 
 								pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
@@ -97,8 +96,6 @@ public class LoginScreen extends ActionBarActivity{
 							e.printStackTrace();
 						}
 
-//	    				  Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-//	    			      startActivity(userMenu);
 	    			  }
 
 					
@@ -131,22 +128,5 @@ public class LoginScreen extends ActionBarActivity{
 		Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
         startActivity(userMenu);
 	}
-	
-//	public void checkPassword(View view){
-//		//function will be used to check if the username and password match from backend
-//		
-//		//kaden must finish connecting to fatFractal first to pass and pull information
-//		 final EditText mEdit_Evaluator_name = (EditText)findViewById(R.id.fld_Evaluator_name);
-//	     final EditText mEdit_password = (EditText)findViewById(R.id.fld_pwd);
-//
-//		 SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//	      
-//		   // We need an editor object to make changes
-//		  final SharedPreferences.Editor edit = pref.edit();
-//		  Log.v("EditText", mEdit_password.getText().toString());
-//		  edit.putString("evaluator_name", mEdit_Evaluator_name.getText().toString());
-//		  edit.commit();
-//		  Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-//	      startActivity(userMenu);
-//	}
+
 }
