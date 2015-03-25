@@ -55,7 +55,6 @@
 	android:layout_marginStart="0dp"
 	android:layout_marginLeft="60dp"
     android:layout_below="@+id/pwd_block"
-    android:onClick="checkPassword"
     android:text="@string/lbl_login" />
 
 	<Button
