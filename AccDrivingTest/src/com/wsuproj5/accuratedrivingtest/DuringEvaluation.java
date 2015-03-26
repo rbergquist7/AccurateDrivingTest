@@ -1,5 +1,7 @@
 package com.wsuproj5.accuratedrivingtest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +15,10 @@ import java.util.Set;
 //obd, get it one time, show pass/fail from HPH, connection = T/F,
 //possibly add refresh button. removes memory issue since dont need so many loops running
 
+import com.fatfractal.ffef.FFException;
+import com.fatfractal.ffef.FatFractal;
+import com.fatfractal.ffef.impl.FatFractalHttpImpl;
+import com.fatfractal.ffef.json.FFObjectMapper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -69,8 +75,9 @@ public class DuringEvaluation extends ActionBarActivity implements
      * Define a request code to send to Google Play services
      * This code is returned in Activity.onActivityResult
      */
-    final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
-    private Driver driver = new Driver();
+    SecurePreferences pref;
+    private Driver driver;
+    private static FatFractal ff;
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	
@@ -252,14 +259,16 @@ public class DuringEvaluation extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_during_evaluation);
-
+		
+		 pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+		 driver = new Driver();
         mMonitor = (TextView) findViewById(R.id.obd_data_view);
        	mMonitor.setText(getString(R.string.bt_not_available) + " attempting to connect...");
        // mTest_progress = (TextView) findViewById(R.id.test_progress_data_view);
        // mTest_progress.setText("Passing...For now!");
 		mConnectionStatus = (TextView) findViewById(R.id.tvConnectionStatus);
 	        
-		 driver.setDriver_Licence_Numbere(pref.getString("drivers_licence_number"));
+		 driver.setdriversLicense(pref.getString("drivers_licence_number"));
 
 	        // make sure user has Bluetooth hardware
 	        displayLog("Try to check hardware...");
@@ -356,6 +365,18 @@ public class DuringEvaluation extends ActionBarActivity implements
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude()) + "," + formatted;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        
+        //store lat/long points driven
+        if(driver.getLatLon() == null){
+        	driver.setLatLon(Double.toString(location.getLatitude()) + "," +
+                    Double.toString(location.getLongitude()));
+        }
+        else{
+        	driver.setLatLon(driver.getLatLon() + "\n" + Double.toString(location.getLatitude()) + "," +
+        			Double.toString(location.getLongitude()));
+        	
+        }
+        
     	Log.d("Location Update:",
                 "Location Updated.");
         
@@ -512,6 +533,16 @@ public class DuringEvaluation extends ActionBarActivity implements
     protected void onStop() {
         // Disconnecting the client invalidates it.
         mLocationClient.disconnect();
+        DuringEvaluation.ff = getFF();
+
+        try {
+        	ff.login("r.bergquist7@gmail.com", "23Mar917457");
+        	
+			ff.createObjAtUri(driver, "/driver");
+		} catch (FFException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         super.onStop();
     }
 	
@@ -565,8 +596,18 @@ public class DuringEvaluation extends ActionBarActivity implements
 	}
 	public void saveComment(View view){
 		final EditText add_comment = (EditText)findViewById(R.id.Field_Comment);
+		
 		String Comment_To_Add = add_comment.getText().toString();
-		System.out.println(Comment_To_Add);
+		String current_comments = driver.getcomments();
+		
+		if(current_comments == null){
+			current_comments = "-" + Comment_To_Add;
+		}
+		else{
+			current_comments = current_comments + "\n-" + Comment_To_Add;
+		}
+		driver.setcomments(current_comments);
+		add_comment.setText("");
 
 	}
 	 public void extendCommentMenu(View view) {
@@ -583,9 +624,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    public void revealOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(VISIBLE);
-//	    	commandNumber = 3;
-//	    	sendOBD2CMD("010C");
-	    	
 
 	    }
 	    
@@ -1327,6 +1365,23 @@ public class DuringEvaluation extends ActionBarActivity implements
 	public void setDistanceTraveled(int distanceTraveled) {
 		this.distanceTraveled = distanceTraveled;
 	}
+	public static FatFractal getFF() {
+    	//initialize instance of fatfractal
+        if (ff == null) {
+            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
+            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
+            try {
+                ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
+                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
+                //declare object collections here
+              //  FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
+                FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        return ff;
+    }
 }
 
 

@@ -1,28 +1,20 @@
 package com.wsuproj5.accuratedrivingtest;
 
 public class Driver {
-	
-		//object to be stored by fatfractal
-
-		private String m_driver_licence_number = null;
-		private String comments_during_evaluation = null;
-		private boolean pass = true;
-		private int score = 0;
-		
-		public	Driver() {}
-
-		public String getDriver_Licence_Numbere()      {return m_driver_licence_number;}
-		public String getComments_during_evaluation() {return comments_during_evaluation;}	
-		public boolean isPass() {return pass;}
-		public int getScore() {return score;}
-		
-		
-		public void setDriver_Licence_Numbere(String param)      {m_driver_licence_number = param;}
-		public void setComments_during_evaluation(String comments_during_evaluation) {
-			this.comments_during_evaluation = comments_during_evaluation;
-		}
-		public void setPass(boolean pass) {this.pass = pass;}
-		public void setScore(int score) {this.score = score;}
-		
-
+    private String m_driversLicense = null;
+    private String m_comments = null;
+    private byte[] m_imageData = null;
+    private String m_LatLon = null;
+ 
+    public  Driver() {}
+ 
+    public String getdriversLicense()      {return m_driversLicense;}
+    public String getcomments()       {return m_comments;}
+    public byte[] getImageData()      {return m_imageData;}
+    public String getLatLon()         {return m_LatLon;}
+ 
+    public void setdriversLicense(String param)      {m_driversLicense = param;}
+    public void setcomments(String param)       {m_comments = param;}
+    public void setImageData(byte[] param)      {m_imageData = param;}
+    public void setLatLon(String param)         {m_LatLon= param;}
 }
