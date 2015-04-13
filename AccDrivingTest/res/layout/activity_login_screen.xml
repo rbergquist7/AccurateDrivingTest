@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+			android:inputType="textPassword" 
             android:hint="@string/lbl_enter_pwd" />
 
     </LinearLayout>
@@ -55,7 +56,6 @@
 	android:layout_marginStart="0dp"
 	android:layout_marginLeft="60dp"
     android:layout_below="@+id/pwd_block"
-    android:onClick="checkPassword"
     android:text="@string/lbl_login" />
 
 	<Button
