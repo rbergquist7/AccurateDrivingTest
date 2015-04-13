@@ -160,6 +160,8 @@ public class DuringEvaluation extends ActionBarActivity implements
     // Variable def
     boolean sendAll = false;
     int commandNumber = 0;
+    private int tracker = 1;
+    private int AvgMPH = 0;
     private int MPH = 0;
     private int RPM = 0;
     private int distanceTraveled = 0;
@@ -543,6 +545,13 @@ public class DuringEvaluation extends ActionBarActivity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+		 pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+		 pref.put("average_MPH", Integer.toString(AvgMPH));
+		 
+		 Intent Review = new Intent(DuringEvaluation.this,ReviewEvaluation.class);                               
+	     startActivity(Review);   
+		 
         super.onStop();
     }
 	
@@ -1304,7 +1313,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 
                 String temp = buf.substring(4, 6);
 
-                return Integer.valueOf(temp, 16);
+                return (int)(Integer.valueOf(temp, 16) / 1.609344);
             }
             catch (IndexOutOfBoundsException | NumberFormatException e)
             {
@@ -1347,7 +1356,12 @@ public class DuringEvaluation extends ActionBarActivity implements
 	}
 
 	public void setMPH(int mPH) {
+		if( mPH > (2 * MPH) ){
+			return;
+		}
 		MPH = mPH;
+		AvgMPH = AvgMPH + MPH / tracker;
+		tracker ++;
 	}
 
 	public int getRPM() {
