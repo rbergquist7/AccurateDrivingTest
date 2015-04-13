@@ -542,15 +542,13 @@ public class DuringEvaluation extends ActionBarActivity implements
         	
 			ff.createObjAtUri(driver, "/driver");
 		} catch (FFException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
 		 pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
 		 pref.put("average_MPH", Integer.toString(AvgMPH));
 		 
-		 Intent Review = new Intent(DuringEvaluation.this,ReviewEvaluation.class);                               
-	     startActivity(Review);   
+	     startActivity(new Intent(DuringEvaluation.this,ReviewEvaluation.class));   
 		 
         super.onStop();
     }
