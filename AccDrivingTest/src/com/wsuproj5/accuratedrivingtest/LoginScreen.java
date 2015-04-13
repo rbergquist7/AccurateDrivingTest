@@ -2,7 +2,6 @@ package com.wsuproj5.accuratedrivingtest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;

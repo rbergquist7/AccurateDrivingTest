@@ -1,10 +1,13 @@
 package com.wsuproj5.accuratedrivingtest;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import android.widget.TextView;
 
+import com.fatfractal.ffef.FFException;
 import com.fatfractal.ffef.FatFractal;
 
 public class ReviewEvaluation  extends ActionBarActivity{
@@ -29,6 +32,23 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	    		"\nDrivers License Number: " + driversLicense + 
 	    		"\nAvg MPH: " + A_MPH);
 	    
+	    
+		try {
+			ff.login("r.bergquist7@gmail.com", "23Mar917457");
+		
+			List<Driver> list = ff.getArrayFromUri("/driver");	
+		
+
+			for (Driver temp : list) {
+				if(temp.getdriversLicense() == driversLicense){
+					LeftSide.append("\nComments" + temp.getcomments());
+				}
+			}
+		} catch (FFException e) {
+			e.printStackTrace();
+		}
+
+		RightSide.setText("Section in progress");
 	    /* Left side
 	     * 
 	     * Pass/Fail
