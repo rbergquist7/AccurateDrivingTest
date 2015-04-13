@@ -14,13 +14,17 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.R;
+import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TableRow;
 
 public class TestingJSON {
 	
-   public static JSONObject readTestingJSONLocal(CreateTest createTest) {
+   public static final String CATEGORY_ABBREVIATIONS = "Category Abbreviations";
+	
+   public static JSONObject readTestingJSONLocal(ActionBarActivity createTest) {
 	   String json = null;
 	   try 
 	   {
@@ -51,10 +55,5 @@ public class TestingJSON {
 		e.printStackTrace();
 	}
 	   return null;
-   }
-   
-   public static ArrayList<TableRow> constructTestingTableFromJSON(JSONObject json) {
-	   
-	return null;
    }
 }

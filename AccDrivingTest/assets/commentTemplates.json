@@ -1,0 +1,28 @@
+{
+  "Disqualifying Errors":
+  {
+    "Accidents":[
+        "Contact with a pedestrian",
+        "Contact with another vehicle",
+        "Running off the road",
+        "Contact with a fixed object"
+      ],
+    "Dangerous Action":[
+        "Accident prevented by driving of another",
+        "Dodging by a pedestrian",
+        "Examiner had to assume physical or verbal control of any part of the vehicle"
+      ],
+    "Violation of Traffic Law":[
+        "Pulled over by law enforcement",
+        "Speeding (posted limit exceeded by at least 5mph)",
+        "Failure to stop for sign or signal",
+        "Driving on the wrong side of the road",
+        "Turning from a straight-ahead lane or driving straight in a turn lane",
+        "Driving the wrong way on a one way street"
+      ],
+    "Failure to Perform": [
+        "Applicant could not perform maneuver",
+        "Repeatedly failed to follow instructions or directions"
+      ]
+  }
+}

@@ -24,6 +24,15 @@ public class UserMenu extends ActionBarActivity {
 	      fillRoutes();
 	   }
 	   
+	   @Override
+	   public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	   }
+	   
 	   private void fillRoutes() {
 			SharedPreferences prefs = getSharedPreferences("existingRoutes", Context.MODE_PRIVATE);
 			List<String> spinnerArray =  new ArrayList<String>();

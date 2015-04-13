@@ -7,14 +7,15 @@ import android.os.Bundle;
 import android.app.Activity;
 import java.net.URI;
 import java.net.URISyntaxException;
-/*import com.fatfractal.ffef.FFException;
+
 import com.fatfractal.ffef.FatFractal;
 import com.fatfractal.ffef.impl.FatFractalHttpImpl;
-import com.fatfractal.ffef.json.FFObjectMapper;*/
+import com.fatfractal.ffef.FFException;
+import com.fatfractal.ffef.json.FFObjectMapper;
 
 public class MainActivity extends Activity {
 	
-	//public static FatFractal ff = null;
+	public static FatFractal ff = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class MainActivity extends Activity {
         Intent splashScreen = new Intent(MainActivity.this,SplashScreen.class);                               
         startActivity(splashScreen);   
     }
-  /*
+  
     public static FatFractal getFF() {
     	//initialize instance of fatfractal
         if (ff == null) {
@@ -40,5 +41,5 @@ public class MainActivity extends Activity {
             }
         }
         return ff;
-    }*/
+    }
 }

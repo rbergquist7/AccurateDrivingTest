@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 //instead of always running all. only get MPH, get rest only when needed. when hit display 
 //obd, get it one time, show pass/fail from HPH, connection = T/F,
 //possibly add refresh button. removes memory issue since dont need so many loops running
@@ -21,14 +23,23 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.wsuproj5.accuratedrivingtest.GoogleMapsQuery.DirectionsFetcher;
 import com.wsuproj5.accuratedrivingtest.addroute.AddRoute;
 import com.wsuproj5.accuratedrivingtest.addroute.CreateRouteMap;
+import com.wsuproj5.accuratedrivingtest.testing.JObject;
+import com.wsuproj5.accuratedrivingtest.testing.TestDetailsGeneral;
+import com.wsuproj5.accuratedrivingtest.testing.TestingJSON;
+import com.wsuproj5.comments.CommentTemplates;
+import com.wsuproj5.comments.CommentsFragment;
 
 import de.greenrobot.event.EventBus;
 
@@ -51,11 +62,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,13 +77,15 @@ import android.widget.Toast;
 public class DuringEvaluation extends ActionBarActivity implements 
 	GoogleApiClient.ConnectionCallbacks,
 	GoogleApiClient.OnConnectionFailedListener,
-	LocationListener,PairedDevicesDialog.PairedDeviceDialogListener{
+	LocationListener,PairedDevicesDialog.PairedDeviceDialogListener, OnMarkerClickListener{
 	/*
      * Define a request code to send to Google Play services
      * This code is returned in Activity.onActivityResult
      */
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    
+    private String titleComment = "Comment:";
 	
 	// Milliseconds per second
     private static final int MILLISECONDS_PER_SECOND = 1000;
@@ -92,13 +108,28 @@ public class DuringEvaluation extends ActionBarActivity implements
     // Global variable to hold the current location
     Location mCurrentLocation;
     boolean mUpdatesRequested;
+    View v;
+    
+    //Used for removing fragments properly on onBackPressed()
+    private boolean viewingTestInfo = false;
+	public TestDetailsGeneral previousFragment;
     
     SharedPreferences mPrefs;
+    DuringEvaluation that = this;
     
+    //Various objects used by DuringEvaluation
     GoogleMapsQuery googleMapsQuery;
     CreateRouteMap createRouteMap;
     MapFragment mapFragment;
     GoogleMap map;
+    
+    //List of test data that applies to the current evaluation
+    ArrayList<JObject> testDataSelected;
+    //Used for adding comments
+    ArrayList<Marker> commentAll = new ArrayList<Marker>();
+    boolean commentSet = false;
+    String comment = "";
+    Marker markerCurrent;
     
     Editor mEditor;
 	
@@ -109,6 +140,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	private static final int VISIBLE = 0;
 	private static final int INVISIBLE = 4;
 	private String routeToLoad = "";
+	private CommentsFragment cF;
 	List<String> newRoute = new ArrayList<String>();
 	
 	private PlaceholderFragment routeLines;
@@ -116,7 +148,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 	private static final String TAG = MainActivity.class.getSimpleName();
     private static final String TAG_DIALOG = "dialog";
     private static final String NO_BLUETOOTH = "Oops, your device doesn't support bluetooth";
-   
     
     // Commands
     private static final String[] INIT_COMMANDS = {"AT Z", "AT SP 0", "0105", "010C", "010D", "0131"};
@@ -231,7 +262,7 @@ public class DuringEvaluation extends ActionBarActivity implements
                     break;
 
                 case MESSAGE_TOAST:
-                    displayMessage(msg.getData().getString(TOAST));
+                    //displayMessage(msg.getData().getString(TOAST));
                     break;
 
                 case MESSAGE_DEVICE_NAME:
@@ -243,17 +274,95 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     };
     
+    @Override
+	public void onBackPressed()
+	{
+		if (previousFragment != null) {
+			getFragmentManager().popBackStack(); // remove fragment
+			getFragmentManager() 
+			.beginTransaction()
+			.remove(previousFragment)
+			.commit();
+			getFragmentManager() //show previous fragment
+			.beginTransaction()
+			.add(R.id.menu_test_progress, previousFragment)
+			.commit();
+			previousFragment = previousFragment.previousFragment;
+			return;
+		}
+		
+	    if (viewingTestInfo) { //Case: Last fragment on the stack
+	    	viewingTestInfo = false;
+	    	v.setVisibility(View.INVISIBLE);
+	    	getFragmentManager().popBackStack(); // remove fragment
+	        return;
+	    }
+	    if (findViewById(R.id.menu_comments).getVisibility() == View.VISIBLE) { //if our comments fragment is visible, hide it and pop it
+	    	while (!cF.currentView && cF.returnTemplate) {
+	    		if (cF.currentFragment != null) {
+		    		getFragmentManager().popBackStack(); // remove fragment
+		    		getFragmentManager()
+		    		.beginTransaction()
+		    		.remove(cF.currentFragment)
+		    		.commit();
+	    		} else {
+	    			//getFragmentManager().popBackStack(); // remove fragment
+		    		getFragmentManager()
+		    		.beginTransaction()
+		    		.remove(cF)
+		    		.add(R.id.menu_comments, cF)
+		    		.commit();
+	    			cF.returnTemplate = false;
+	    			cF.currentView = true;
+	    			cF.setCommentContent();
+	    			return;
+	    		}
+	    		cF.currentFragment = cF.currentFragment.parent;
+	    	}
+	    	if (!cF.currentView)
+	    		cF.currentFragment = cF.currentFragment.parent;
+	    	if (!cF.currentView && cF.currentFragment != null) {
+	    		getFragmentManager().popBackStack(); // remove fragment
+	    		getFragmentManager()
+	    		.beginTransaction()
+	    		.remove(cF.currentFragment)
+	    		.add(R.id.menu_comments, cF.currentFragment)
+	    		.commit();
+	    	} else if (!cF.currentView){
+	    		getFragmentManager().popBackStack(); // remove fragment
+	    		getFragmentManager()
+	    		.beginTransaction()
+	    		.remove(cF)
+	    		.add(R.id.menu_comments, cF)
+	    		.commit();
+	    		cF.currentView = true; //clear cF to indicate that we are on the comments menu 	
+	    		return;
+		    } 
+	    	if (cF.currentView) {
+		    	findViewById(R.id.menu_comments).setVisibility(View.INVISIBLE);
+		    	getFragmentManager().popBackStack(); // remove fragment
+		    	mSbCmdResp.setLength(0); //TODO: Parker moved this. Looks like placeholder for storing a comment
+	            mMonitor.setText("");
+	            comment = cF.commentTemplate;
+	            commentSet = true;
+		    }
+	    	return;
+	    }
+	    	super.onBackPressed();
+	}
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_during_evaluation);
-
         mMonitor = (TextView) findViewById(R.id.obd_data_view);
        	mMonitor.setText(getString(R.string.bt_not_available) + " attempting to connect...");
        // mTest_progress = (TextView) findViewById(R.id.test_progress_data_view);
        // mTest_progress.setText("Passing...For now!");
+       	/* Stop screen from resting */
+       	getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		mConnectionStatus = (TextView) findViewById(R.id.tvConnectionStatus);
 	        
 	        // make sure user has Bluetooth hardware
@@ -328,10 +437,46 @@ public class DuringEvaluation extends ActionBarActivity implements
         }
 		
 	    Bundle extras = getIntent().getExtras();
+	    loadTest(extras.getString("test"));
 	    if (routeListPoints.size() == 0) {
 		    routeToLoad = extras.getString("route");
 		    loadRoute();
 	    }
+	    
+	    mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+	    mapFragment.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+			@Override
+			public void onMapClick(LatLng point) {
+				if (that.commentSet){
+					MarkerOptions marker = new MarkerOptions().position(
+	                        new LatLng(point.latitude, point.longitude))
+	                        .snippet(that.comment)
+	                        .title(titleComment);
+	
+					that.markerCurrent = map.addMarker(marker);
+	                that.commentSet = false;
+	                that.comment = "";
+	                that.commentAll.add(markerCurrent);
+	                findViewById(R.id.comment_instructions).setVisibility(View.INVISIBLE);
+				}
+			}
+		});
+	    mapFragment.getMap().setOnMarkerClickListener(this);
+	    
+	}
+	
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		if (marker.equals(markerCurrent)) { //If someone tapped a marker being displayed, remove it as the current marker
+			markerCurrent.hideInfoWindow();
+			markerCurrent = null;
+			System.out.println("markerCurrent is null");
+		} else {
+			System.out.println("markerCurrent is set to something else");
+			markerCurrent = marker;
+			markerCurrent.showInfoWindow();
+		}
+		return false;
 	}
 	
 	// Define the callback method that receives location updates
@@ -350,29 +495,30 @@ public class DuringEvaluation extends ActionBarActivity implements
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude()) + "," + formatted;
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     	Log.d("Location Update:",
                 "Location Updated.");
         
         if (map == null) {
         	mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         	map = mapFragment.getMap();
-//        	CameraPosition cameraPosition = new CameraPosition.Builder()
-//            .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to new location
-//            .zoom(25)                   // Sets the zoom
-//            .bearing(0)        
-//            .tilt(0)            
-//            .build();                  
-//            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        	CameraPosition cameraPosition = new CameraPosition.Builder()
+            .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to new location
+            .zoom(25)                   // Sets the zoom
+            .bearing(0)        
+            .tilt(0)            
+            .build();                  
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         } else {
         	
 	        points.add(new LatLng(location.getLatitude(), location.getLongitude()));
 	        
 	        map.clear();
 	        MarkerOptions mp = new MarkerOptions();
-	        
+	        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.car);
+	        mp.icon(bitmap);
 	        mp.position(new LatLng(location.getLatitude(), location.getLongitude()));
-	
+	      
 	        mp.title("Me ");
 	
 	        map.addMarker(mp);
@@ -383,6 +529,29 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    	   .color(Color.RED));
 	    	   
 	       }
+    	   for (int i = 0; i < commentAll.size(); i++) {
+    		   Marker m = commentAll.get(i);
+				if (commentAll.get(i).equals(markerCurrent)) {
+				   Marker temp = map.addMarker(new MarkerOptions()
+				   .position(m.getPosition())
+				   .title(m.getTitle())
+				   .snippet(m.getSnippet())
+				   );
+				   temp.showInfoWindow();
+				   commentAll.remove(i);
+				   commentAll.add(i,temp);
+				   markerCurrent = temp;
+				}
+    		   else {
+    			   Marker temp = map.addMarker(new MarkerOptions()
+    			   .position(m.getPosition())
+    			   .title(titleComment)
+    			   .snippet(m.getSnippet())
+    			   );
+    			   commentAll.remove(i);
+    			   commentAll.add(i, temp);
+    		   }
+    	   }
 	       if(routeListPoints != null && routeListPoints.size() > 0){
 	    	   map.addPolyline(new PolylineOptions()
 	    	   .addAll(routeListPoints.get(0))
@@ -394,9 +563,9 @@ public class DuringEvaluation extends ActionBarActivity implements
 	        
 	        CameraPosition cameraPosition = new CameraPosition.Builder()
 	        .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to new location
-	        .zoom(map.getCameraPosition().zoom).zoom(25)                   // Sets the zoom
-	        .bearing(0)                // Sets the orientation of the camera to east
-	        .tilt(0)                   // Sets the tilt of the camera to 30 degrees
+	        .zoom(map.getCameraPosition().zoom)                   // Sets the zoom
+	        .bearing(0)                // Sets the orientation of the camera
+	        .tilt(0)                   // Sets the tilt of the camera to
 	        .build();                   // Creates a CameraPosition from the builder
 	        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 	        
@@ -407,7 +576,6 @@ public class DuringEvaluation extends ActionBarActivity implements
     
     @Override
     protected void onPause() {
-    	
         // Save the current setting for updates
         mEditor.putBoolean("KEY_UPDATES_ON", mUpdatesRequested);
         mEditor.commit();
@@ -419,7 +587,6 @@ public class DuringEvaluation extends ActionBarActivity implements
     @Override
     public void onDestroy() {
     	super.onDestroy();
-
         // Un register receiver
         if (mReceiver != null)
         {
@@ -449,8 +616,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 	@Override
     protected void onResume() {
     	super.onResume();
-    	
-
         // Register EventBus
         EventBus.getDefault().register(this);
         /*
@@ -524,13 +689,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 				for (int j = 0; j < routeAsArray.length; j++) {
 					newRoute.add(routeAsArray[j]);
 				}
-				/*
-				try {
-					existingRoutes.add((List<String>) ObjectSerializer.deserialize(route));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				*/
 			}
 		}
 		DirectionsFetcher directionsFetcher = googleMapsQuery.new DirectionsFetcher(GoogleMapsQuery.routeTotal, newRoute);
@@ -556,33 +714,47 @@ public class DuringEvaluation extends ActionBarActivity implements
 	
 	@Override
 	public void onConnectionSuspended(int arg) {
-		Toast.makeText(this, "Connection Suspended", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Connection Suspended", Toast.LENGTH_SHORT).show();
 	}
 
 	 public void extendCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(VISIBLE);
-//	    	Intent intent = new Intent(this, DisplayMessageActivity.class);
-//	    	EditText editText = (EditText) findViewById(R.id.edit_message);
-//	    	String message = editText.getText().toString();
-//	    	intent.putExtra(EXTRA_MESSAGE, message);
-//	    	startActivity(intent);
+	    	CommentsFragment fr = new CommentsFragment();
+	    	cF = fr;
+	    	cF.currentView = true;
+	    	FragmentManager fm = getFragmentManager();
+	    	fm.beginTransaction()
+	    	.add(R.id.menu_comments, fr)
+	    	.addToBackStack(null)
+	    	.commit();
 	    }
 	    
-	    public void hideCommentMenu(View view) {
-	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
-	    	commentMenu.setVisibility(INVISIBLE);
-	    	mSbCmdResp.setLength(0);
-            mMonitor.setText("");
-	    }
-	    
+		public void viewTemplates(View v) {
+			cF.currentView = false;
+			Fragment fr = new CommentTemplates(cF);
+			cF.currentFragment = (CommentTemplates) fr;
+			getFragmentManager()
+			.beginTransaction()
+			.hide(cF)
+			.add(R.id.menu_comments, fr)
+			.addToBackStack(null)
+			.commit();
+		}
+		
+		public void addComment(View v) {
+			findViewById(R.id.comment_instructions).setVisibility(View.VISIBLE);
+			EditText temp = (EditText) findViewById(R.id.Field_Comment);
+			if (cF.commentTemplate == null)
+				cF.commentTemplate = temp.getText().toString();
+			onBackPressed();
+		}
+	 
 	    public void revealOBDDataMenu(View view) {
 	    	LinearLayout obdDataMenu = (LinearLayout) findViewById(R.id.menu_OBD_data);
 	    	obdDataMenu.setVisibility(VISIBLE);
 //	    	commandNumber = 3;
 //	    	sendOBD2CMD("010C");
-	    	
-
 	    }
 	    
 	    public void hideOBDDataMenu(View view) {
@@ -603,7 +775,18 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    
 	    public void revealTestProgress(View view) {
 	    	LinearLayout testProgress = (LinearLayout) findViewById(R.id.menu_test_progress);
+	    	v = testProgress;
 	    	testProgress.setVisibility(VISIBLE);
+	    	//inflate new test details fragment
+	    	viewingTestInfo = true;
+	        TestDetailsGeneral fr = new TestDetailsGeneral(testDataSelected, this);
+	        FragmentManager fm = getFragmentManager();
+	        android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+    		fragmentTransaction.add(R.id.menu_test_progress, fr)
+    		.addToBackStack(null)
+	        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+	        .show(fr)
+	        .commit();
 	    }
 	    
 	    public void hideTestProgress(View view) {
@@ -630,49 +813,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	            return mDialog;
 	        }
 	    }
-
-	    /*
-	     * Handle results returned to the FragmentActivity
-	     * by Google Play services
-	     */
-	   
-	    private boolean servicesConnected() {
-	        // Check that Google Play services is available
-	        int resultCode =
-	                GooglePlayServicesUtil.
-	                        isGooglePlayServicesAvailable(this);
-	        // If Google Play services is available
-	        if (ConnectionResult.SUCCESS == resultCode) {
-	            // In debug mode, log the status
-	            Log.d("Location Updates",
-	                    "Google Play services is available.");
-	            // Continue
-	            return true;
-	        // Google Play services was not available for some reason.
-	        // resultCode holds the error code.
-	        } else {
-	            // Get the error dialog from Google Play services
-	            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
-	                    resultCode,
-	                    this,
-	                    CONNECTION_FAILURE_RESOLUTION_REQUEST);
-
-	            // If Google Play services can provide an error dialog
-	            if (errorDialog != null) {
-	                // Create a new DialogFragment for the error dialog
-	                ErrorDialogFragment errorFragment =
-	                        new ErrorDialogFragment();
-	                // Set the dialog in the DialogFragment
-	                errorFragment.setDialog(errorDialog);
-	                // Show the error dialog in the DialogFragment
-	                //errorFragment.show(getSupportFragmentManager(),
-	                 //       "Location Updates");
-	            }
-	        }
-	        return false;
-	    }
-
-
+	    
 	    /*
 	     * Called by Location Services if the attempt to
 	     * Location Services fails.
@@ -951,7 +1092,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     private void displayMessage(String msg)
     {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void displayLog(String msg)
@@ -1322,6 +1463,15 @@ public class DuringEvaluation extends ActionBarActivity implements
 
 	public void setDistanceTraveled(int distanceTraveled) {
 		this.distanceTraveled = distanceTraveled;
+	}
+	
+	public void loadTest(String t) {
+		int selectedTest = Integer.parseInt(t);
+		JSONObject json = TestingJSON.readTestingJSONLocal(this); //read testing json in
+		ArrayList<JObject> testDataAll = DuringEvaluationLoadTest.getTestingData(json); //convert json into JObjects so they are ready to appear in list view
+		ArrayList<List<String>> existingTests = DuringEvaluationLoadTest.getExistingTests(new ArrayList<List<String>>(), getSharedPreferences("existingTests", Context.MODE_PRIVATE)); //get all existing tests as strings
+		List<String> selectedTests = existingTests.get(selectedTest);//Load the test selected from the spinner
+		testDataSelected = DuringEvaluationLoadTest.loadTest(selectedTests, testDataAll); //extract the test data we want from the list of all test data
 	}
 }
 

@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" >
@@ -79,10 +79,14 @@
         </activity>
         <activity
             android:name="com.wsuproj5.accuratedrivingtest.addroute.AddRoute"
+         	android:screenOrientation="landscape"
+			android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_add_route" >
         </activity>
         <activity
             android:name="com.wsuproj5.accuratedrivingtest.testing.CreateTest"
+			android:screenOrientation="portrait"
+			android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_create_test" >
         </activity>
         <activity

@@ -2,8 +2,7 @@
   "testingCriteria": {
     "Backing Around a Corner": {
       "Description": "This maneuver measures the applicant’s ability to observe traffic from all directions and to back a vehicle safely. This maneuver can be performed from driveways, parking lots and other places where more skill is required than merely backing in a straight line. (Note: When a driveway is not available, the use of an alley, or a corner with curb is permitted. If using a corner this maneuver is best performed by using a 90 degree curb and not rounded corners.)",
-      "Notes": null,
-      "Instructions": "Advise the applicant to turn into the driveway, alleyway, or if using the corner for the backing maneuver, say “drive to the side of the road and stop” at least three car lengths from the road or intersection. If the maneuver is being conducted at an intersection, advise the applicant, “imagine you are backing out of a driveway.” When the applicant is stopped, give the instructions.\nInstruct the applicant:'Back around the corner to the right, staying as close to the edge of the road (or curb) as you can. Then safely continue backing in a straight line until I say stop.' The applicant should continue backing in a straight line for a distance of 50 feet (two and a half car lengths). If the applicant stops early, instruct them to continue until directed to stop. When the maneuver is complete, instruct the applicant to 'Stop' and 'Reenter traffic.'",
+      "Instructions": "Advise the applicant to turn into the driveway, alleyway, or if using the corner for the backing maneuver,\n\n say “drive to the side of the road and stop” at least three car lengths from the road or intersection. If the maneuver is being conducted at an intersection, advise the applicant, “imagine you are backing out of a driveway.” When the applicant is stopped, give the instructions.\n\nInstruct the applicant:'Back around the corner to the right, staying as close to the edge of the road (or curb) as you can. Then safely continue backing in a straight line until I say stop.' \n\nThe applicant should continue backing in a straight line for a distance of 50 feet (two and a half car lengths). If the applicant stops early, instruct them to continue until directed to stop. \n\nWhen the maneuver is complete, instruct the applicant to 'Stop' and 'Reenter traffic.'",
       "Scoring Criteria": {
         "Dangerous Actions": {
           "Category Abbreviations": [
@@ -56,20 +55,13 @@
               "CURB": "While backing, made contact with curb.", 
               "WEAVE": "After backing, did not keep vehicle in straight line."
           }
-        },
-        "Congestion Potential": {
-          "Category Abbreviations": null,
-          "Categories": null
         }
       }
     },
     "Parallel Parking": {
-      "Description": "",
+      "Description": "This maneuver provides a measure of the applicant’s ability to manipulate the vehicle in reverse in a confined or restricted area. It is also a good opportunity to observe the way the applicant looks for traffic, the signals the applicant gives, and his/her ability to judge near distances with relation to the vehicle. It also measures the applicants ability to safely re-enter traffic and perform the correct signal as they re-enter.",
+      "Instructions":"The instructions for this maneuver differ for stanchions or cars. As the applicant approaches the parking area, give the appropriate instructions:\n\n Use these instructions when parking between two vehicles: (recommend you do not use two vehicles)\n\n Identify the landmark, (e.g. “ see the space between the red and blue cars”)\nInstruct the applicant:\n\n“Parallel park between these two vehicles.” \n\nUse these instructions when parking behind a single vehicle.\nInstruct the applicant:\n\n”Imagine another vehicle parked 1-1/2 car lengths to the rear; parallel park between the two.\n\nUse these instructions when parking between poles, cones or stanchions. \nInstruct the applicant:“Parallel Park in the space between the four poles as if you were parking between two vehicles\n\nWhen the maneuver is complete, instruct the applicant to “Reenter traffic.”\n\nNotes: During parallel parking, ensure the maneuver includes exiting the space (e.g., “re-enter traffic”). Do not alter the 30 foot stanchion distance and, if stanchions are used, there must be four of them, and the stanchions must be tall enough for drivers to see them throughout the maneuver.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "VIS", 
@@ -115,7 +107,8 @@
       }
     },
     "Park and Start On Hill": {
-      "Description": "",
+      "Description": "This parking maneuver is a good indication of the applicant’s coordination and ability to observe and react to changing traffic situations. It determines if the applicant can park on a hill without creating a traffic hazard, properly secure the vehicle to be left unattended without danger, start the vehicle on a hill, and safely re-enter traffic",
+      "Instructions":"The examiner should choose a landmark to indicate the actual location where the vehicle is to be parked. (e.g. “ see the tree ahead on the right”)\n The hill park is the only maneuver where the applicant will be required to secure their vehicle as if leaving it unattended.\n As the applicant approaches the parking area, give the instructions. \nInstruct the applicant:\n\n“Park your vehicle (name place or landmark) as though you were going to leave it unattended.“ \n\nIf the maneuver is simulated, tell the applicant\n\n “Assume you are on an uphill (downhill) grade.”\n\nWhen the maneuver is complete, instruct the applicant to “Reenter traffic.”\n\n Don’t give hints by asking questions such as, “Is that all?” During this maneuver, the examiner should be particularly alert for loss of control.",
       "Scoring Criteria": {
         "Dangerous Actions": {
           "Category Abbreviations": ["DA"],
@@ -168,7 +161,8 @@
       }
     },
     "Starting Maneuver": {
-      "Description": "",
+      "Description": "This maneuver determines the applicant’s ability to safely enter traffic. \n\nIf possible, it should be conducted on a level street with moderate traffic volumes. Note: Do not combine this maneuver with any other maneuver and it must occur on a public roadway and not in a parking lot.",
+      "Instructions":"As the applicant approaches the identified area, give the instructions. (use landmarks to identify the area) The starting maneuver should not take place in the parking lot. It must be performed on your drive route as a separate maneuver and not combined with any other maneuver. \n\nInstruct the applicant: “Drive to the side of the road and stop.”\n\n When the maneuver is complete, instruct the applicant to “Reenter traffic.”",
       "Scoring Criteria": {
         "Dangerous Actions": {
           "Category Abbreviations": [
@@ -189,24 +183,12 @@
               "VIS": "Fails to use best possible vision when re-entering traffic", 
               "CURB": "Goes over curb or off of road with one tire"
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
-        "Congestion Potential": {
-          "Category Abbreviations": null,
-          "Categories": null
         }
       }
     },
     "Approach To An Uncontrolled Intersection": {
-      "Description": "",
+      "Description": "This maneuver evaluates the applicant’s ability to interact with other traffic at any place where traffic merges or crosses. This includes cross streets and side streets such as uncontrolled intersections.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "SPD",
@@ -216,10 +198,6 @@
               "SPD": "Fails to decrease speed, if necessary, before entering intersection. ", 
               "VIS": "If view is obstructed, fails to observe all possible areas for approaching traffic before entering intersection."
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [
@@ -234,12 +212,8 @@
       }
     },
     "Traffic Control Devices": {
-      "Description": "",
+      "Description": "This maneuver evaluates the applicant’s ability to recognize and respond to traffic signals, signs, pavement markings and roundabouts. Traffic control devices may also include direction provided by law enforcement, highway construction, maintenance personnel or school crossing",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "FTC"
@@ -247,10 +221,6 @@
           "Categories": {
               "FTC": "Fails to comply with traffic control device."
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [
@@ -263,12 +233,8 @@
       }
     },
     "Stop Sign/Flashing Red Traffic Light": {
-      "Description": "",
+      "Description": "This maneuver measure an applicants ability to correctly follow the rules of either a stop sign or flashing red traffic light and can be measured at any time.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "2STP",
@@ -278,10 +244,6 @@
               "2STP": "Fails to make a second stop when needed \n\t--When additional stop is needed to observe for cross-traffic or to yield right-of-way. \n\t--When vehicle ahead has stopped, causing applicant to stop one car length or more before stop line, intersection or crosswalk.",
               "VIS": "Failed to look both directions before starting."
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [
@@ -298,12 +260,8 @@
       }
     },
     "Traffic Signal Light": {
-      "Description": "",
+      "Description": "This maneuver measure the applicants ability to follow traffic signal rules and can be measured at any point an applicant uses a traffic signal light.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "YEL",
@@ -313,10 +271,6 @@
               "YEL": "Fails to anticipate change of signal on approach, entering on yellow when stop could have been made safely.",
               "VIS": "Fails to look both directions before starting, when driving straight through the intersection, if the applicant's vehicle is the first in the lane."
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [
@@ -335,12 +289,8 @@
       }
     },
     "Mechanical Operation": {
-      "Description": "",
+      "Description": "This is a general test measured at all times that determines the applicants capability to utilize the mechanical aspects of the vehicle.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "HANDS",
@@ -385,10 +335,6 @@
             "SPINS": "Spins wheels excessively on wet or slick roads"
           }
           
-        },
-        "Congestion Potential": {
-          "Category Abbreviations": null,
-          "Categories": null
         }
       }
     },
@@ -397,10 +343,6 @@
       "Notes": "The lane change maneuver should be done with two lanes of traffic in the same direction (typically a 4 lane road) in order to adequately check the applicant’s skill.",
       "Instructions":"When the applicant is in the lane of travel, give the instructions. (this maneuver is performed on a multilane roadway (preferred) or when moving into a turn lane.)\nInstruct the applicant:\n'When safe, move to the right/left lane.'\nNote: The examiner should be watching for traffic as the applicant changes lanes.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "SIG",
@@ -417,10 +359,6 @@
               "CURB": "Strikes curb or one wheel over curb when driving to side of road."
           }
         },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Congestion Potential": {
           "Category Abbreviations": [
             "LANES", 
@@ -434,12 +372,8 @@
       }
     },
     "Following": {
-      "Description": "",
+      "Description": "This is a general test evaluated at all times. It evaluates the drivers ability to maintain a safe following distance.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "CLOSE"
@@ -447,10 +381,6 @@
           "Categories": {
               "CLOSE": "Follows too close for existing traffic, speed, road or weather conditions, etc."
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [
@@ -463,12 +393,8 @@
       }
     },
     "Passing": {
-      "Description": "",
+      "Description": "This maneuver measures the applicants ability to safely pass another vehicle.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "SIG",
@@ -487,10 +413,6 @@
               "RIGHT": "Passes on the right when not safe."
           }
         },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Congestion Potential": {
           "Category Abbreviations": [
             "PASS"
@@ -502,12 +424,8 @@
       }
     },
     "Right-of-Way": {
-      "Description": "",
+      "Description": "This maneuver measure the ability of the applicant to follow right-of-way procedure.",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "ROW"
@@ -515,10 +433,6 @@
           "Categories": {
               "ROW": "Right of way not clearly yielded."
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [
@@ -531,12 +445,9 @@
       }
     },
     "Left and Right Turns": {
-      "Description": "",
+      "Description": "This maneuver evaluates the applicant’s knowledge and ability to turn into the correct lane without crossing lane lines or interfering with other traffic.",
+      "Instructions": "As the applicant approaches the intersection (approximately 100 feet before), give the instructions. (Do not identify signs or signals when giving these commands.)\n\nInstruct the applicant: “At the next corner, turn right/left.”",
       "Scoring Criteria": {
-        "Dangerous Actions": {
-          "Category Abbreviations": null,
-          "Categories": null
-        },
         "Danger Potential": {
           "Category Abbreviations": [
               "SIG",
@@ -578,7 +489,7 @@
       }
     },
     "General Driving Performance": {
-      "Description": "",
+      "Description": "This is a general test measured at all times and measures general driving driving performance such as speed, attention, and hesitation.",
       "Scoring Criteria": {
         "Dangerous Actions": {
           "Category Abbreviations": [
@@ -599,10 +510,6 @@
               "SLOW": "Drives too slowly (more than 10 mph below the posted or safe speed limit, unless conditions warrant).",
               "STP": "Makes unnecessary stop. (While driving straight ahead with no traffic controls.) "
           }
-        },
-        "Lack of Skill": {
-          "Category Abbreviations": null,
-          "Categories": null
         },
         "Congestion Potential": {
           "Category Abbreviations": [

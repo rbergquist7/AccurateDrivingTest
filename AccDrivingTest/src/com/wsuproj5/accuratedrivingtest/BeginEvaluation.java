@@ -1,10 +1,16 @@
 package com.wsuproj5.accuratedrivingtest;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.wsuproj5.accuratedrivingtest.addroute.AddRoute;
 import com.wsuproj5.accuratedrivingtest.testing.CreateTest;
+import com.wsuproj5.accuratedrivingtest.testing.TestingJSON;
+import com.wsuproj5.accuratedrivingtest.testing.JObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +22,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,7 +37,7 @@ public class BeginEvaluation extends ActionBarActivity{
 	      setContentView(R.layout.activity_begin_evaluation);
 	      fillEvaluatorsName();
 	      fillRoutes();
-	//      fillTests();
+	      fillTests();
 	      Button begin_evaluation = (Button)findViewById(R.id.btn_begin_evaluation);
 	     begin_evaluation.setOnClickListener(
 	    		  new View.OnClickListener()
@@ -77,53 +84,55 @@ public class BeginEvaluation extends ActionBarActivity{
 			   Intent duringEvaluation = new Intent(BeginEvaluation.this,DuringEvaluation.class);  
 				Spinner sItems = (Spinner) findViewById(R.id.route_spinner1 );
 				String selected = sItems.getSelectedItem().toString();
+				Spinner testSpinner = (Spinner) findViewById(R.id.test_spinner);
+				String selectedTest = Integer.toString(testSpinner.getSelectedItemPosition()); //get position of selected test
 				duringEvaluation.putExtra("route", selected);
+				duringEvaluation.putExtra("test", selectedTest);
 		        startActivity(duringEvaluation);  
 		   }
 
 		private void fillRoutes() {
-				SharedPreferences prefs = getSharedPreferences("existingRoutes", Context.MODE_PRIVATE);
-				List<String> spinnerArray =  new ArrayList<String>();
-				for (int i = 0; i < 1000; i++) {
-					String route = prefs.getString("route" + i, null);
-					if (route == null || route.equals("removed")) {
-						break;
-					}
-					spinnerArray.add("route " + i);
+			SharedPreferences prefs = getSharedPreferences("existingRoutes", Context.MODE_PRIVATE);
+			List<String> spinnerArray =  new ArrayList<String>();
+			for (int i = 0; i < 1000; i++) {
+				String route = prefs.getString("route" + i, null);
+				if (route == null || route.equals("removed")) {
+					break;
 				}
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				    this, android.R.layout.simple_spinner_item, spinnerArray);
-
-				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				Spinner sItems = (Spinner) findViewById(R.id.route_spinner1);
-				sItems.setAdapter(adapter);
+				spinnerArray.add("route " + i);
 			}
-		   
-		   private void fillTests() {
-				SharedPreferences prefs = getSharedPreferences("existingTests", Context.MODE_PRIVATE);
-				List<String> spinnerArray =  new ArrayList<String>();
-				for (int i = 0; i < 1000; i++) {
-					String test = prefs.getString("test" + i, null);
-					if (test == null || test.equals("removed")) {
-						break;
-					}
-					spinnerArray.add("test " + i);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+			    this, android.R.layout.simple_spinner_item, spinnerArray);
+
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			Spinner sItems = (Spinner) findViewById(R.id.route_spinner1);
+			sItems.setAdapter(adapter);
+		}
+	   
+	   private void fillTests() {
+			SharedPreferences prefs = getSharedPreferences("existingTests", Context.MODE_PRIVATE);
+			List<String> spinnerArray =  new ArrayList<String>();
+			for (int i = 0; i < 1000; i++) {
+				String test = prefs.getString("test" + i, null);
+				if (test == null || test.equals("removed")) {
+					break;
 				}
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				    this, android.R.layout.simple_spinner_item, spinnerArray);
-
-				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				Spinner sItems = (Spinner) findViewById(R.id.test_spinner);
-				sItems.setAdapter(adapter);
+				spinnerArray.add("test " + i);
 			}
-		   public void toAddRoute(View view) {
-			   Intent addRoute = new Intent(BeginEvaluation.this, AddRoute.class);
-			   startActivity(addRoute);
-		   }
-		   
-		   public void toCreateTest(View view) {
-			   Intent createTest = new Intent(BeginEvaluation.this, CreateTest.class);
-			   startActivity(createTest);
-		   }
-		 
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+			    this, android.R.layout.simple_spinner_item, spinnerArray);
+
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			Spinner sItems = (Spinner) findViewById(R.id.test_spinner);
+			sItems.setAdapter(adapter);
+		}
+	   public void toAddRoute(View view) {
+		   Intent addRoute = new Intent(BeginEvaluation.this, AddRoute.class);
+		   startActivity(addRoute);
+	   }
+	   
+	   public void toCreateTest(View view) {
+		   Intent createTest = new Intent(BeginEvaluation.this, CreateTest.class);
+		   startActivity(createTest);
+	   }
 }
