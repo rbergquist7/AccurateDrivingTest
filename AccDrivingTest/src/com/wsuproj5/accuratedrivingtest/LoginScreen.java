@@ -30,6 +30,7 @@ public class LoginScreen extends ActionBarActivity{
 		final EditText mEdit_password = (EditText)findViewById(R.id.fld_pwd);
 		
 	      
+
 //		final SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 	    final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
 
@@ -165,6 +166,16 @@ public class LoginScreen extends ActionBarActivity{
 	    		  });
 	      
 	   }
+	
+	   @Override
+	   public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	   }
+	
 	 protected boolean checkPassword(User temp, String string) {
 		 if(temp.getPassword().equals(string)){
 			 return true;

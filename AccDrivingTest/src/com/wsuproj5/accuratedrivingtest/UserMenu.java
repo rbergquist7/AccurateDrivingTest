@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wsuproj5.accuratedrivingtest.addroute.*;
+import com.wsuproj5.accuratedrivingtest.testing.CreateTest;
 
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -21,6 +22,15 @@ public class UserMenu extends ActionBarActivity {
 	      super.onCreate(savedInstanceState);
 	      setContentView(R.layout.activity_user_menu);
 	      fillRoutes();
+	   }
+	   
+	   @Override
+	   public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
 	   }
 	   
 	   private void fillRoutes() {
