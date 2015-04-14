@@ -467,7 +467,8 @@ public class DuringEvaluation extends ActionBarActivity implements
 	                        new LatLng(point.latitude, point.longitude))
 	                        .snippet(that.comment)
 	                        .title(titleComment);
-	
+	                saveComment(point.latitude,point.longitude,that.comment);
+
 					that.markerCurrent = map.addMarker(marker);
 	                that.commentSet = false;
 	                that.comment = "";
@@ -713,8 +714,6 @@ public class DuringEvaluation extends ActionBarActivity implements
 		 pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
 		 pref.put("average_MPH", Integer.toString(AvgMPH));
 		 
-	     startActivity(new Intent(DuringEvaluation.this,ReviewEvaluation.class));   
-		 
         super.onStop();
     }
 	
@@ -759,20 +758,17 @@ public class DuringEvaluation extends ActionBarActivity implements
 	public void onConnectionSuspended(int arg) {
 		//Toast.makeText(this, "Connection Suspended", Toast.LENGTH_SHORT).show();
 	}
-	public void saveComment(View view){
-		final EditText add_comment = (EditText)findViewById(R.id.Field_Comment);
-		
-		String Comment_To_Add = add_comment.getText().toString();
+	public void saveComment(double latitude, double longitude, String Comment_To_Add){
+
 		String current_comments = driver.getcomments();
 		
 		if(current_comments == null){
-			current_comments = "-" + Comment_To_Add;
+			current_comments = "-" + Comment_To_Add + " \n( " + String.valueOf(latitude) + " , " + String.valueOf(longitude) + " )";
 		}
 		else{
-			current_comments = current_comments + "\n-" + Comment_To_Add;
+			current_comments = current_comments + "\n-" + Comment_To_Add + " \n( " + String.valueOf(latitude) + " , " + String.valueOf(longitude) + " )";
 		}
 		driver.setcomments(current_comments);
-		add_comment.setText("");
 
 	}
 	 public void extendCommentMenu(View view) {

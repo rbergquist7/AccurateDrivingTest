@@ -70,4 +70,8 @@ public class UserMenu extends ActionBarActivity {
 		   Intent obdMain = new Intent(UserMenu.this, MainElmActivity.class);
 		   startActivity(obdMain);
 	   }
+	   public void toReviewEvaluation(View view){
+		     startActivity(new Intent(UserMenu.this,ReviewEvaluation.class));   
+
+	   }
 	}

@@ -1,5 +1,7 @@
 package com.wsuproj5.accuratedrivingtest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import android.os.Bundle;
@@ -9,12 +11,15 @@ import android.widget.TextView;
 
 import com.fatfractal.ffef.FFException;
 import com.fatfractal.ffef.FatFractal;
+import com.fatfractal.ffef.impl.FatFractalHttpImpl;
+import com.fatfractal.ffef.json.FFObjectMapper;
 
 public class ReviewEvaluation  extends ActionBarActivity{
 	public static FatFractal ff = null;
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+		ff = getFF();
 		setContentView(R.layout.activity_review_evaluation);
 		final TextView LeftSide = (TextView)findViewById(R.id.editText1);
 		final TextView RightSide = (TextView)findViewById(R.id.editText2);
@@ -28,9 +33,9 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	    int A_MPH = Integer.parseInt(AvgMPH);
 	    
 	    LeftSide.setText("Pass/Fail: " + Pass_Fail + 
-	    		"\nEvaluators Name: " + EvaluatorsName + 
-	    		"\nDrivers License Number: " + driversLicense + 
-	    		"\nAvg MPH: " + A_MPH);
+	    		"\n\nEvaluators Name: " + EvaluatorsName + 
+	    		"\n\nDrivers License Number: " + driversLicense + 
+	    		"\n\nAvg MPH: " + A_MPH);
 	    
 	    
 		try {
@@ -39,9 +44,9 @@ public class ReviewEvaluation  extends ActionBarActivity{
 			List<Driver> list = ff.getArrayFromUri("/driver");	
 		
 
-			for (Driver temp : list) {
-				if(temp.getdriversLicense() == driversLicense){
-					LeftSide.append("\nComments" + temp.getcomments());
+			for (Driver temp : list) { //finds driver information based on drivers license
+				if(temp.getdriversLicense().equalsIgnoreCase(driversLicense)){
+					LeftSide.append("\n\nComments:\n" + temp.getcomments());
 				}
 			}
 		} catch (FFException e) {
@@ -79,5 +84,22 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	     */
 	    
 	}
+	public static FatFractal getFF() {
+    	//initialize instance of fatfractal
+        if (ff == null) {
+            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
+            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
+            try {
+                ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
+                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
+                //declare object collections here
+              //  FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
+                FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        return ff;
+    }
 
 }
