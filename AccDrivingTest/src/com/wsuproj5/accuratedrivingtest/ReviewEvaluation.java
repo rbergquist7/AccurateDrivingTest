@@ -113,9 +113,10 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	    
 	    
 		try {
-			ff.login("r.bergquist7@gmail.com", "23Mar917457");
-		
-			List<Driver> list = ff.getArrayFromUri("/allDrivers");	
+			//ff.login("r.bergquist7@gmail.com", "23Mar917457");
+        	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
+
+			List<Driver> list = ff.getArrayFromUri("/driver");	
 		
 
 			for (Driver temp : list) { //finds driver information based on drivers license
@@ -169,14 +170,16 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	public static FatFractal getFF() {
     	//initialize instance of fatfractal
         if (ff == null) {
-            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
-            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
+            String baseUrl = "http://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
+            String sslUrl = "https://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
+//            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
+//            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
             try {
                 ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
-                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
+                FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
+//                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
                 //declare object collections here
-              //  FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
-                FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
+                FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }

@@ -450,7 +450,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	        // the data is available in dataFragment.getData()
 			routeListPoints = routeLines.getRouteList();
 			points = routeLines.getGPSPoints();
-			driver.setM_drive_route(points.toString());
+			//driver.setM_drive_route(points.toString());
         }
 		
 	    Bundle extras = getIntent().getExtras();
@@ -706,16 +706,19 @@ public class DuringEvaluation extends ActionBarActivity implements
         DuringEvaluation.ff = getFF();
 
         try {
-        	ff.login("r.bergquist7@gmail.com", "23Mar917457");
+        	//ff.login("r.bergquist7@gmail.com", "23Mar917457");
+        	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
+        	pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+        	driver.setAvgMPH(AvgMPH);
+        	driver.setEvaluatorsName(pref.getString("evaluator_name"));
+        	driver.setM_drive_route(this.newRoute.toString());
         	
-			ff.createObjAtUri(driver, "/allDrivers");
+			ff.createObjAtUri(driver, "/driver");
+			
 		} catch (FFException e) {
 			e.printStackTrace();
 		}
         
-		 pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
-		 driver.setAvgMPH(AvgMPH);
-		 driver.setEvaluatorsName(pref.getString("evaluator_name"));
 		// pref.put("average_MPH", Integer.toString(AvgMPH));
 		 
         super.onStop();
@@ -1544,13 +1547,15 @@ public class DuringEvaluation extends ActionBarActivity implements
 	public static FatFractal getFF() {
     	//initialize instance of fatfractal
         if (ff == null) {
-            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
-            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
+            String baseUrl = "http://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
+            String sslUrl = "https://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
+//            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
+//            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
             try {
                 ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
-                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
+                FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
+//                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
                 //declare object collections here
-              //  FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
                 FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
             } catch (URISyntaxException e) {
                 e.printStackTrace();
