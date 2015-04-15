@@ -708,7 +708,7 @@ public class DuringEvaluation extends ActionBarActivity implements
         try {
         	ff.login("r.bergquist7@gmail.com", "23Mar917457");
         	
-			ff.createObjAtUri(driver, "/driverInfo");
+			ff.createObjAtUri(driver, "/allDrivers");
 		} catch (FFException e) {
 			e.printStackTrace();
 		}

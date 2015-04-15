@@ -115,7 +115,7 @@ public class ReviewEvaluation  extends ActionBarActivity{
 		try {
 			ff.login("r.bergquist7@gmail.com", "23Mar917457");
 		
-			List<Driver> list = ff.getArrayFromUri("/driverInfo");	
+			List<Driver> list = ff.getArrayFromUri("/allDrivers");	
 		
 
 			for (Driver temp : list) { //finds driver information based on drivers license
