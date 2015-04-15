@@ -352,9 +352,10 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    	if (cF.currentView) {
 		    	findViewById(R.id.menu_comments).setVisibility(View.INVISIBLE);
 		    	getFragmentManager().popBackStack(); // remove fragment
-		    	mSbCmdResp.setLength(0); //TODO: Parker moved this. Looks like placeholder for storing a comment
-	            mMonitor.setText("");
+//		    	mSbCmdResp.setLength(0); //TODO: Parker moved this. Looks like placeholder for storing a comment
+//	            mMonitor.setText("");
 	            comment = cF.commentTemplate;
+	            driver.setPass_Fail("False"); //if template was used, you failed
 	            commentSet = true;
 		    }
 	    	return;
@@ -449,6 +450,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	        // the data is available in dataFragment.getData()
 			routeListPoints = routeLines.getRouteList();
 			points = routeLines.getGPSPoints();
+			driver.setM_drive_route(points.toString());
         }
 		
 	    Bundle extras = getIntent().getExtras();
@@ -706,13 +708,15 @@ public class DuringEvaluation extends ActionBarActivity implements
         try {
         	ff.login("r.bergquist7@gmail.com", "23Mar917457");
         	
-			ff.createObjAtUri(driver, "/driver");
+			ff.createObjAtUri(driver, "/driverInfo");
 		} catch (FFException e) {
 			e.printStackTrace();
 		}
         
 		 pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
-		 pref.put("average_MPH", Integer.toString(AvgMPH));
+		 driver.setAvgMPH(AvgMPH);
+		 driver.setEvaluatorsName(pref.getString("evaluator_name"));
+		// pref.put("average_MPH", Integer.toString(AvgMPH));
 		 
         super.onStop();
     }
