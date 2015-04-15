@@ -706,7 +706,6 @@ public class DuringEvaluation extends ActionBarActivity implements
         DuringEvaluation.ff = getFF();
 
         try {
-        	//ff.login("r.bergquist7@gmail.com", "23Mar917457");
         	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
         	pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
         	driver.setAvgMPH(AvgMPH);

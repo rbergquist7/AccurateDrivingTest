@@ -113,7 +113,6 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	    
 	    
 		try {
-			//ff.login("r.bergquist7@gmail.com", "23Mar917457");
         	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
 
 			List<Driver> list = ff.getArrayFromUri("/driver");	

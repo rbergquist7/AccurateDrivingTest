@@ -40,33 +40,7 @@ public class LoginScreen extends ActionBarActivity{
 					public void onClick(View view)
 					{
 						
-//						try {
-//							ff.login("r.bergquist7@gmail.com", "23Mar917457");
-//							Log.d("yes","login worked!");
-//															
-//							
-//							if(mEdit_password.getText().toString().equals("password")){
-//								User evaluator = new User();
-//								evaluator.setusername(mEdit_Evaluator_name.getText().toString());
-//								evaluator.setpassword(mEdit_password.getText().toString());
-//								ff.createObjAtUri(evaluator, "/evaluator");
-//								 
-//								pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
-//								 Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-//				    			 startActivity(userMenu);
-//							}
-//							else{
-//								//toast error message of incorrect password
-//								Context context = getApplicationContext();
-//								CharSequence text = "Incorrent Password. Try again";
-//								int duration = Toast.LENGTH_SHORT;
-//								
-//								Toast toast = Toast.makeText(context, text, duration);
-//								toast.show();
-//							}
-						
 						try {
-							//ff.login("r.bergquist7@gmail.com", "23Mar917457");
 				        	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
 
 							Log.d("yes","login worked!");
@@ -111,7 +85,6 @@ public class LoginScreen extends ActionBarActivity{
 							
 
 //							try {
-//								ff.login("r.bergquist7@gmail.com", "23Mar917457");
 //								Log.d("yes","login worked!");
 //								
 //								List<User> list = ff.getArrayFromUri("/evaluator");	
