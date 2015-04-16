@@ -710,7 +710,7 @@ public class DuringEvaluation extends ActionBarActivity implements
         	pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
         	driver.setAvgMPH(AvgMPH);
         	driver.setEvaluatorsName(pref.getString("evaluator_name"));
-        	driver.setM_drive_route(this.newRoute.toString());
+        	driver.setM_drive_route(this.routeListPoints.toString());
         	
 			ff.createObjAtUri(driver, "/driver");
 			
