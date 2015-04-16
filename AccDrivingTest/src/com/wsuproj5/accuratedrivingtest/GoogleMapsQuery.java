@@ -112,7 +112,20 @@ public class GoogleMapsQuery {
 
 			protected void onPostExecute(String result) {
 				//clearMarkers();
-				if (choice == routePatch)
+				if (latLngs.size() == 0) { //if user entered invalid location
+					if (addRoute.waypointListStrings.size() == 2) {
+						addRoute.waypointListStrings.remove(0);
+						addRoute.waypointListStrings.remove(0);
+						while (addRoute.routeListPoints.size() != 0)
+							addRoute.routeListPoints.remove(0);
+						addRoute.routeState.origin = null;
+						addRoute.routeState.terminus = null;
+					} else {
+						addRoute.waypointListStrings.remove(addRoute.waypointListStrings.size() - 1);
+						addRoute.routeState.terminus = addRoute.waypointListStrings.get(addRoute.waypointListStrings.size() - 1);
+					}
+					addRoute.createRoute.rebuildTable();
+				} else if (choice == routePatch)
 					addRoute.replacePath(latLngs);
 				else if (choice == routeSegment) {
 					map.addMarkersToMap(latLngs);

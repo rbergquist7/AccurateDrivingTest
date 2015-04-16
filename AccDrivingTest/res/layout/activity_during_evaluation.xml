@@ -41,23 +41,15 @@
    	
 	<Button
 	    android:id="@+id/Button_OBD_Data_Menu"
-	    android:layout_width="0px"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:text="@string/obd_data_menu"
 	    android:onClick="revealOBDDataMenu"
-	    android:layout_alignLeft="@+id/Route_Progress_Menu_Button"
-   		android:layout_alignRight="@+id/Route_Progress_Menu_Button"
+	    android:layout_alignLeft="@id/Button_Comment_Menu"
+   		android:layout_alignRight="@id/Button_Comment_Menu"
 	    android:layout_alignParentLeft="true"
 	    android:layout_above="@id/Button_Comment_Menu"/>
-	
-	<Button
-	    android:id="@+id/Route_Progress_Menu_Button"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/route_progress_menu"
-	    android:onClick="revealRouteProgress"
-	    android:layout_alignParentLeft="true"
-	    android:layout_above="@id/Button_OBD_Data_Menu" />
+
 	
 	<Button
 	    android:id="@+id/Button_Test_Progress_Menu"
@@ -66,9 +58,9 @@
 	    android:text="@string/test_progress_menu"
 	    android:onClick="revealTestProgress"
 	    android:layout_alignParentLeft="true"
-	    android:layout_alignLeft="@+id/Route_Progress_Menu_Button"
-   		android:layout_alignRight="@+id/Route_Progress_Menu_Button"
-	    android:layout_above="@id/Route_Progress_Menu_Button" />
+	    android:layout_alignLeft="@id/Button_Comment_Menu"
+   		android:layout_alignRight="@id/Button_Comment_Menu"
+	    android:layout_above="@id/Button_OBD_Data_Menu" />
 		 
 	<LinearLayout
    		android:layout_width="fill_parent"

@@ -37,7 +37,8 @@
             android:value="@integer/google_play_services_version" />
        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyD42NNCas6vfpcC6pwaHHz0w3mu0o81W14" />
+            android:value="AIzaSyAvq0dYo4TdZhOKta15QFgZlPdFiyTbFz0" />
+           <!--   android:value="AIzaSyD42NNCas6vfpcC6pwaHHz0w3mu0o81W14" />  -->
 
         <activity
             android:name=".MainActivity"
@@ -92,6 +93,10 @@
         <activity
             android:name=".MainElmActivity"
             android:label="@string/title_activity_elm_main" >
+        </activity>
+        <activity
+            android:name=".ReviewEvaluation"
+            android:label="@string/title_activity_review_evaluation" >
         </activity>
      
     </application>

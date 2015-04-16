@@ -25,10 +25,10 @@ public class AddRoute extends ActionBarActivity {
 	GoogleMap map;
 	AutoCompleteTextView nextWaypoint;
 	EditRoute editRoute;
-	CreateRoute createRoute;
+	public CreateRoute createRoute;
 	public CreateRouteMap createRouteMap;
 	GoogleMapsQuery googleMapsQuery;
-	RouteState routeState;
+	public RouteState routeState;
 	String newOrigin = null;
 	String newTerminus = null;
 	int replacedPath;
@@ -43,10 +43,9 @@ public class AddRoute extends ActionBarActivity {
 	private PlaceholderFragment routeLines;
 	private PlaceholderFragment tableData;
 	public static String routeDelimiter = "!--ROUTEDELIMITER--!";
-	ArrayList<List<LatLng>> routeListPoints = new ArrayList<List<LatLng>>();
-	List<String> waypointListStrings = new ArrayList<String>();
+	public ArrayList<List<LatLng>> routeListPoints = new ArrayList<List<LatLng>>();
+	public List<String> waypointListStrings = new ArrayList<String>();
 	ArrayList<List<String>> existingRoutes = new ArrayList<List<String>>();
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

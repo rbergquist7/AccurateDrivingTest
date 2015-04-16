@@ -22,6 +22,7 @@
     <string name="title_activity_user_menu">UserMenu</string>
     <string name="title_activity_login_screen">Login Screen</string>
     <string name="title_activity_begin_evaluation">Begin Evaluation</string>
+    <string name="title_activity_review_evaluation">Begin Evaluation</string>
     <string name="comment_instructions">Touch map to place comment</string>
    
     <!-- BEGIN USER MENU STRINGS -->

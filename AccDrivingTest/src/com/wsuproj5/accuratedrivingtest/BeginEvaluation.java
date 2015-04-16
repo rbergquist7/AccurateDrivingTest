@@ -54,7 +54,7 @@ public class BeginEvaluation extends ActionBarActivity{
 		 * and fill the text field after variable is set
 		 */
 			 //  SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-			      final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
+			   final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
  
 			   String username = pref.getString("evaluator_name");
 			   //Log.d("username", username);
@@ -77,16 +77,17 @@ public class BeginEvaluation extends ActionBarActivity{
 			   /*check if all fields have been filled
 			    * check obd connection onCreate of duringEvaluation()
 			    */
-			   getDriversName();
-			   
-			   Intent duringEvaluation = new Intent(BeginEvaluation.this,DuringEvaluation.class);  
+				getDriversName();
 				Spinner sItems = (Spinner) findViewById(R.id.route_spinner1 );
-				String selected = sItems.getSelectedItem().toString();
 				Spinner testSpinner = (Spinner) findViewById(R.id.test_spinner);
-				String selectedTest = Integer.toString(testSpinner.getSelectedItemPosition()); //get position of selected test
-				duringEvaluation.putExtra("route", selected);
-				duringEvaluation.putExtra("test", selectedTest);
-		        startActivity(duringEvaluation);  
+				if (sItems.getAdapter().getCount() != 0 && testSpinner.getAdapter().getCount() != 0) {		   
+					Intent duringEvaluation = new Intent(BeginEvaluation.this,DuringEvaluation.class);  
+					String selected = sItems.getSelectedItem().toString();
+					String selectedTest = Integer.toString(testSpinner.getSelectedItemPosition()); //get position of selected test
+					duringEvaluation.putExtra("route", selected);
+					duringEvaluation.putExtra("test", selectedTest);
+					startActivity(duringEvaluation);  
+				}
 		   }
 
 		private void fillRoutes() {
