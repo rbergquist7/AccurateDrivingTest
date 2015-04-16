@@ -43,6 +43,7 @@
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignLeft="@+id/Button_Create_And_Edit_Routes"
    		android:layout_alignRight="@+id/Button_Create_And_Edit_Routes"
+   		android:onClick="toReviewEvaluation"
 	    android:layout_below="@id/Button_Create_And_Edit_Tests" />
 	
 	<Button

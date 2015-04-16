@@ -40,41 +40,17 @@ public class LoginScreen extends ActionBarActivity{
 					public void onClick(View view)
 					{
 						
-//						try {
-//							ff.login("r.bergquist7@gmail.com", "23Mar917457");
-//							Log.d("yes","login worked!");
-//															
-//							
-//							if(mEdit_password.getText().toString().equals("password")){
-//								User evaluator = new User();
-//								evaluator.setusername(mEdit_Evaluator_name.getText().toString());
-//								evaluator.setpassword(mEdit_password.getText().toString());
-//								ff.createObjAtUri(evaluator, "/evaluator");
-//								 
-//								pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
-//								 Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-//				    			 startActivity(userMenu);
-//							}
-//							else{
-//								//toast error message of incorrect password
-//								Context context = getApplicationContext();
-//								CharSequence text = "Incorrent Password. Try again";
-//								int duration = Toast.LENGTH_SHORT;
-//								
-//								Toast toast = Toast.makeText(context, text, duration);
-//								toast.show();
-//							}
-						
 						try {
-							ff.login("r.bergquist7@gmail.com", "23Mar917457");
+				        	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
+
 							Log.d("yes","login worked!");
 							User x = null;
 							if(mEdit_Evaluator_name.getText().toString().equalsIgnoreCase("ryan")){
-								x = ff.getObjFromUri("/ff/resources/evaluator/XwuFa6-oLG6Ti7z2cUNIM5");
+								x = ff.getObjFromUri("/ff/resources/evaluator/jz0aB2v8cTecsbv_3k2CT7");
 
 							}
 							else if(mEdit_Evaluator_name.getText().toString().equalsIgnoreCase("parker")){
-								x = ff.getObjFromUri("/ff/resources/evaluator/Jm0rmmjF3X_-zhJOPigRD4");
+								x = ff.getObjFromUri("/ff/resources/evaluator/IcegzoKiYsaaRpvhclJNu6");
 								
 							}
 							else {
@@ -92,8 +68,8 @@ public class LoginScreen extends ActionBarActivity{
 							
 							if(checkPassword(x,mEdit_password.getText().toString()) == true){
 								pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
-								Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-								startActivity(userMenu);
+								Intent userMenus = new Intent(LoginScreen.this,UserMenu.class);                               
+								startActivity(userMenus);
 							}
 							else{
 								//toast error message of incorrect password
@@ -109,7 +85,6 @@ public class LoginScreen extends ActionBarActivity{
 							
 
 //							try {
-//								ff.login("r.bergquist7@gmail.com", "23Mar917457");
 //								Log.d("yes","login worked!");
 //								
 //								List<User> list = ff.getArrayFromUri("/evaluator");	
@@ -185,11 +160,14 @@ public class LoginScreen extends ActionBarActivity{
 	public static FatFractal getFF() {
 	    	//initialize instance of fatfractal
 	        if (ff == null) {
-	            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
-	            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
+	            String baseUrl = "http://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
+	            String sslUrl = "https://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
+//	            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
+//	            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
 	            try {
 	                ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
-	                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
+	                FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
+//	                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
 	                //declare object collections here
 	                FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
 	            } catch (URISyntaxException e) {
