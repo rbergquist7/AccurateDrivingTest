@@ -61,6 +61,16 @@
 	    android:layout_alignLeft="@id/Button_Comment_Menu"
    		android:layout_alignRight="@id/Button_Comment_Menu"
 	    android:layout_above="@id/Button_OBD_Data_Menu" />
+	
+	<TextView 
+	    android:id="@+id/current_score"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="#FFFFFF"
+	    android:layout_toRightOf="@id/Button_Comment_Menu"
+	    android:layout_alignParentBottom="true"
+	    android:text="@string/score"
+	    />
 		 
 	<LinearLayout
    		android:layout_width="fill_parent"

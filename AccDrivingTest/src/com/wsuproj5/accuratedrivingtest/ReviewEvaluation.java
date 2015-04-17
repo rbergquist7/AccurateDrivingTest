@@ -178,7 +178,7 @@ public class ReviewEvaluation  extends ActionBarActivity{
                 FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
 //                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
                 //declare object collections here
-                FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
+                FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -186,4 +186,21 @@ public class ReviewEvaluation  extends ActionBarActivity{
         return ff;
     }
 
+	public void recreateMap() {
+		addCommentsToMap(); // Add all comments back to the map
+		addDesignatedRouteToMap(); // Add the route that was intended to be taken to the map. This is the blue line in during evaluation.
+		addDrivenRouteToMap(); // Add the route that was actually taken to the map. This is the route that was driven during the evaluation and is the red line in DuringEvaluatio
+	}
+	
+	public void addCommentsToMap() {
+		
+	}
+	
+	public void addDesignatedRouteToMap() {
+		
+	}
+	
+	public void addDrivenRouteToMap() {
+		
+	}
 }

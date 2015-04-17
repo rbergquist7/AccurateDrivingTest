@@ -131,11 +131,16 @@ public class DuringEvaluation extends ActionBarActivity implements
     CreateRouteMap createRouteMap;
     MapFragment mapFragment;
     GoogleMap map;
+    int score = 100; // The current score of the driver
+    
+    private boolean failTest = false; // Used to indicate that a test has been failed. OnBackPressed  will pop fragments when this is true
+    								  // until we are back to DuringEvaluation
     
     //List of test data that applies to the current evaluation
     ArrayList<JObject> testDataSelected;
     //Used for adding comments
-    ArrayList<Marker> commentAll = new ArrayList<Marker>();
+    ArrayList<Marker> commentAll = new ArrayList<Marker>(); // Stores all comments
+    ArrayList<Marker> failures = new ArrayList<Marker>(); // Stores all failure markers
     boolean commentSet = false;
     String comment = "";
     Marker markerCurrent;
@@ -285,9 +290,32 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     };
     
+    private String categories = "Categories"; //Used to ignore a test fragment with name "Categories
+    private String scoringCriteria = "Scoring Criteria"; //Used to ignore a test fragment with name "Scoring Criteria"
+    ArrayList<String> testInformation;
+	public TestDetailsGeneral currentFragment;
     @Override
 	public void onBackPressed()
 	{
+    	if (failTest && viewingTestInfo) {
+    		while (previousFragment != null) {
+    			if (!categories.equals(previousFragment.testName) && !scoringCriteria.equals(previousFragment.testName)) { // Ignore the categories fragment
+    				if (currentFragment != null) { // The actual reason for failure
+    					testInformation.add(currentFragment.info); // grab the reason for failure
+    					testInformation.add(currentFragment.testName); // grab the abbreviation associated with that failure
+    					currentFragment = null; // clear current fragment
+    				}		
+    				if (previousFragment.testName != null)
+    					testInformation.add(previousFragment.testName);
+    			}
+    			getFragmentManager().popBackStack(); // remove fragment
+    			previousFragment = previousFragment.previousFragment;
+    		}
+	    	viewingTestInfo = false;
+	    	v.setVisibility(View.INVISIBLE);
+	    	getFragmentManager().popBackStack(); // remove fragment
+	        return;
+    	}
 		if (previousFragment != null) {
 			getFragmentManager().popBackStack(); // remove fragment
 			getFragmentManager() 
@@ -503,6 +531,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 
     	mSbCmdResp.setLength(0);
         mMonitor.setText("");
+        mCurrentLocation = location;
     	commandNumber = 1;
     	sendOBD2CMD("AT SP 0");
     	
@@ -527,8 +556,8 @@ public class DuringEvaluation extends ActionBarActivity implements
         	
         }
         
-    	Log.d("Location Update:",
-                "Location Updated.");
+    	//Log.d("Location Update:",
+        //        "Location Updated.");
         
         if (map == null) {
         	mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
@@ -583,6 +612,31 @@ public class DuringEvaluation extends ActionBarActivity implements
     			   commentAll.add(i, temp);
     		   }
     	   }
+    	   
+    	   for (int i = 0; i < failures.size(); i++) {
+    		   Marker m = failures.get(i);
+				if (failures.get(i).equals(markerCurrent)) {
+				   Marker temp = map.addMarker(new MarkerOptions()
+				   .position(m.getPosition())
+				   .title(m.getTitle())
+				   .snippet(m.getSnippet())
+				   );
+				   temp.showInfoWindow();
+				   failures.remove(i);
+				   failures.add(i,temp);
+				   markerCurrent = temp;
+				}
+    		   else {
+    			   Marker temp = map.addMarker(new MarkerOptions()
+    			   .position(m.getPosition())
+    			   .title(m.getTitle())
+    			   .snippet(m.getSnippet())
+    			   );
+    			   failures.remove(i);
+    			   failures.add(i, temp);
+    		   }
+    	   }
+    	   
 	       if(routeListPoints != null && routeListPoints.size() > 0){
 	    	   map.addPolyline(new PolylineOptions()
 	    	   .addAll(routeListPoints.get(0))
@@ -856,6 +910,77 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    public void hideTestProgress(View view) {
 	    	LinearLayout testProgress = (LinearLayout) findViewById(R.id.menu_test_progress);
 	    	testProgress.setVisibility(INVISIBLE);
+	    }
+	    
+	    private String colonSpace = ": ";
+	    public void failTest(View view) {
+	    	findViewById(R.id.menu_test_progress).setVisibility(View.INVISIBLE); //Hide the test view
+	    	testInformation = new ArrayList<String>(); // Stores all relevant test information to add to comment. Clear any previous values
+	    	failTest = true; // Set in order to pop fragments until we're back to duringEvaluation //TODO: Log
+	    	onBackPressed(); //Pop all of our fragments until we're back to during evaluation
+	    	failTest = false; // Clear flag
+	    	MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
+                    .title(testInformation.get(3) + colonSpace + testInformation.get(2) + colonSpace + testInformation.get(1))
+                    .snippet(testInformation.get(0));
+	    	Marker m = map.addMarker(marker);
+	    	failures.add(m); // Add marker indicating where the failed test happened
+	    	updateFails(m);
+	    	determineCategory(testInformation.get(2));
+	    }
+	    
+	    public final String delimiter = "!--DELIMITER--!"; 
+	    private void updateFails(Marker marker) {
+	    	final String fNewLine = "\n";
+	    	String fails = driver.getFails();
+	    	String failsPoints = driver.getFailsLatLng();
+	    	String failsType = driver.getFailsTypes();
+	    	
+	    	if (fails == null) // Initialization case
+	    		fails = marker.getSnippet();
+	    	else
+	    		fails = fails + delimiter + marker.getSnippet();
+	    	
+	    	if (failsPoints == null) // Initialization case
+	    		failsPoints = marker.getPosition().latitude + fNewLine + marker.getPosition().longitude;
+	    	else
+	    		failsPoints = failsPoints + fNewLine + marker.getPosition().latitude + fNewLine + marker.getPosition().longitude;
+	    	
+	    	if (failsType == null) // Initialization case
+	    		failsType = marker.getTitle();
+	    	else
+	    		failsType = failsType + delimiter + marker.getTitle();
+	    	driver.setFails(fails);
+	    	driver.setFailsLatLng(failsPoints);
+	    	driver.setFailsTypes(failsType);
+	    }
+	    
+	    private final String cDangerousActions = "Dangerous Actions"; // Automatic fail
+	    private final String cDangerPotential = "Danger Potential"; // Lose 3 points
+	    private final String cCongestionPotential = "Congestion Potential"; // Lose 2 points
+	    private final String cLackOfSkill = "Lack of Skill"; // Lose 1 point
+	    private void determineCategory(String category) {
+	    	switch (category) {
+	    		case cDangerousActions :
+	    			score = 0;
+	    			break;
+	    		case cDangerPotential :
+	    			score -= 3;
+	    			break;
+	    		case cCongestionPotential :
+	    			score -= 2;
+	    			break;
+	    		case cLackOfSkill :
+	    			score -= 1;
+	    			break;
+	    	}
+	    	updateScore();
+	    	//TODO: Update fail or not updateFail()
+	    }
+	    
+	    private void updateScore() {
+	    	TextView v = (TextView) findViewById(R.id.current_score);
+	    	v.setText("Score: " + Integer.toString(score) + "/100");
 	    }
 	    
 	    // Define a DialogFragment that displays the error dialog

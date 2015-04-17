@@ -28,12 +28,17 @@ import android.widget.TextView;
 
 public class TestDetailsGeneral extends Fragment {
 	JSONObject testData;
-	String testName;
-	String info;
+	public String testName;
+	public String info;
 	TestDetailsGeneral o;
 	CreateTest activityCreateTest;
 	DuringEvaluation activityDuringEvaluation;
 	public TestDetailsGeneral previousFragment;
+	
+	private String description = "Description";
+	private String notes = "Notes";
+	private String instructions = "Instructions";
+	
 	public TestDetailsGeneral(JSONObject jO, String tN, CreateTest a) {
 		super();
 		testName = tN;
@@ -94,6 +99,10 @@ public class TestDetailsGeneral extends Fragment {
 		testInfo.setText(info);
 		testInfo.setVisibility(View.VISIBLE);
 		v.findViewById(R.id.test_general_view).setVisibility(View.GONE);
+		/*If we are in DuringEvaluation and we are not viewing description instruction, or notes. */
+		if (activityDuringEvaluation != null && !description.equals(testName) && !instructions.equals(testName) && !notes.equals(testName)) {
+			v.findViewById(R.id.button_fail_test).setVisibility(View.VISIBLE);
+		}
 	}
 	
 	private void setList(View v) {
@@ -121,13 +130,14 @@ public class TestDetailsGeneral extends Fragment {
 			      	        	fr = new TestDetailsGeneral(temp.value, temp.objectName, activityCreateTest);
 			      	        previousFragment = activityCreateTest.previousFragment;
 			      	        activityCreateTest.previousFragment = o;
-		      	        } else {
+		      	        } else { // We are in DuringEvaluation
 			      	        if (item.jsonObject != null)
 			      	        	fr = new TestDetailsGeneral(temp.jsonObject, temp.objectName, activityDuringEvaluation);
 			      	        else 
 			      	        	fr = new TestDetailsGeneral(temp.value, temp.objectName, activityDuringEvaluation);
 			      	        previousFragment = activityDuringEvaluation.previousFragment;
 			      	        activityDuringEvaluation.previousFragment = o;
+			      	        activityDuringEvaluation.currentFragment = fr;
 		      	        }
 				        FragmentManager fm = getFragmentManager();
 				        FragmentTransaction fragmentTransaction = fm.beginTransaction();

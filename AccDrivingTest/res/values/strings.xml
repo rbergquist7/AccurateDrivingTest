@@ -13,6 +13,7 @@
     <string name="return_from_comment_menu">Hide\nComment\nMenu</string>
     <string name="view_comment_templates">View Comment\nTemplates</string>
     <string name="add_comment">Add Comment</string>
+    <string name="score">Score: 100/100</string>
     <string name="enter_comment">Enter comment here</string>
     <string name="comment_instructions">Touch map to place comment</string>
     <string name="return_from_OBD_data_menu">Hide\nOBD\nData</string>
@@ -138,6 +139,7 @@
 	<string name="tests_load">Load Test</string>
 	<string name="tests_used">Tests Used</string>
 	<string name="tests_used_not">Tests Not Used</string>
+	<string name="fail_test">Fail</string>
 	<!-- END CREATE TEST STRINGS -->
 
 </resources>
