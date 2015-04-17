@@ -144,4 +144,4 @@ Email (accuratedrivingtest@gmail.com)
 
 ## License
 
-AFNetworking is available under the MIT license. See the LICENSE file for more info.
+Accurate Driving Test is available under the MIT license. See the LICENSE file for more info.
