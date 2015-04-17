@@ -29,9 +29,6 @@ public class LoginScreen extends ActionBarActivity{
 		final EditText mEdit_Evaluator_name = (EditText)findViewById(R.id.fld_Evaluator_name);
 		final EditText mEdit_password = (EditText)findViewById(R.id.fld_pwd);
 		
-	      
-
-//		final SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 	    final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
 
 		mButton_login.setOnClickListener(
@@ -39,6 +36,16 @@ public class LoginScreen extends ActionBarActivity{
 				{
 					public void onClick(View view)
 					{
+						if( (mEdit_Evaluator_name.getText().toString().equals("") == true) ||
+							(mEdit_password.getText().toString().equals("") == true) ){
+							Context context = getApplicationContext();
+							CharSequence text = "Empty Fields. Try again";
+							int duration = Toast.LENGTH_SHORT;
+							
+							Toast toast = Toast.makeText(context, text, duration);
+							toast.show();
+							return;
+						}
 						
 						try {
 				        	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
@@ -82,53 +89,6 @@ public class LoginScreen extends ActionBarActivity{
 								
 								//dont need to check other users passwords
 							}
-							
-
-//							try {
-//								Log.d("yes","login worked!");
-//								
-//								List<User> list = ff.getArrayFromUri("/evaluator");	
-//								
-//								//if no evaluators exist, create new one with the given password and name
-//								if(list.size() == 1){ 
-//									pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
-//									
-//									User evaluator = new User();
-//									evaluator.setusername(mEdit_Evaluator_name.getText().toString());
-//									evaluator.setpassword(mEdit_password.getText().toString());
-//									ff.createObjAtUri(evaluator, "/evaluator");
-//									
-//									Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-//									startActivity(userMenu);
-//								}
-//								
-//								String name = mEdit_Evaluator_name.getText().toString();
-//								//check through all evaluators							
-//								for (User temp : list) {
-//									String temp_name = temp.getUserName();
-//									
-//									if(name.equals( temp_name ) ){
-//										//if password enterend equals password saved to user start intent
-//										if(checkPassword(temp,mEdit_password.getText().toString()) == true){
-//											pref.put("evaluator_name", mEdit_Evaluator_name.getText().toString());
-//											Intent userMenu = new Intent(LoginScreen.this,UserMenu.class);                               
-//											startActivity(userMenu);
-//										}
-//										else{
-//											//toast error message of incorrect password
-//											Context context = getApplicationContext();
-//											CharSequence text = "Incorrent Password. Try again";
-//											int duration = Toast.LENGTH_SHORT;
-//											
-//											Toast toast = Toast.makeText(context, text, duration);
-//											toast.show();
-//											
-//											//dont need to check other users passwords
-//											break;
-//										}
-//									}
-//								}
-
 
 						} catch (FFException e) {
 							// TODO Auto-generated catch block
@@ -162,12 +122,9 @@ public class LoginScreen extends ActionBarActivity{
 	        if (ff == null) {
 	            String baseUrl = "http://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
 	            String sslUrl = "https://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
-//	            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
-//	            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
 	            try {
 	                ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
 	                FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
-//	                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
 	                //declare object collections here
 	                FFObjectMapper.registerClassNameForClazz(User.class.getName(), "User");
 	            } catch (URISyntaxException e) {

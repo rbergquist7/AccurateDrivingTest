@@ -35,6 +35,7 @@ public class BeginEvaluation extends ActionBarActivity{
 		
 	      super.onCreate(savedInstanceState);
 	      setContentView(R.layout.activity_begin_evaluation);
+	      
 	      fillEvaluatorsName();
 	      fillRoutes();
 	      fillTests();

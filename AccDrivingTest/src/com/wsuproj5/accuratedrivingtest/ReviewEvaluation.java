@@ -100,17 +100,7 @@ public class ReviewEvaluation  extends ActionBarActivity{
 		
 	    final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
 	    
-//	    String Pass_Fail = "True";
-//	    String EvaluatorsName = pref.getString("evaluator_name");
 	    String driversLicense = license.getText().toString();
-//	    String AvgMPH = pref.getString("average_MPH");
-//	    int A_MPH = Integer.parseInt(AvgMPH);
-//	    
-//	    LeftSide.setText("Pass/Fail: " + Pass_Fail + 
-//	    		"\n\nEvaluators Name: " + EvaluatorsName + 
-//	    		"\n\nDrivers License Number: " + driversLicense + 
-//	    		"\n\nAvg MPH: " + A_MPH);
-	    
 	    
 		try {
         	ff.login("accuratedrivingtest@gmail.com", "AccurateDrivingT3st");
@@ -171,12 +161,9 @@ public class ReviewEvaluation  extends ActionBarActivity{
         if (ff == null) {
             String baseUrl = "http://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
             String sslUrl = "https://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
-//            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
-//            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
             try {
                 ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
                 FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
-//                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
                 //declare object collections here
                 FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
             } catch (URISyntaxException e) {
