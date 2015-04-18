@@ -21,6 +21,7 @@
     <string name="return_from_test_progress_menu">Hide\nTest\nProgress</string>
     <string name="title_activity_splash__screen"></string>
     <string name="accurate_driving_test">Accurate Driving\nTest</string>
+    <string name="please_wait">Please wait</string>
     <string name="title_activity_user_menu">UserMenu</string>
     <string name="title_activity_login_screen">Login Screen</string>
     <string name="title_activity_begin_evaluation">Begin Evaluation</string>
