@@ -930,7 +930,7 @@ public class DuringEvaluation extends ActionBarActivity implements
 	    	determineCategory(testInformation.get(2));
 	    }
 	    
-	    public final String delimiter = "!--DELIMITER--!"; 
+	    public final static String delimiter = "!--DELIMITER--!"; 
 	    private void updateFails(Marker marker) {
 	    	final String fNewLine = "\n";
 	    	String fails = driver.getFails();

@@ -1,80 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ReviewEvaluation">
-
- 	 <RelativeLayout
- 	     android:layout_width="151dp"
- 	     android:layout_height="match_parent"
- 	     android:layout_alignParentRight="true"
- 	     android:layout_alignParentTop="true"
- 	     android:layout_toRightOf="@+id/viewTest"
- 	     android:layout_toEndOf="@+id/viewTest"
- 	     android:layout_alignParentEnd="true"
- 	     android:background="#FFFFAA"
- 	     android:orientation="vertical" >
-
- 	     <TextView
- 	         android:id="@+id/editText2"
- 	         android:layout_width="wrap_content"
- 	         android:layout_height="wrap_content"
- 	         android:layout_alignParentBottom="true"
- 	         android:layout_alignParentEnd="true"
- 	         android:layout_alignParentStart="true"
- 	         android:layout_alignParentLeft="true"
- 	         android:layout_alignParentRight="true"
- 	         android:layout_alignParentTop="true" />
-
-
- 	 </RelativeLayout>
-
- 	 <RelativeLayout
- 	     android:id="@+id/viewTest"
- 	     android:layout_width="400dp"
- 	     android:layout_height="match_parent"
- 	     android:layout_alignParentLeft="true"
- 	     android:layout_alignParentTop="true"
- 	     android:layout_alignParentStart="true"
-		 android:background="#DEB887"
- 	     android:orientation="vertical" >
-
- 	     <TextView
- 	         android:id="@+id/editText1"
- 	         android:layout_width="wrap_content"
- 	         android:layout_height="wrap_content"
- 	         android:layout_alignParentBottom="true"
- 	         android:layout_alignParentLeft="true"
- 	         android:layout_alignParentRight="true"
- 	         android:layout_alignParentEnd="true"
- 	         android:layout_alignParentStart="true"
- 	         android:layout_alignParentTop="true" />
-
- 	     <EditText
- 	         android:id="@+id/editText3"
- 	         android:layout_width="wrap_content"
- 	         android:layout_height="wrap_content"
- 	         android:layout_alignParentBottom="true"
- 	         android:layout_alignParentLeft="true"
- 	         android:layout_alignParentStart="true"
- 	         android:ems="10"
- 	         android:hint="Enter Drivers License Number" >
-
- 	         <requestFocus />
- 	     </EditText>
-
- 	     <Button
- 	         android:id="@+id/button1"
- 	         android:layout_width="wrap_content"
- 	         android:layout_height="wrap_content"
- 	         android:layout_alignParentBottom="true"
- 	         android:layout_alignParentRight="true"
- 	         android:layout_alignParentEnd="true"
- 	         android:onClick="searchLicenseNumber"
- 	         android:text="Get Information" />
-
- 	 </RelativeLayout>
-
+         xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:id="@+id/review_container_main"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+    >
+   	<TextView
+	     android:id="@+id/please_wait"
+	     android:background="#000000"
+	     android:layout_height="match_parent"
+		 android:layout_width="match_parent"
+		 android:text="@string/please_wait"
+		 android:gravity="center"
+		 android:visibility="gone"
+		 android:textColor="#FFFFFF"
+	     android:textSize="40sp"
+	 ></TextView>
+	<LinearLayout
+	    android:id="@+id/review_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    tools:context=".ReviewEvaluation"
+	    android:weightSum="2"
+	    android:orientation="vertical"
+	    >
+	
+	    <fragment
+	        android:id="@+id/map"
+	        android:name="com.google.android.gms.maps.MapFragment"
+	        android:layout_weight="1"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp" />
+	    <LinearLayout 
+	        android:layout_height="0dp"
+	        android:layout_width="match_parent"
+		    tools:context=".ReviewEvaluation"
+		    android:layout_weight="1"
+		    android:weightSum="10"
+		    android:orientation="vertical">
+		    <ScrollView
+		    android:layout_width="match_parent"
+		    android:layout_weight="8"
+		    android:padding="16dp"
+		    android:background="#DEB887"
+		    android:layout_height="0dp" >
+			 	 <RelativeLayout 
+			 	     android:layout_width="match_parent"
+			 	     android:layout_height="match_parent"
+			 	     android:layout_alignParentRight="true"
+			 	     android:layout_alignParentTop="true"
+			 	     android:layout_toRightOf="@+id/viewTest"
+			 	     android:layout_toEndOf="@+id/viewTest"
+			 	     android:layout_alignParentEnd="true"
+			 	     android:background="#FFFFAA"
+			 	     android:orientation="vertical" >
+			
+			 	     <TextView
+			 	         android:id="@+id/editText2"
+			 	         android:layout_width="wrap_content"
+			 	         android:layout_height="wrap_content"
+			 	         android:layout_alignParentBottom="true"
+			 	         android:layout_alignParentEnd="true"
+			 	         android:layout_alignParentStart="true"
+			 	         android:layout_alignParentLeft="true"
+			 	         android:layout_alignParentRight="true"
+			 	         android:layout_alignParentTop="true" />
+			
+				     <RelativeLayout
+				 	     android:id="@+id/viewTest"
+				 	     android:layout_width="wrap_content"
+				 	     android:layout_height="wrap_content"
+				 	     android:layout_alignParentLeft="true"
+				 	     android:layout_alignParentBottom="true"
+				 	     android:layout_alignParentStart="true"
+						 android:background="#DEB887"
+				 	     android:orientation="vertical" >
+				
+				 	     <TextView
+				 	         android:id="@+id/editText1"
+				 	         android:layout_width="wrap_content"
+				 	         android:layout_height="wrap_content"
+				 	         android:layout_alignParentBottom="true"
+				 	         android:layout_alignParentLeft="true"
+				 	         android:layout_alignParentRight="true"
+				 	         android:layout_alignParentEnd="true"
+				 	         android:layout_alignParentStart="true"
+				 	         android:layout_alignParentTop="true" />
+				
+				 	 </RelativeLayout>
+			 	 </RelativeLayout>
+		 	 </ScrollView>
+		 	 <LinearLayout         
+		 	    android:layout_height="0dp"
+		 	    android:layout_width="match_parent"
+			    tools:context=".ReviewEvaluation"
+			    android:layout_weight="2"
+			    android:weightSum="4"
+			    android:orientation="horizontal">
+		  	 	 	<Button
+			         android:id="@+id/button1"
+			         android:layout_width="0dp"
+			         android:layout_height="wrap_content"
+			         android:layout_weight="1"
+			         android:onClick="searchLicenseNumber"
+			         android:text="Get\nEval" />
+			     	<RelativeLayout
+			     	    android:layout_height="match_parent"
+			     	    android:layout_width="0dp"
+			     	    android:layout_weight="3" >
+			 	 	     <EditText
+				         android:id="@+id/editText3"
+				         android:layout_width="match_parent"
+				         android:layout_height="wrap_content"
+				         android:layout_alignParentBottom="true"
+				         android:ems="10"
+				         android:hint="Enter Drivers License Number">
+				              <requestFocus />
+				     	</EditText>  
+			     	</RelativeLayout>
+		     </LinearLayout>
+	 	 </LinearLayout>
+	</LinearLayout>
 </RelativeLayout>

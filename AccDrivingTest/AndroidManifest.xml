@@ -96,7 +96,9 @@
         </activity>
         <activity
             android:name=".ReviewEvaluation"
-            android:label="@string/title_activity_review_evaluation" >
+            android:label="@string/title_activity_review_evaluation"
+            android:screenOrientation="portrait"
+			android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
      
     </application>
