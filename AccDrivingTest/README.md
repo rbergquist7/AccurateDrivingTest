@@ -136,7 +136,7 @@ When sending and recieving from the Fat Fractal server, the connection is based 
 
 ## Credits/Maintainers
 
-Accurate Driving Test was originally created by [Ryan Bergquist](www.linkedin.com/in/ryanbergquist) and [Parker Kimbell](https://gitlab.encs.vancouver.wsu.edu/u/parker.kimbell) 
+Accurate Driving Test was originally created by [Ryan Bergquist](https://www.linkedin.com/in/ryanbergquist) and [Parker Kimbell](https://gitlab.encs.vancouver.wsu.edu/u/parker.kimbell) 
 
 ## Contact
 
