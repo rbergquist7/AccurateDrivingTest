@@ -197,6 +197,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     int commandNumber = 0;
     private int tracker = 1;
     private int AvgMPH = 0;
+    private int MPH_LIMIT = 25;
     private int MPH = 0;
     private int RPM = 0;
     private int distanceTraveled = 0;
@@ -1639,6 +1640,9 @@ public class DuringEvaluation extends ActionBarActivity implements
 			return;
 		}
 		MPH = mPH;
+		if(MPH > MPH_LIMIT){
+			saveComment(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), "warning: exceded current speed limit");
+		}
 		AvgMPH = AvgMPH + MPH / tracker;
 		tracker ++;
 	}
@@ -1673,12 +1677,9 @@ public class DuringEvaluation extends ActionBarActivity implements
         if (ff == null) {
             String baseUrl = "http://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
             String sslUrl = "https://accuratedrivingtest.fatfractal.com/accuratedrivingtest";
-//            String baseUrl = "http://accuratedriving.fatfractal.com/AccDrivingTest";
-//            String sslUrl = "https://accuratedriving.fatfractal.com/AccDrivingTest";
             try {
                 ff = FatFractal.getInstance(new URI(baseUrl), new URI(sslUrl));
                 FatFractalHttpImpl.addTrustedHost("accuratedrivingtest.fatfractal.com");
-//                FatFractalHttpImpl.addTrustedHost("accuratedriving.fatfractal.com");
                 //declare object collections here
                 FFObjectMapper.registerClassNameForClazz(Driver.class.getName(), "Driver");
             } catch (URISyntaxException e) {
