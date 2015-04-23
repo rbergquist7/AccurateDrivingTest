@@ -1544,7 +1544,7 @@ public void startTransmission() {
     private void addToAvgMph(int mph){
     	MPH = mph;
     	AvgMPH = (AvgMPH + MPH) / tracker;
-    	tracker++;
+    	if(tracker < 2) tracker++;
     	
     }
     private void checkSpeed(Location location) {
