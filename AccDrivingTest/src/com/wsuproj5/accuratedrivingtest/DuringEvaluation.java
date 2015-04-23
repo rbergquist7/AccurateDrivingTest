@@ -1543,13 +1543,14 @@ public void startTransmission() {
     }
     private void addToAvgMph(int mph){
     	MPH = mph;
-    	AvgMPH = (AvgMPH + MPH) / (tracker++);
+    	AvgMPH = (AvgMPH + MPH) / tracker;
+    	tracker++;
     	
     }
     private void checkSpeed(Location location) {
     	
     	if(MPH > MPH_LIMIT){
-    		saveComment(location.getLatitude(), location.getLatitude(), "Warning! Exceeding speed limit! of: " + MPH_LIMIT);
+    		saveComment(location.getLatitude(), location.getLongitude(), "Warning! Exceeding speed limit! of: " + MPH_LIMIT);
     		
     	}
 		
