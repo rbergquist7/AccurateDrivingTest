@@ -33,75 +33,7 @@ public class ReviewEvaluation  extends ActionBarActivity{
 		super.onCreate(savedInstanceState);
 		ff = getFF();
 		setContentView(R.layout.activity_review_evaluation);
-//		final TextView LeftSide = (TextView)findViewById(R.id.editText1);
-//		final TextView RightSide = (TextView)findViewById(R.id.editText2);
-//		
-//	    final SecurePreferences pref = new SecurePreferences(getBaseContext(),"MyPrefs", "cs421encrypt", true);
-//	    
-////	    String Pass_Fail = "True";
-////	    String EvaluatorsName = pref.getString("evaluator_name");
-//	    String driversLicense = pref.getString("drivers_licence_number");
-////	    String AvgMPH = pref.getString("average_MPH");
-////	    int A_MPH = Integer.parseInt(AvgMPH);
-////	    
-////	    LeftSide.setText("Pass/Fail: " + Pass_Fail + 
-////	    		"\n\nEvaluators Name: " + EvaluatorsName + 
-////	    		"\n\nDrivers License Number: " + driversLicense + 
-////	    		"\n\nAvg MPH: " + A_MPH);
-//	    
-//	    
-//		try {
-//			ff.login("r.bergquist7@gmail.com", "23Mar917457");
-//		
-//			List<Driver> list = ff.getArrayFromUri("/driver");	
-//		
-//
-//			for (Driver temp : list) { //finds driver information based on drivers license
-//				if(temp.getdriversLicense().equalsIgnoreCase(driversLicense)){
-//					 String Pass_Fail = "True";
-//					    String EvaluatorsName = temp.getEvaluatorsName();
-//					    int A_MPH = temp.getAvgMPH();
-//					    
-//					    LeftSide.setText("Pass/Fail: " + Pass_Fail + 
-//					    		"\n\nEvaluators Name: " + EvaluatorsName + 
-//					    		"\n\nDrivers License Number: " + driversLicense + 
-//					    		"\n\nAvg MPH: " + A_MPH);
-//					LeftSide.append("\n\nComments:\n" + temp.getcomments());
-//				}
-//			}
-//		} catch (FFException e) {
-//			e.printStackTrace();
-//		}
-//
-//		RightSide.setText("Section in progress");
-//	    /* Left side
-//	     * 
-//	     * Pass/Fail
-//	     * Average Speed
-//	     * Distance Traveled
-//	     * 
-//	     * Test Score percent
-//	     * Test Score Total Points
-//	     * 
-//	     * Trouble Areas:
-//	     * 
-//	     * Role: Driver/eval
-//	     * Eval name
-//	     * driver license
-//	     * 
-//	     * ...
-//	     */
-//	    
-//	    /*
-//	     * Right Side
-//	     * 
-//	     * Test Criteria # : pass/fail
-//	     * 	Eval comment
-//	     * 	description
-//	     * 
-//	     * ...
-//	     * 
-//	     */
+
 	    
 	}
 	
@@ -142,34 +74,7 @@ public class ReviewEvaluation  extends ActionBarActivity{
 		}
 
 		RightSide.setText("Section in progress");
-	    /* Left side
-	     * 
-	     * Pass/Fail
-	     * Average Speed
-	     * Distance Traveled
-	     * 
-	     * Test Score percent
-	     * Test Score Total Points
-	     * 
-	     * Trouble Areas:
-	     * 
-	     * Role: Driver/eval
-	     * Eval name
-	     * driver license
-	     * 
-	     * ...
-	     */
-	    
-	    /*
-	     * Right Side
-	     * 
-	     * Test Criteria # : pass/fail
-	     * 	Eval comment
-	     * 	description
-	     * 
-	     * ...
-	     * 
-	     */
+
 		findViewById(R.id.please_wait).setVisibility(View.GONE);
 		findViewById(R.id.review_container).setVisibility(View.VISIBLE);
 	}
@@ -194,10 +99,17 @@ public class ReviewEvaluation  extends ActionBarActivity{
 	public void recreateMap(Driver driver) {
 		MapFragment m = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 		map = m.getMap();
-		addCommentsToMap(driver.getcomments()); // Add all comments back to the map
+		if(driver.getcomments() != null){
+			addCommentsToMap(driver.getcomments()); // Add all comments back to the map
+			
+		}
 		addDesignatedRouteToMap(null); // Add the route that was intended to be taken to the map. This is the blue line in during evaluation.
-		addDrivenRouteToMap(driver.getLatLon()); // Add the route that was actually taken to the map. This is the route that was driven during the evaluation and is the red line in DuringEvaluatio
-		addFailsToMap(driver.getFails(), driver.getFailsTypes(), driver.getFailsLatLng());
+		if(driver.getLatLon() != null){
+			addDrivenRouteToMap(driver.getLatLon()); // Add the route that was actually taken to the map. This is the route that was driven during the evaluation and is the red line in DuringEvaluatio
+		}
+		if(driver.getFails() != null){
+			addFailsToMap(driver.getFails(), driver.getFailsTypes(), driver.getFailsLatLng());
+		}
 	}
 	
 	public void addCommentsToMap(String c) {
