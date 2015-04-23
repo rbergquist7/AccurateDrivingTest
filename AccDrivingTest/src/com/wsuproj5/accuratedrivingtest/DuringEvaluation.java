@@ -653,12 +653,6 @@ import android.widget.Toast;
     @Override
     public void onLocationChanged(Location location) {
 
-//    	mSbCmdResp.setLength(0);
-//        mMonitor.setText("");
-//        mCurrentLocation = location;
-//    	commandNumber = 1;
-//    	sendOBD2CMD("AT SP 0");
-    	mMonitor.setText("");
     	startTransmission();
     	checkSpeed(location);
     	// Report to the UI that the location was updated
@@ -787,7 +781,7 @@ import android.widget.Toast;
 
     }
 	private void setMonitorText(){
-    	mMonitor.append("------------------------------------\n");
+    	mMonitor.setText("------------------------------------\n");
     	mMonitor.append("Intake temp: \t\t\t" + IntakeTemp + "\n");
     	mMonitor.append("------------------------------------\n");
     	mMonitor.append("Engine Load: \t\t" + EngineLoad + "\n");
@@ -797,6 +791,8 @@ import android.widget.Toast;
     	mMonitor.append("RPM: \t\t\t\t\t" + RPM + "\n");
     	mMonitor.append("------------------------------------\n");
     	mMonitor.append("MPH: \t\t\t\t\t" + MPH + "\n");
+    	mMonitor.append("------------------------------------\n");
+    	mMonitor.append("AVG MPH: \t\t\t" + AvgMPH + "\n");
     	mMonitor.append("------------------------------------\n");
     	mMonitor.append("Voltage: \t\t\t" + voltage + "\n");
     	mMonitor.append("------------------------------------\n");
