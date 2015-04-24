@@ -457,6 +457,9 @@ import android.widget.Toast;
 	    if (viewingTestInfo) { //Case: Last fragment on the stack
 	    	viewingTestInfo = false;
 	    	v.setVisibility(View.INVISIBLE);
+	    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
+			findViewById(R.id.button35).setVisibility(View.VISIBLE);
+			findViewById(R.id.button25).setVisibility(View.VISIBLE);
 	    	getFragmentManager().popBackStack(); // remove fragment
 	        return;
 	    }
@@ -503,6 +506,9 @@ import android.widget.Toast;
 		    } 
 	    	if (cF.currentView) {
 		    	findViewById(R.id.menu_comments).setVisibility(View.INVISIBLE);
+		    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
+				findViewById(R.id.button35).setVisibility(View.VISIBLE);
+				findViewById(R.id.button25).setVisibility(View.VISIBLE);
 		    	getFragmentManager().popBackStack(); // remove fragment
 //		    	mSbCmdResp.setLength(0); //TODO: Parker moved this. Looks like placeholder for storing a comment
 //	            mMonitor.setText("");
@@ -974,6 +980,9 @@ import android.widget.Toast;
 	 public void extendCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(VISIBLE);
+	    	findViewById(R.id.buttonNoLimit).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button35).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button25).setVisibility(View.INVISIBLE);
 	    	CommentsFragment fr = new CommentsFragment();
 	    	cF = fr;
 	    	cF.currentView = true;
@@ -1035,6 +1044,9 @@ import android.widget.Toast;
 	    	LinearLayout testProgress = (LinearLayout) findViewById(R.id.menu_test_progress);
 	    	v = testProgress;
 	    	testProgress.setVisibility(VISIBLE);
+	    	findViewById(R.id.buttonNoLimit).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button35).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button25).setVisibility(View.INVISIBLE);
 	    	//inflate new test details fragment
 	    	viewingTestInfo = true;
 	        TestDetailsGeneral fr = new TestDetailsGeneral(testDataSelected, this);
