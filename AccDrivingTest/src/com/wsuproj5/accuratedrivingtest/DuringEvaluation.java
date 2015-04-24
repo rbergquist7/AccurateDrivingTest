@@ -421,6 +421,9 @@ import android.widget.Toast;
     @Override
 	public void onBackPressed()
 	{
+    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
+		findViewById(R.id.button35).setVisibility(View.VISIBLE);
+		findViewById(R.id.button25).setVisibility(View.VISIBLE);
     	if (failTest && viewingTestInfo) {
     		while (previousFragment != null) {
     			if (!categories.equals(previousFragment.testName) && !scoringCriteria.equals(previousFragment.testName)) { // Ignore the categories fragment
