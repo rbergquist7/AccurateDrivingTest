@@ -421,6 +421,9 @@ import android.widget.Toast;
     @Override
 	public void onBackPressed()
 	{
+    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
+		findViewById(R.id.button35).setVisibility(View.VISIBLE);
+		findViewById(R.id.button25).setVisibility(View.VISIBLE);
     	if (failTest && viewingTestInfo) {
     		while (previousFragment != null) {
     			if (!categories.equals(previousFragment.testName) && !scoringCriteria.equals(previousFragment.testName)) { // Ignore the categories fragment
@@ -974,6 +977,9 @@ import android.widget.Toast;
 	 public void extendCommentMenu(View view) {
 	    	LinearLayout commentMenu = (LinearLayout) findViewById(R.id.menu_comments);
 	    	commentMenu.setVisibility(VISIBLE);
+	    	findViewById(R.id.buttonNoLimit).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button35).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button25).setVisibility(View.INVISIBLE);
 	    	CommentsFragment fr = new CommentsFragment();
 	    	cF = fr;
 	    	cF.currentView = true;
@@ -1035,6 +1041,9 @@ import android.widget.Toast;
 	    	LinearLayout testProgress = (LinearLayout) findViewById(R.id.menu_test_progress);
 	    	v = testProgress;
 	    	testProgress.setVisibility(VISIBLE);
+	    	findViewById(R.id.buttonNoLimit).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button35).setVisibility(View.INVISIBLE);
+			findViewById(R.id.button25).setVisibility(View.INVISIBLE);
 	    	//inflate new test details fragment
 	    	viewingTestInfo = true;
 	        TestDetailsGeneral fr = new TestDetailsGeneral(testDataSelected, this);
