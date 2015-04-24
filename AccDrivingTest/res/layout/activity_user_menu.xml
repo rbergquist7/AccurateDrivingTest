@@ -68,4 +68,12 @@
 	    android:layout_below="@id/Button_Go_To_OBD_Connection"
 	    android:prompt="@string/select_your_route" />
 
+	<ImageView
+	    android:id="@+id/imageView1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentRight="true"
+	    android:src="@drawable/tiltaccdriving" />
+
 </RelativeLayout>
