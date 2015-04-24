@@ -768,7 +768,7 @@ import android.widget.Toast;
 	        
 	        CameraPosition cameraPosition = new CameraPosition.Builder()
 	        .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to new location
-	        .zoom(25)                   // Sets the zoom
+	        .zoom(20)                   // Sets the zoom
 //	        .zoom(map.getCameraPosition().zoom)                   // Sets the zoom
 	        .bearing(0)                // Sets the orientation of the camera
 	        .tilt(0)                   // Sets the tilt of the camera to
@@ -1583,6 +1583,23 @@ public void startTransmission() {
         }
         return ff;
     }
+	 public void toTwentyFiveLimit(View view){
+	     MPH_LIMIT = 25;  
+	     Toast.makeText(getApplicationContext(), "Speed limit set to 25 MPH", Toast.LENGTH_SHORT).show();
+
+   }
+	 public void toThirtyFiveLimit(View view){
+		 MPH_LIMIT = 35;  
+	     Toast.makeText(getApplicationContext(), "Speed limit set to 35 MPH", Toast.LENGTH_SHORT).show();
+
+
+   }
+	 public void toNoLimit(View view){
+		 MPH_LIMIT = 10000000;   
+	     Toast.makeText(getApplicationContext(), "Speed limit is not set", Toast.LENGTH_SHORT).show();
+
+
+   }
 	
 }
 
