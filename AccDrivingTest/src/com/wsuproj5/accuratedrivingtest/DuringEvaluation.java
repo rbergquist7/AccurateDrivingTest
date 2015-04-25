@@ -197,6 +197,7 @@ import android.widget.Toast;
     private int tracker = 1;
     private int AvgMPH = 0;
     private int MPH_LIMIT = 25;
+    private int total_MPH;
     private int MPH = 0;
     private int RPM = 0;
     private int IntakeTemp;
@@ -421,9 +422,9 @@ import android.widget.Toast;
     @Override
 	public void onBackPressed()
 	{
-    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
-		findViewById(R.id.button35).setVisibility(View.VISIBLE);
-		findViewById(R.id.button25).setVisibility(View.VISIBLE);
+//    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
+//		findViewById(R.id.button35).setVisibility(View.VISIBLE);
+//		findViewById(R.id.button25).setVisibility(View.VISIBLE);
     	if (failTest && viewingTestInfo) {
     		while (previousFragment != null) {
     			if (!categories.equals(previousFragment.testName) && !scoringCriteria.equals(previousFragment.testName)) { // Ignore the categories fragment
@@ -663,7 +664,8 @@ import android.widget.Toast;
     public void onLocationChanged(Location location) {
 
     	startTransmission();
-    	checkSpeed(location);
+//    	checkSpeed(location);
+    	mCurrentLocation = location;
     	// Report to the UI that the location was updated
     	DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.US);
     	Date date = new Date(location.getTime());
@@ -1560,14 +1562,16 @@ public void startTransmission() {
     }
     private void addToAvgMph(int mph){
     	MPH = mph;
-    	AvgMPH = (AvgMPH + MPH) / tracker;
-    	if(tracker < 2) tracker++;
+    	total_MPH += mph;
+    	AvgMPH = total_MPH / tracker;
+    	tracker++;
+    	checkSpeed();
     	
     }
-    private void checkSpeed(Location location) {
+    private void checkSpeed() {
     	
     	if(MPH > MPH_LIMIT){
-    		saveComment(location.getLatitude(), location.getLongitude(), "Warning! Exceeding speed limit! of: " + MPH_LIMIT);
+    		saveComment(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), "Warning! Exceeding speed limit! of: " + MPH_LIMIT);
     		
     	}
 		
