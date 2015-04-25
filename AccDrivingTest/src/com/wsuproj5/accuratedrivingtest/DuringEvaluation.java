@@ -421,9 +421,9 @@ import android.widget.Toast;
     @Override
 	public void onBackPressed()
 	{
-    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
-		findViewById(R.id.button35).setVisibility(View.VISIBLE);
-		findViewById(R.id.button25).setVisibility(View.VISIBLE);
+//    	findViewById(R.id.buttonNoLimit).setVisibility(View.VISIBLE);
+//		findViewById(R.id.button35).setVisibility(View.VISIBLE);
+//		findViewById(R.id.button25).setVisibility(View.VISIBLE);
     	if (failTest && viewingTestInfo) {
     		while (previousFragment != null) {
     			if (!categories.equals(previousFragment.testName) && !scoringCriteria.equals(previousFragment.testName)) { // Ignore the categories fragment
@@ -767,10 +767,11 @@ import android.widget.Toast;
     	   }
     	   
 	       if(routeListPoints != null && routeListPoints.size() > 0){
-	    	   map.addPolyline(new PolylineOptions()
-	    	   .addAll(routeListPoints.get(0))
-	    	   .width(5)
-	    	   .color(Color.BLUE));
+	    	   for (int i = 0; i < routeListPoints.size(); i++)
+		    	   map.addPolyline(new PolylineOptions()
+		    	   .addAll(routeListPoints.get(i))
+		    	   .width(5)
+		    	   .color(Color.BLUE));
 	    	   
 	    	   
 	       }
