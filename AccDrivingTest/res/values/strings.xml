@@ -15,6 +15,9 @@
     <string name="add_comment">Add Comment</string>
     <string name="score">Score: 100/100</string>
     <string name="enter_comment">Enter comment here</string>
+    <string name="two_limit">Limit: 25</string>
+    <string name="three_limit">Limit: 35</string>
+    <string name="no_limit">No Limit</string>
     <string name="comment_instructions">Touch map to place comment</string>
     <string name="return_from_OBD_data_menu">Hide\nOBD\nData</string>
     <string name="return_from_route_progress_menu">Hide\nRoute\nProgress</string>
@@ -81,20 +84,6 @@
     
     
     <!--  Get Data Screen -->
-    <string name="MPH">MPH</string>
-    <string name="RPM">RPM</string>
-    <string name="CIA">Intake Air Temperature</string>
-    <string name="CT">Coolant Temperature</string>
-    <string name="load">Engine Load</string>
-    <string name="OT">Oil Temperature</string>
-    <string name="zero">0</string>
-    <string name="getdata">Get Vehicle Operating Data</string>
-    <string name="getcodes">Check Trouble Codes</string>
-    <string name="logo">Application Logo</string>
-    <string name="voltage">Voltage</string>
-    <string name="TX">TX: </string>
-    <string name="RX">RX: </string>
-    <string name="blank"> </string>
     
     <!--  Get Trouble Codes Screen -->
     <string name="found">Trouble Codes Found:</string>

@@ -229,4 +229,35 @@
 	    android:background="#FFFFFF">
 	</LinearLayout>
 	<!-- END TEST PROGRESS MENU -->
+
+	<Button
+	    android:id="@+id/button25"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/button25"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/tvConnectionStatus"
+	    android:onClick="toTwentyFiveLimit"
+	    android:text="@string/two_limit" />
+
+	<Button
+	    android:id="@+id/button35"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentEnd="true"
+	    android:layout_alignTop="@+id/map"
+	    android:onClick="toThirtyFiveLimit"
+	    android:text="@string/three_limit" />
+
+	<Button
+	    android:id="@+id/buttonNoLimit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/button35"
+	    android:layout_alignBottom="@+id/button35"
+	    android:layout_centerHorizontal="true"
+		android:onClick="toNoLimit"
+	    android:text="@string/no_limit" />
+
 </RelativeLayout>
