@@ -310,6 +310,7 @@ import android.widget.Toast;
     		            	
     		            	case 12: //PID(0C): RPM
     		                		int RPM_value = (value*256)/4;
+    		                		if(RPM_value > 5000) break;
     		                		RPM = RPM_value;
     		            		break;
     		            		
@@ -341,6 +342,7 @@ import android.widget.Toast;
                 	if(PID == 12) {
                 		
                 		int RPM_value = ((value*256)+value2)/4;
+                		if(RPM_value > 5000) break;
                 		RPM = RPM_value;
                 	} 
                 	else if((PID == 1)||(PID == 65)) {
@@ -1561,6 +1563,7 @@ public void startTransmission() {
         
     }
     private void addToAvgMph(int mph){
+    	if(mph > 80) return;
     	MPH = mph;
     	total_MPH += mph;
     	AvgMPH = total_MPH / tracker;
