@@ -639,10 +639,11 @@ public class DuringEvaluation extends ActionBarActivity implements
     	   }
     	   
 	       if(routeListPoints != null && routeListPoints.size() > 0){
-	    	   map.addPolyline(new PolylineOptions()
-	    	   .addAll(routeListPoints.get(0))
-	    	   .width(5)
-	    	   .color(Color.BLUE));
+	    	   for (int i = 0; i < routeListPoints.size(); i++)
+		    	   map.addPolyline(new PolylineOptions()
+		    	   .addAll(routeListPoints.get(i))
+		    	   .width(5)
+		    	   .color(Color.BLUE));
 	    	   
 	    	   
 	       }
@@ -1369,6 +1370,8 @@ public class DuringEvaluation extends ActionBarActivity implements
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append("\n");
+    		commandNumber = 3;
+    		sendOBD2CMD("010C");
     		break;
     		
     	case 2: // CMD: 0105, Engine coolant temperature
@@ -1384,26 +1387,47 @@ public class DuringEvaluation extends ActionBarActivity implements
     		
     	case 3: // CMD: 010C, EngineRPM
     		int eRPM = showEngineRPM(buffer);
+    		if(eRPM != -1) {
+    			setRPM(eRPM);
+    		}
+    		else{
+        	//	sendOBD2CMD("010C");
+        	}
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append( " (Eng. RPM: ");
     		mSbCmdResp.append(eRPM);
     		mSbCmdResp.append(")");
     		mSbCmdResp.append("\n");
+    		commandNumber = 4;
+    		sendOBD2CMD("010D");
     		break;
     		
     	case 4: // CMD: 010D, Vehicle Speed
     		int vs = showVehicleSpeed(buffer);
+    		if(vs != -1){
+    			setMPH(vs);
+    		}
+    		else{
+        	//	sendOBD2CMD("010D");
+    		}
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append( " (Vehicle Speed: ");
     		mSbCmdResp.append(vs);
     		mSbCmdResp.append("Km/h)");
     		mSbCmdResp.append("\n");
+    		commandNumber = -1;
     		break;
     		
     	case 5: // CMD: 0131
     		int dt = showDistanceTraveled(buffer);
+    		if(dt != -1){
+    			setDistanceTraveled(dt);
+    		}
+    		else{
+        	//	sendOBD2CMD("0131");
+    		}
     		mSbCmdResp.append("R>>");
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append( " (Distance traveled since codes cleared: ");
@@ -1417,6 +1441,7 @@ public class DuringEvaluation extends ActionBarActivity implements
     		mSbCmdResp.append(buffer);
     		mSbCmdResp.append("\n");
     	}
+    	
     	
     	
     	mMonitor.setText(mSbCmdResp.toString());
