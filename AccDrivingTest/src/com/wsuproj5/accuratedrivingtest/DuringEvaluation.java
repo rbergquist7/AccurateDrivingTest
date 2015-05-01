@@ -518,9 +518,11 @@ import android.widget.Toast;
 		    	getFragmentManager().popBackStack(); // remove fragment
 //		    	mSbCmdResp.setLength(0); //TODO: Parker moved this. Looks like placeholder for storing a comment
 //	            mMonitor.setText("");
-	            comment = cF.commentTemplate;
-	            driver.setPass_Fail("False"); //if template was used, you failed
-	            commentSet = true;
+		    	if (!cF.commentTemplate.equals("")) {
+		            comment = cF.commentTemplate;
+		            driver.setPass_Fail("False"); //if template was used, you failed
+		            commentSet = true;
+	    		}
 		    }
 	    	return;
 	    }
@@ -1020,10 +1022,11 @@ import android.widget.Toast;
 		}
 		
 		public void addComment(View v) {
-			findViewById(R.id.comment_instructions).setVisibility(View.VISIBLE);
 			EditText temp = (EditText) findViewById(R.id.Field_Comment);
 			if (cF.commentTemplate == null)
 				cF.commentTemplate = temp.getText().toString();
+			if (!cF.commentTemplate.equals(""))
+				findViewById(R.id.comment_instructions).setVisibility(View.VISIBLE);
 			onBackPressed();
 		}
 	 
