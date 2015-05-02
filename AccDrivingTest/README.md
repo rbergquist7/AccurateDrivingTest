@@ -4,11 +4,11 @@ Accurate Driving Test is a android application to evaluate a driver based on Was
 
 ## How To Get Started
 
-- [Download Accurate Driving Test ](https://gitlab.encs.vancouver.wsu.edu/r.bergquist7/AccDrivingTestSecond) Use the following as library projects in your workspace 
+- [Download Accurate Driving Test ](ttps://github.com/rbergquist7/AccurateDrivingTest) Use the following as library projects in your workspace 
 
 - [Download Event Bus] (https://github.com/greenrobot/EventBus) minor part of recording during an evaluation
 
-- [Download Library](https://gitlab.encs.vancouver.wsu.edu/r.bergquist7/library) This is the main library file. The rest can be found in your SDK folder
+- [Download Library](https://github.com/rbergquist7/Library) This is the main library file. The rest can be found in your SDK folder
 
 - [Use Android-support-v7-appcompat] In the /sdk/extras/android/support/v7/ folder
 
